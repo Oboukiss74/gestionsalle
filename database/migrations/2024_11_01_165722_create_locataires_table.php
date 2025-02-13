@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('locataires', function (Blueprint $table) {
             $table->id();
-            $table->string ('nom');
-            $table->string ('prenom');
+            $table->string ('sexe');
             $table->string ('telephone');
-            $table->string ('mail');
-            $table->string ('passe');
+            $table->string ('cnib');
+            $table->string ('datecnib');
             $table->timestamps();
         });
     }

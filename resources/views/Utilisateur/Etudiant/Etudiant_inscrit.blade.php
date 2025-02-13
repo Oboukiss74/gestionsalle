@@ -10,42 +10,64 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
+<link rel="icon" type="image/png" href="images/logo.png"/>
 <link rel="stylesheet" href="{{asset('css/Etudiant/etudiant_inscrit.css')}}">
-
-
 
 </head>
 <body class="body_etudiant">
 <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+    <form action="{{ route('etudiants_enregistrer') }}" method="post">
+		@csrf
 		<div class="form-header">
 			<h2>s'inscrire</h2>
 			<p></p>
 		</div>
         <div class="form-group" >
+			<label class="required">identifiant</label>
+        	<input type="text" class="form-control" name="id" required="required" placeholder="identifiant">
+        </div>
+       
+        <div class="form-group" >
 			<label class="required">nom</label>
-        	<input type="text" class="form-control" name="username" required="required" placeholder="nom">
+        	<input type="text" class="form-control" name="nom" required="required" placeholder="nom">
         </div>
         <div class="form-group">
 			<label class="required" >prenom</label>
-        	<input type="email" class="form-control" name="prenom" required="required"  placeholder="prenom">
+        	<input type="text" class="form-control" name="prenom" required="required"  placeholder="prenom">
+        </div>
+		<div class="form-group" >
+			<label class="required">profile</label>
+        	<select name="profile">
+				<option value="" style="text-decoration: none">
+					selection
+				</option>
+				<option value="etudiant">
+					etudiant
+				</option>
+				<option value="locataire">
+					locataire
+				</option>
+			</select>
         </div>
         <div class="form-group">
 			<label class="required" >mail</label>
-        	<input type="email" class="form-control" name="email" required="required"  placeholder="">
+        	<input type="email" class="form-control" name="email" required="required"  placeholder="mail">
         </div>
         <div class="form-group">
 			<label class="required" >telephone</label>
-        	<input type="email" class="form-control" name="telephone" required="required"  placeholder="">
+        	<input type="text" class="form-control" name="telephone" required="required"  placeholder="telephone">
+        </div>
+        <div class="form-group">
+			<label class="required" >INE</label>
+        	<input type="text" class="form-control" name="INE"   placeholder="INE">
         </div>
 		<div class="form-group">
-			<label class="required">Password</label>
-            <input type="password" class="form-control" name="password" required="required" placeholder="">
+			<label class="required">mot de passe</label>
+            <input type="password" class="form-control" name="passe" required="required" placeholder="mot de passe">
         </div>
 		<div class="form-group">
-			<label class="required">Confirm Password</label>
-            <input type="password" class="form-control" name="confirm_password" required="required" placeholder="">
+			<label class="required">Confirme mot de  passe</label>
+            <input type="password" class="form-control" name="confirmepasse" required="required" placeholder="Confirme mot de  passe">
         </div>        
         <div class="form-group">
 			<label class="form-check-label"><input type="checkbox" required="required"> j'accepte <a href="#">les termes et conditons</a> &amp; <a href="#">politiques</a></label>

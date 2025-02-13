@@ -19,9 +19,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'id_etudiant',
+        'id_personnel',
+        'id_locataire',
+        'nom',
+        'prenom',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,5 +50,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function Etudiant(){
+        return $this->belongsTo(Etudiants::class, 'id_etudiant');
+        
+       
+    }
+    public function Locations(){ 
+        return $this->belongsTo(Locataires::class, 'id_locataire');
+    }
+    public function Personnel(){
+        return $this->belongsTo(Personnels::class, 'id_personnel');
+    }
+
+    public function hasRole($role) {
+        return $this->role === $role;
     }
 }

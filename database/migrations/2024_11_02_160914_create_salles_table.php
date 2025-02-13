@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('salles', function (Blueprint $table) {
             $table->id();
-            $table->string ('code');
             $table->string ('nom');
+            $table->string ('code');
+            $table->string ('nombre_place');
+            $table->string ('taille');
             $table->string ('Epuipement');
+            $table->string ('tarif');
+            $table->string ('statut');
             $table->string ('localisation');
             $table->timestamps();
         });

@@ -23,6 +23,8 @@
         <link href="css2/owl.carousel.min.css" rel="stylesheet">
 
         <link href="css2/tooplate-moso-interior.css" rel="stylesheet">
+
+        <link rel="icon" type="image/png" href="images/logo.png"/>
         
 <!--
 
@@ -56,21 +58,21 @@ Bootstrap 5 HTML CSS Template
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle click-scroll" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
+                            <a class="nav-link dropdown-toggle click-scroll" href="{{ route('register') }}" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">S'incrire</a>
 
-                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            {{-- <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{route('etudiant_inscrit')}}">Etudiant</a></li>
 
-                                <li><a class="dropdown-item" href="{{route('inscrit_personnel')}}">Personnels</a></li>
-                                <li><a class="dropdown-item" href="{{route('etudiant_inscrit')}}">Etrangers</a></li>
+                                <li><a class="dropdown-item" href="{{Route('inscrit_personnel')}}">Personnels</a></li>
+                                <li><a class="dropdown-item" href="{{route('etudiant_inscrit')}}">Locataire</a></li>
                                 <li><a class="dropdown-item" href="{{route('inscrit_publics')}}">public</a></li>
-                            </ul>
+                            </ul> --}}
                         </li>
+                       
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_4">Reviews</a>
+                            <a class="nav-link click-scroll" href="{{route('login')}}">Se connecter</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_5">Contact</a>
                         </li>
@@ -78,7 +80,12 @@ Bootstrap 5 HTML CSS Template
                 </div>
             </div>
         </nav>
-
+        @if (session()->has(session('success')))
+        <h1>
+            {{ session('success') }}
+        </h1>
+            
+        @endif
         <main>
 
             <section class="hero-section hero-slide d-flex justify-content-center align-items-center" id="section_1">

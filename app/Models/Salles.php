@@ -9,12 +9,13 @@ class Salles extends Model
     protected $fillable=[
         'code',
         'nom',
-        'taille',
+        'code',
         'nombre_place',
-        'Epuipement',
-        'id_tarif',
-        'localisation',
+        'taille',
+        'equipement',
+        'tarif',
         'statut',
+        'localisation',
     ];
     protected $table="salles";
 }

@@ -41,10 +41,15 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'users',
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+        'etudiant' => [ // Nouveau guard pour les étudiants
+            'driver' => 'session',
+            'provider' => 'etudiants',
+        ],
+
     ],
-],
 
     /*
     |--------------------------------------------------------------------------
@@ -68,6 +73,19 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
+
+        'etudiants' => [ // Nouveau provider pour les étudiants
+            'driver' => 'eloquent',
+            'model' => App\Models\Etudiants::class,
+        ],
+
+        'providers' => [
+            'users' => [
+                'driver' => 'eloquent',
+                'model' => App\Models\Personnels::class,
+            ],
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',

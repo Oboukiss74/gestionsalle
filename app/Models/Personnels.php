@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,11 +10,17 @@ class Personnels extends Model
     //
     protected $fillable=[
         'id',
-        'nom',
-        'prenom',
-        'Gmail',
+        'sexe',
+        'matricule',
         'telephone',
-        'passe',
+        'cnib',
+        'datecnib',
+
+        
     ];
     protected $table = 'personnels';
+
+    public function Perspnnels(){
+        return $this->hasMany(User::class, 'id');
+    }
 }
