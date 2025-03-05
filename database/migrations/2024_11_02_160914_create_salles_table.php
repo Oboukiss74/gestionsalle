@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string ('nom');
             $table->string ('code');
-            $table->string ('nombre_place');
+            $table->string ('nombreplace');
             $table->string ('taille');
-            $table->string ('Epuipement');
+            $table->string ('equipement');
             $table->string ('tarif');
             $table->string ('statut');
             $table->string ('localisation');

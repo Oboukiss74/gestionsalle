@@ -8,6 +8,7 @@ use App\Models\Locataires;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Auth\Events\Validated;
 
 class Etudiant_Controller extends Controller
 {
@@ -86,6 +87,9 @@ class Etudiant_Controller extends Controller
     //connection
     public function etudiant_connection()
     {
+        // if ($Users->hasRole('admin')) {
+        //     echo "L'utilisateur est un administrateur.";
+        // }
         return view('Utilisateur.Etudiant.Etudiant_connection');
     }
 
@@ -125,5 +129,10 @@ class Etudiant_Controller extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function listeetudiant(Request $request){
+        $request=Etudiants::all();
+        dump($request);
     }
 }

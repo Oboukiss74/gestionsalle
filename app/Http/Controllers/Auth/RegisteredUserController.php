@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
                 'sexe' => ['required'],
                 'matricule' => ['unique:personnels,matricule'],
                 'telephone' => 'required|max:12',
-                'cnib' => ['required','max:12'],
+                'cnib' => ['required','max:12','unique:'],
                 'datecnib' => ['required','date'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'INE'=> ['unique:etudiants,INE'],

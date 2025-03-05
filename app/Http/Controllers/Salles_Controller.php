@@ -4,46 +4,139 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Salles;
+use App\Models\Demandes;
+use Carbon\Carbon;
+
 class Salles_Controller extends Controller
 {
     //page enregistrement des salles
-    public function AjouterSalle()
+    public function AjouterSalles()
     {
         return view("salles.Ajout_salles");
     }
     //validation denregistrement salles
-    public function store(Request $request)
+    public function enretrement_salle(Request $request)
     {
-        $salles=$request->validate( [
-            
-            "nom" => "required",
-            "code" => "required",
-            "nombre_place" => "required",
-            "taille" => "required",
-            "equipement" => "required",
-            "tarif"=> "required",
-            "statut" => "required",
-            "localisation" => "required",
+        try {
+            $request->validate([
 
-        ]);
-        // dd($salles);
-        Salles::create([
-           
-            "nom"=> $request->input("nom"),
-            "code"=> $request->input("code"),
-            "nombre_place"=> $request->input("nombre_place"),
-            "taille"=> $request->input("taille"),
-            "equipement"=> $request->input("equipement"),
-            "statut"=> $request->input("statut"),
-            "localisation"=> $request->input("localisation"),
+                "nom" => "required",
+                "code" => "required",
+                "nombreplace" => "required",
+                "taille" => "required",
+                "equipement" => "required",
+                "tarif" => "required",
+                "statut" => "required",
+                "localisation" => "required",
 
-        ]);
-        return back()->with("success","Salle ajoutée");
+            ]);
 
+            Salles::create([
+
+                "nom" => $request->input("nom"),
+                "code" => $request->input("code"),
+                "nombreplace" => $request->input("nombreplace"),
+                "taille" => $request->input("taille"),
+                "equipement" => $request->input("equipement"),
+                "tarif" => $request->input("tarif"),
+                "statut" => $request->input("statut"),
+                "localisation" => $request->input("localisation"),
+
+            ]);
+            //dd($salles);
+
+            return back()->with("message", "Salle ajoutée");
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                "status" => false,
+                "message" => $th->getMessage(),
+            ]);
+        }
     }
     //liste des salles
-    public function liste_salles (Request $request){
-        $salles = Salles::where("id_salle", $request->input("id_salle"))->get();
-        dd($salles);
+
+    public function liste_salles(Request $request)
+    {
+        $salles = Salles::paginate(2);
+        return view("salles.liste_salles", compact("salles"));
+    }
+
+
+    //salle occupées
+    public function sallesOccupe(Request $request)
+    {
+        $datedebut = $request->input('datedebut');
+        $datefin = $request->input('datefin');
+
+        $sallesOccupees = Salles::whereNotIn('id', function ($query) use ($datedebut, $datefin) {
+            $query->select('id_salle')
+                ->from('demandes')
+                ->where(function ($q) use ($datedebut, $datefin) {
+                    $q->whereBetween('datedebut', [$datedebut, $datefin])
+                        ->orWhereBetween('datefin', [$datedebut, $datefin])
+                        ->orWhere(function ($q2) use ($datedebut, $datefin) {
+                            $q2->where('datedebut', '<=', $datedebut)
+                                ->where('datefin', '>=', $datefin);
+                        });
+                });
+        })->pluck('id');
+
+        // Correction : Utiliser get() au lieu de first()
+        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+
+        return view('salles.salle_disponible', ['salles' => $salles]);
+    }
+
+    //salle disponible a une date donnée
+    public function sallesDisponibles(Request $request)
+    {
+        $datedebut = $request->input('datedebut');
+        $datefin = $request->input('datefin');
+
+        // Récupérer les IDs des salles occupées directement depuis la table demandes
+        $sallesOccupees = Demandes::where(function ($salle) use ($datedebut, $datefin) {
+            $salle->whereBetween('datedebut', [$datedebut, $datefin])
+                ->orWhereBetween('datefin', [$datedebut, $datefin])
+                ->orWhere(function ($q) use ($datedebut, $datefin) {
+                    $q->where('datedebut', '<=', $datedebut)
+                        ->where('datefin', '>=', $datefin);
+                });
+        })->pluck('id_salle'); // Récupère les id_salle des demandes qui chevauchent
+
+        // Récupérer les salles non occupées
+        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+
+        return view('salles.salle_disponible', ['salles' => $salles]);
+    }
+
+    //salle disponible a la date du jour
+    
+
+    public function sallesDisponiblesJour(Request $request)
+    {
+        // Définir la période pour aujourd'hui
+        $datedebut = Carbon::today()->startOfDay(); // Début de la journée (00:00)
+        $datefin = Carbon::today()->endOfDay();     // Fin de la journée (23:59:59)
+
+        // Récupérer les IDs des salles occupées aujourd'hui
+        $sallesOccupees = Demandes::where(function ($query) use ($datedebut, $datefin) {
+            $query->whereBetween('datedebut', [$datedebut, $datefin])
+                ->orWhereBetween('datefin', [$datedebut, $datefin])
+                ->orWhere(function ($q) use ($datedebut, $datefin) {
+                    $q->where('datedebut', '<=', $datedebut)
+                        ->where('datefin', '>=', $datefin);
+                });
+        })->pluck('id_salle');
+
+        // Récupérer les salles disponibles
+        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+
+        return view('salles.salle_disponible', ['salles' => $salles]);
+    }
+
+    public function sallesDispo()
+    {
+        return view('salles.salle_dipo');
     }
 }

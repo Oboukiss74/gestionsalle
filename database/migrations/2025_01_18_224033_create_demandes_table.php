@@ -13,6 +13,21 @@ return new class extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_salle');
+            $table->foreign('id_salle')->references('id')->on('salles')->onDelete('cascade');
+            $table->string('nom');
+            $table->string('telephone');
+            $table->string('mail');
+            $table->string('cnib');
+            $table->date('datedebut');
+            $table->date('datefin');
+            $table->time('heuredebut');
+            $table->time('heurefin');
+            $table->string('salle');
+            $table->string('effectif');
+            $table->string('motif');
+            $table->string('equipement');
+            $table->enum('etat', ['En attente', 'Validée', 'Refusée'])->default('En attente');
             $table->timestamps();
         });
     }

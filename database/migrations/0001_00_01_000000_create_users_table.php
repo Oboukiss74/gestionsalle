@@ -23,9 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('id_etudiant')->references('id')->on('etudiants')->onDelete('cascade');
-            $table->foreign('id_personnel')->references('id')->on('personnels')->onDelete('cascade');
-            $table->foreign('id_locataire')->references('id')->on('locataires')->onDelete('cascade');
+            
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -42,9 +40,9 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('user'); // Valeur par défaut : 'user'
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->string('role')->default('user'); // Valeur par défaut : 'user'
+        // });
     }
 
     /**

@@ -50,7 +50,7 @@ Bootstrap 5 HTML CSS Template
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="#section_1">Accueil</a>
+                            <a class="nav-link click-scroll" href="{{ route('Accueil') }}">Accueil</a>
                         </li>
 
                         <li class="nav-item">
@@ -58,7 +58,7 @@ Bootstrap 5 HTML CSS Template
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle click-scroll" href="{{ route('register') }}" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">S'incrire</a>
+                            <a class="nav-link dropdown-toggle click-scroll" href="{{ route('register') }}" >S'incrire</a>
 
                             {{-- <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{route('etudiant_inscrit')}}">Etudiant</a></li>
