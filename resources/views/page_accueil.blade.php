@@ -11,7 +11,7 @@
 
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        
+
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
         <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;300;400;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         <link href="css2/tooplate-moso-interior.css" rel="stylesheet">
 
         <link rel="icon" type="image/png" href="images/logo.png"/>
-        
+
 <!--
 
 Tooplate 2133 Moso Interior
@@ -36,7 +36,7 @@ Bootstrap 5 HTML CSS Template
 
 -->
     </head>
-    
+
     <body>
 
         <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
@@ -58,7 +58,7 @@ Bootstrap 5 HTML CSS Template
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle click-scroll" href="{{ route('register') }}" >S'incrire</a>
+                            <a class="nav-link click-scroll" href="{{ route('register') }}" >S'incrire</a>
 
                             {{-- <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{route('etudiant_inscrit')}}">Etudiant</a></li>
@@ -68,10 +68,10 @@ Bootstrap 5 HTML CSS Template
                                 <li><a class="dropdown-item" href="{{route('inscrit_publics')}}">public</a></li>
                             </ul> --}}
                         </li>
-                       
+
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href="{{route('login')}}">Se connecter</a>
+                            <a class="nav-link click-scroll" href="{{route('profiles')}}">Se connecter</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link click-scroll" href="#section_5">Contact</a>
@@ -84,7 +84,7 @@ Bootstrap 5 HTML CSS Template
         <h1>
             {{ session('success') }}
         </h1>
-            
+
         @endif
         <main>
 
@@ -116,7 +116,7 @@ Bootstrap 5 HTML CSS Template
                         <h3><a href="index.html" class="custom-link mb-1">Moso Interior</a></h3>
 
                         <p class="text-white">Since 1986, We crafted interior products for better spaces</p>
-                        
+
                         <p class="text-white"><a href="https://www.tooplate.com" target="_parent">Web Design: Tooplate</a></p>
                     </div>
 
