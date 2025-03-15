@@ -75,10 +75,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('modifier_salles', [Salles_Controller::class, 'Salles_Update'])->name(name: 'Update_salles');
     //supprimer salles
     Route::post('supprimer_salles', [Salles_Controller::class, 'delete_salle'])->name(name: 'delete_salles');
-    //Profile
-
-    Route::get('profile_utilisteur', action: [Utilisateurs_Controller::class, 'profiles'])->name(name: 'profiles');
-
 
     //modifier info
     Route::get('mes_infos', [ProfileController::class, 'VoirInfos'])->name('mesinfos');
@@ -86,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('Mesdemandes', [ProfileController::class, 'DemandeStatut'])->name('mes_demande');
 });
+//Profile
+
+Route::get('profile_utilisteur', action: [Utilisateurs_Controller::class, 'profiles'])->name(name: 'profiles');
 
 
 // Route::get('sallle', [Salles_Controller::class,'AjouterSalle'])->name(name:'pages_salles');
