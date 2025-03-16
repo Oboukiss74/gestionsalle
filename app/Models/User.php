@@ -24,6 +24,7 @@ class User extends Authenticatable
         'id_locataire',
         'nom',
         'prenom',
+        'cnib',
         'email',
         'password',
         'role',
@@ -54,10 +55,10 @@ class User extends Authenticatable
 
     public function Etudiant(){
         return $this->belongsTo(Etudiants::class, 'id_etudiant');
-        
-       
+
+
     }
-    public function Locations(){ 
+    public function Locations(){
         return $this->belongsTo(Locataires::class, 'id_locataire');
     }
     public function Personnel(){

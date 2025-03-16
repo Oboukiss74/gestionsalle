@@ -27,6 +27,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -75,17 +76,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('modifier_salles', [Salles_Controller::class, 'Salles_Update'])->name(name: 'Update_salles');
     //supprimer salles
     Route::post('supprimer_salles', [Salles_Controller::class, 'delete_salle'])->name(name: 'delete_salles');
-
+    //Profile
+    Route::get('profile_utilisteur', action: [ProfileController::class, 'profiles'])->name(name: 'profile');
     //modifier info
-    Route::get('mes_infos', [ProfileController::class, 'VoirInfos'])->name('mesinfos');
+    // Route::get('mes_infos', [ProfileController::class, 'VoirInfos'])->name('mesinfos');
     Route::put('mesinfos', [ProfileController::class, 'ModifierProfile'])->name('mesinfosmodifier');
-
     Route::get('Mesdemandes', [ProfileController::class, 'DemandeStatut'])->name('mes_demande');
 });
-//Profile
-
-Route::get('profile_utilisteur', action: [Utilisateurs_Controller::class, 'profiles'])->name(name: 'profiles');
-
+//valider la connexion
+Route::post('connexion_utilisteur', action: [ProfileController::class, 'connecter'])->name(name: 'validerconnexion');
+//connection
+Route::get('connecter_utilisteur', action: [ProfileController::class, 'ConnectionProfile'])->name(name: 'connecter');
 
 // Route::get('sallle', [Salles_Controller::class,'AjouterSalle'])->name(name:'pages_salles');
 //page d'enregistrement salles

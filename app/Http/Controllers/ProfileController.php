@@ -16,9 +16,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('Utilisateur.profiles.modifier_profile', [
             'user' => $request->user(),
         ]);
+        // return view('profile.edit', [
+        //     'user' => $request->user(),
+        // ]);
     }
 
     /**
@@ -34,7 +37,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile')->with('status', 'profile-updated');
     }
 
     /**
@@ -57,5 +60,22 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    //vue de connection a son profile
+    public function ConnectionProfile() {
+        return view('Utilisateur.profiles.connection');
+
+    }
+
+    //vue de modifier les infos du profile
+    public function profile_modier()  {
+        return view('utilisateur.profiles.modifier_profile');
+    }
+    //vue du profile
+    public function profiles(request $request) {
+
+        return view('Utilisateur.profiles.profile');
+    }
+
 
 }

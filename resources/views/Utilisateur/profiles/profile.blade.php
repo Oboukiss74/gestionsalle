@@ -38,7 +38,7 @@
             <div class="navbar-nav ml-auto">
                 <a href="{{ route('profile') }}" class="nav-item nav-link active"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('mesinfos') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>mes
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>mes
                         infos</span></a>
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
                 <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a>
@@ -46,7 +46,7 @@
                 <a href="#" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Messages</span></a>
                 <a href="#" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a>
                 {{-- photo de profile --}}
-                <a href="{{ route('mesinfos') }}" class="nav-item nav-link" ><i class="fa-solid fa-circle-user avatar" style="font-size: 40px" ></i></a>
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" ><i class="fa-solid fa-circle-user avatar" style="font-size: 40px" ></i></a>
                 <div class="nav-item dropdown">
                     <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"> {{ Auth::user()->nom }} <b
                             class="caret"></b></a>
@@ -55,7 +55,7 @@
                             <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div> --}}
-                        <x-responsive-nav-link :href="route('mesinfos')" class="dropdown-item">
+                        <x-responsive-nav-link :href="route('profile.edit')" class="dropdown-item">
                             <i class="fa fa-user-o"></i> Profile
                         </x-responsive-nav-link>
                         <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a>
