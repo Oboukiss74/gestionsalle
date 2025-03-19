@@ -25,6 +25,7 @@ class User extends Authenticatable
         'nom',
         'prenom',
         'cnib',
+        'profile',
         'email',
         'password',
         'role',
@@ -72,5 +73,10 @@ class User extends Authenticatable
     public function salles()
     {
         return $this->hasMany(Salles::class, 'id');
+    }
+
+    public function demandes()
+    {
+        return $this->hasMany(Demandes::class, 'id_user');
     }
 }

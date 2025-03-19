@@ -8,7 +8,7 @@ class Etudiants extends Model
 {
     //infos a soumettre
     protected $fillable = [
-        
+        'id',
         'sexe',
         'INE',
         'telephone',
@@ -27,5 +27,5 @@ class Etudiants extends Model
     public function Etudiant(){
         return $this->hasMany(User::class, 'id');
     }
-    
+
 }

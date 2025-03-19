@@ -13,6 +13,7 @@ class Demandes extends Model
     protected $fillable = [
         "id",
         "id_salle",
+        "id_user",
         "nom",
         "telephone",
         "mail",
@@ -27,7 +28,7 @@ class Demandes extends Model
         "equipement",
         'etat',
     ];
-
+    // Relation avec la salle
     public function salle()
     {
         return $this->belongsTo(Salles::class, 'id_salle');
@@ -36,6 +37,11 @@ class Demandes extends Model
     {
         return $this->belongsTo(Demandes::class, 'id');
     }
-    
+    // Relation avec l'utilisateur
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
 
 }

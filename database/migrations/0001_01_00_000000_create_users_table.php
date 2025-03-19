@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('cnib');
+            $table->string('profile');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -38,6 +38,7 @@ class RegisteredUserController extends Controller
                 'nom' => ['required', 'string', 'max:255'],
                 'prenom' => ['required', 'string'],
                 'cnib' => ['required', 'max:13', 'unique:' . User::class],
+                'profile' => ['required'],
                 'sexe' => ['required'],
                 'matricule' => ['unique:personnels,matricule'],
                 'telephone' => 'required|max:12',
@@ -59,6 +60,7 @@ class RegisteredUserController extends Controller
                     'nom' => $request->nom,
                     'prenom' => $request->prenom,
                     'cnib' => $request->cnib,
+                    'profile' => $request->profile,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);

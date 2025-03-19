@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +23,8 @@
             <form action="{{ route('enregistrer_salles') }}" method="POST">
                 @csrf
                 <div class="formbold-input-flex" style="width: 950px">
-                    <div style="width: 650px" class="case_saisie">
-                        
+                    {{-- <div style="width: 650px" class="case_saisie">
+
                         <select name="id_salle" id="" class="formbold-form-label">
                             @foreach ($salles as $salle)
                                 <option value="" class="formbold-form-input">
@@ -31,23 +32,23 @@
                                 </option>
                             @endforeach
                         </select>
-        
-                    </div>
+
+                    </div> --}}
                     <div style="width: 650px" class="case_saisie">
                         <label for="lastname" > nom de la salle </label>
                         <input type="text" name="nom" id="nom" placeholder="nom de la salle"
-                             />
+                        class="formbold-form-input"  />
                     </div>
 
                     <div style="width: 950px">
                         <label for="lastname" class="formbold-form-label"> code de la salle</label>
-                        <input type="text" name="code" id="lastname" placeholder="code de la salle"
+                        <input type="text" name="code" id="nom" placeholder="code de la salle"
                             class="formbold-form-input" />
                     </div>
 
                     <div style="width: 650px">
                         <label for="lastname" class="formbold-form-label"> nombre de place</label>
-                        <input type="number" name="nombreplace" id="lastname" placeholder="N° de la salle"
+                        <input type="number" name="nombreplace" id="nombreplace" placeholder="N° de la salle"
                             class="formbold-form-input" />
                     </div>
                 </div>
@@ -57,6 +58,7 @@
                         <label class="formbold-form-label">Taille de place</label>
 
                         <select class="formbold-form-input" name="taille" id="occupation">
+                            <option value="petite" selected>choix de taille</option>
                             <option value="petite">petite</option>
                             <option value="moyenne">moyenne</option>
                             <option value="grande">grande</option>
@@ -70,8 +72,8 @@
                     </div>
 
                     <div style="width: 650px">
-                        <label for="email" class="formbold-form-label">Le prix de lovation </label>
-                        <input type="number" name="tarif" id="prix" placeholder="nombre de place"
+                        <label for="email" class="formbold-form-label">Le prix de location </label>
+                        <input type="number" name="tarif" id="prix" placeholder="prix"
                             class="formbold-form-input" />
                     </div>
 

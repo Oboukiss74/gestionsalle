@@ -50,6 +50,8 @@
                 <div class="nav-item dropdown">
                     <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"> {{ Auth::user()->nom }} <b
                             class="caret"></b></a>
+                            <br>
+                        {{-- <h5 class="nav-item" >{{ Auth::user()->cnib }}</h5> --}}
                     <div class="dropdown-menu">
                         {{-- <div class="px-4">
                             <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>

@@ -35,7 +35,7 @@
             <div class="navbar-nav ml-auto">
                 <a href="{{ route('Accueil') }}" class="nav-item nav-link active"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('mesinfos') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>paramétre</span></a>
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>paramétre</span></a>
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
                 {{-- <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a> --}}
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}

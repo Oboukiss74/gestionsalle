@@ -16,39 +16,46 @@
         <h3>mes infos</h3>
         <div class="modifiers">
             <div class="toutesinfos">
-                @csrf
 
-                <form action="{{ route('mesinfosmodifier') }}" method="post">
+
+                <form action="{{ route('profile.modifier') }}" method="post">
+                    @csrf
+
                     <div class="infos">
                         <div class="modifiersinofs">
                             <label for="">nom</label>
-                            <input type="text" value="{{ Auth::user()->nom }} " class="saisieinfos">
+                            <input type="text" value="{{ Auth::user()->nom }} " class="saisieinfos" name="nom">
+                            <x-input-error class="mt-2" :messages="$errors->get('nome')" />
                         </div>
                         <div class="modifiersinofs prenom">
                             <label for="">prenom</label>
-                            <input type="text" value=" {{ Auth::user()->prenom }}" class="saisieinfos">
+                            <input type="text" value=" {{ Auth::user()->prenom }}" class="saisieinfos" name="prenom">
+                            <x-input-error class="mt-2" :messages="$errors->get('prenom')" />
                         </div>
                     </div>
 
                     <div class="mail modifiersinofs">
                         <label for="">votre mail</label>
-                        <input type="mail" value="{{ Auth::user()->email }}" class="saisieinfos">
+                        <input type="mail" value="{{ Auth::user()->email }}" class="saisieinfos" name="email">
+
                     </div>
                     <div class="mail modifiersinofs">
                         <label for="">Téléphone</label>
                         <input type="text"
-                            value="{{ Auth::user()->Etudiant?->telephone ?? (Auth::user()->Personnel?->telephone ?? (Auth::user()->Locations?->telephone ?? '')) }}"
-                            class="saisieinfos">
+                        value="{{ Auth::user()->Etudiant?->telephone ?? (Auth::user()->Personnel?->telephone ?? (Auth::user()->Locations?->telephone ?? '')) }}"
+                        class="saisieinfos" name="telephone">
+
                     </div>
 
 
                     <div class="passe modifiersinofs">
                         <label for="">mot de passe</label>
-                        <input type="text" placeholder="nouveau mot de passe" class="saisieinfos">
+                        <input type="password" placeholder="nouveau mot de passe" class="saisieinfos" name="password">
+                        <x-input-error class="mt-2" :messages="$errors->get('password')" />
                     </div>
                     <br>
                     <div class="passe modifiersinofs">
-                        <input type="text" placeholder="confirmer" class="saisieinfos">
+                        <input type="password" placeholder="confirmer" class="saisieinfos">
                     </div>
                     <br>
                     <div class="passe modifiersinofs">

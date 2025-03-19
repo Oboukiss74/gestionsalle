@@ -30,10 +30,11 @@ Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.modifier');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 //partie accueil
-Route::get('accueil', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil');
+Route::get('/', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil');
 
 
 //partie etudiant
@@ -64,7 +65,7 @@ Route::post('Enregistrer_locataire', [Locataire_Controller::class, 'Enregistrer_
 Route::post('connexion_locataire', [Locataire_Controller::class, 'connecter_Locataire'])->name(name: 'locataire_connecter');
 
 
-//connexion avant action
+//connexion avant action sur le profile
 Route::middleware(['auth'])->group(function () {
     //page d'enregistrement salles
     Route::get('sallles', [Salles_Controller::class, 'AjouterSalle'])->name(name: 'pages_salles');
@@ -81,12 +82,19 @@ Route::middleware(['auth'])->group(function () {
     //modifier info
     // Route::get('mes_infos', [ProfileController::class, 'VoirInfos'])->name('mesinfos');
     Route::put('mesinfos', [ProfileController::class, 'ModifierProfile'])->name('mesinfosmodifier');
-    Route::get('Mesdemandes', [ProfileController::class, 'DemandeStatut'])->name('mes_demande');
+
 });
-//valider la connexion
-Route::post('connexion_utilisteur', action: [ProfileController::class, 'connecter'])->name(name: 'validerconnexion');
-//connection
-Route::get('connecter_utilisteur', action: [ProfileController::class, 'ConnectionProfile'])->name(name: 'connecter');
+
+//connexion avant action sur les demandes
+Route::middleware(['auth'])->group(function () {
+    //Route::get('Ma_demande', [DemandeController::class, 'MaDemande'])->name(name: 'mes_demandes');
+    Route::get('Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
+
+});
+// //valider la connexion
+// Route::post('connexion_utilisteur', action: [ProfileController::class, 'connecter'])->name(name: 'validerconnexion');
+// //connection
+// Route::get('connecter_utilisteur', action: [ProfileController::class, 'ConnectionProfile'])->name(name: 'connecter');
 
 // Route::get('sallle', [Salles_Controller::class,'AjouterSalle'])->name(name:'pages_salles');
 //page d'enregistrement salles
@@ -104,13 +112,18 @@ Route::post('/permissions/create', [RolePermissionController::class, 'createPerm
 Route::post('/roles/assign', [RolePermissionController::class, 'assignRoleToUser']);
 Route::post('/permissions/assign', [RolePermissionController::class, 'assignPermissionToRole']);
 
+//cote demandes
+Route::middleware(['auth'])->group(function () {
+    //pour les demandes
+    Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
+    Route::get('demandes_liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
+    Route::get('la_demande', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
 
-//pour les demandes
-Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
-Route::get('demandes_liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
-Route::get('la_demande', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
 //creation demande
 Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
+
+});
+
 //valider demande
 Route::post('validerdemande', [DemandeController::class, 'updateEtat'])->name(name: 'demandevalidee');
 //voir la demande

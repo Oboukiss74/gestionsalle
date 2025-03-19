@@ -29,11 +29,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
 
         $request->user()->save();
 
@@ -75,6 +76,36 @@ class ProfileController extends Controller
     public function profiles(request $request) {
 
         return view('Utilisateur.profiles.profile');
+    }
+
+    //modifier infos
+    public function updateinfos(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'nom' => 'string|max:255',
+            'prenom' => 'string|max:255',
+            'email' => 'email|unique:users,email,' . $user->id,
+            'telephone' => 'string|max:20',
+        ]);
+
+        // Mise à jour des infos utilisateur
+        $user->update([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'email' => $request->email,
+            'telephone' => $request->telephone,
+        ]);
+
+        // Mise à jour du téléphone dans la bonne table
+        // if ($user->etudiant) {
+        //     $user->etudiant->update([
+        //         'telephone' => $request->telephone,
+        //     ]);
+        // }
+
+        return redirect()->route('profile');
     }
 
 

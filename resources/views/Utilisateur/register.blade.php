@@ -50,7 +50,7 @@
             </div>
             <div class="form-group">
                 <label for="choix">Votre profile</label>
-                <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile">
+                <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile" style="border: white">
                     <option value="selection">
                         selectionne
                     </option>
@@ -86,7 +86,8 @@
             </div>
 
             <div class="form-group">
-                <input type="date" class="form-control" name="datecnib" placeholder="delivrée le" required="required">
+                <label for="">delivré le:</label>
+                <input type="date" class="form-control" name="datecnib" placeholder="delivrée le" required="required" >
             </div>
 
 

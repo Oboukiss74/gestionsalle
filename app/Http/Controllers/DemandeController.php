@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use App\Models\Demandes;
@@ -64,9 +64,9 @@ class DemandeController extends Controller
                 "equipement" => $request->input("equipement"),
             ]);
             Demandes::create($validatedData);
-            
+
             //mail depuis le DB
-           
+
 
             // $admin = User::role('admin')->pluck('email');
             // Mail::to($admin)->send(new DemandeValidationAdmin($demande));
@@ -93,31 +93,31 @@ class DemandeController extends Controller
         //         "motif" => "required",
         //         "equipement" => "required",
         //     ]);
-        
+
         //     // Gestion du fichier CNIB
         //     $data = $request->all();
         //     if ($request->hasFile('cnib')) {
         //         $path = $request->file('cnib')->store('cnibs', 'public');
         //         $data['cnib'] = $path;
         //     }
-        
+
         //     $demande = Demandes::create($data);
-        
+
         //     // Envoi d'un email à l'admin
         //     $admin = User::where('role', 'Admin')->value('email');
         //     Mail::to($admin)->send(new DemandeValidationAdmin($demande));
-           
-        
+
+
         // } catch (\Throwable $th) {
         //     return response()->json([
         //         "status" => false,
         //         "message" => $th->getMessage(),
         //     ]);
         // }
-        
+
         // Redirection avec message de succès
         return redirect()->back()->with('success', 'Demande créée avec succès.');
-        
+
     }
 
     //validation de l'etat de la demande
@@ -145,12 +145,12 @@ class DemandeController extends Controller
         if (!$demande) {
             return redirect()->back()->with('error', 'Demande non trouvée.');
         }
-    
+
         $demande->delete();
-    
+
         return redirect()->back()->with('success', 'Demande supprimée avec succès.');
     }
-    
+
 
     //liste des demandes et la configuration de la validation et refus
     public function liste_demande()
@@ -168,7 +168,13 @@ class DemandeController extends Controller
         $demande = Demandes::findOrFail($id); // Récupère la demande spécifique
         return view('Demandes.liste_demande', compact('demandes'));
     }
+    //mes demande
+    public function DemandeStatut() {
+        $user=Auth::user();
+        $demandes=$user->demande;
+        return view('Demandes.mes_demandes', compact('demandes'));
 
+    }
     //voir la demande
     public function show(Demandes $demande)
     {
