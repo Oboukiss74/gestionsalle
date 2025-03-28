@@ -159,7 +159,7 @@
                                                 <button type="submit" name="etat" class="btn btn-info"
                                                     value="validée">Accepter</button>
                                             </form>
-                                            
+
 
                                             {{-- <input type="button" name="etat" class="btn btn-default" data-dismiss="modal" value="Refuser">
                                             <input type="button" name="etat" class="btn btn-info" value="Accepter"> --}}
@@ -250,7 +250,7 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{{ route('demandesupprimer',['id' => $demande->id]) }}" method="post">
+                <form method="post" action="{{ route('demandesupprimer', ['id' => $demande->id]) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <div class="modal-header">

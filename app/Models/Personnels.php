@@ -10,13 +10,9 @@ class Personnels extends Model
     //
     protected $fillable=[
         'id',
-        'sexe',
         'matricule',
+        'fonction',
         'telephone',
-        'cnib',
-        'datecnib',
-
-        
     ];
     protected $table = 'personnels';
 

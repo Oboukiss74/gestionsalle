@@ -45,7 +45,7 @@ class Salles_Controller extends Controller
             ]);
             //dd($salles);
 
-            return back()->with("message", "Salle ajoutée");
+            return back()->with("succes", "Salle ajoutée avec succes");
         } catch (\Throwable $th) {
             //throw $th;
             return response()->json([
@@ -111,7 +111,7 @@ class Salles_Controller extends Controller
     }
 
     //salle disponible a la date du jour
-    
+
 
     public function sallesDisponiblesJour(Request $request)
     {
@@ -138,5 +138,10 @@ class Salles_Controller extends Controller
     public function sallesDispo()
     {
         return view('salles.salle_dipo');
+    }
+
+    public function essais()  {
+        return view('Utilisateur.admin.profile');
+
     }
 }

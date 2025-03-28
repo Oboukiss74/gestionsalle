@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('personnels', function (Blueprint $table) {
             $table->id();
-            $table->string ('sexe');
             $table->string ('matricule');
+            $table->string('fonction');
             $table->string ('telephone');
-            $table->string ('cnib');
-            $table->string ('datecnib');
             $table->timestamps();
         });
     }

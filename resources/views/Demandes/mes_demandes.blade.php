@@ -1,24 +1,23 @@
 @extends('layouts.navbar3')
 <div>
     @section('elements')
-        <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">demandes</a>
+        <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">soumettre une demande</a>
+        <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link">verifier demande</a>
+        <a href="#" class="nav-item nav-link">supprimer</a>
+        {{-- <div class="nav-item dropdown">
+            <a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">Demandes</a>
+            <div class="dropdown-menu">
+
+                <a href="#" class="dropdown-item">verifier demande</a>
+                <a href="{{ route('pagedemandes') }}" class="dropdown-item">soumettre une demande</a>
+                <a href="#" class="dropdown-item">modifier demande</a>
+                <a href="#" class="dropdown-item">Digital Marketing</a>
+            </div>
+        </div> --}}
     @endsection
     @section('contenu')
-        {{-- @if (!empty($demandes))
-            @foreach ($demandes as $demande)
-                <p>{{ $demande->nom }}</p>
-            @endforeach
-        @else
-            <p>Aucune demande trouvée.</p>
-        @endif
-        <table>
-            @foreach ($demandes as $demande)
-                <tr>
-                    <td>
-                        {{ $demande->nom }}
-                    </td>
-                </tr>
-            @endforeach
-        </table> --}}
+
+
+
     @endsection
 </div>

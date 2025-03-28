@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.modifier');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/suppression', [ProfileController::class, 'SuppCompte'])->name('profile.supprimer');
 });
 //partie accueil
 Route::get('/', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil');
@@ -85,12 +86,6 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-//connexion avant action sur les demandes
-Route::middleware(['auth'])->group(function () {
-    //Route::get('Ma_demande', [DemandeController::class, 'MaDemande'])->name(name: 'mes_demandes');
-    Route::get('Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
-
-});
 // //valider la connexion
 // Route::post('connexion_utilisteur', action: [ProfileController::class, 'connecter'])->name(name: 'validerconnexion');
 // //connection
@@ -115,12 +110,21 @@ Route::post('/permissions/assign', [RolePermissionController::class, 'assignPerm
 //cote demandes
 Route::middleware(['auth'])->group(function () {
     //pour les demandes
+    //accueil des demandes
+    Route::get('Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
+    //faire une demande
     Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
+    //liste des demandes
     Route::get('demandes_liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
-    Route::get('la_demande', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
+    //ma demande
+    Route::get('ma_demande/', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
+    //verification des mes demandes etats
+    Route::get('verifie_demande', [DemandeController::class, 'VerigfierStatut'])->name(name: 'Verifie_demande');
 
-//creation demande
-Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
+    //creation demande
+    Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
+    //detail de ma demande en vue de modifier
+    Route::get('detail_demande/{id}',[DemandeController::class,'DetailMaDemande'])->name('ma_demande_detail');
 
 });
 

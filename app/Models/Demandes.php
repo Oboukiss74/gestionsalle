@@ -43,5 +43,10 @@ class Demandes extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+    public function demandes() {
+        return $this->hasMany(Demandes::class,'id_user');
+
+    }
+
 
 }

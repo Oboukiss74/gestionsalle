@@ -16,8 +16,6 @@
         <h3>mes infos</h3>
         <div class="modifiers">
             <div class="toutesinfos">
-
-
                 <form action="{{ route('profile.modifier') }}" method="post">
                     @csrf
 
@@ -42,8 +40,8 @@
                     <div class="mail modifiersinofs">
                         <label for="">Téléphone</label>
                         <input type="text"
-                        value="{{ Auth::user()->Etudiant?->telephone ?? (Auth::user()->Personnel?->telephone ?? (Auth::user()->Locations?->telephone ?? '')) }}"
-                        class="saisieinfos" name="telephone">
+                            value="{{ Auth::user()->Etudiant?->telephone ?? (Auth::user()->Personnel?->telephone ?? (Auth::user()->Locations?->telephone ?? '')) }}"
+                            class="saisieinfos" name="telephone">
 
                     </div>
 
@@ -60,9 +58,15 @@
                     <br>
                     <div class="passe modifiersinofs">
                         <button class="envoi">Modifier</button>
-
                     </div>
-
+                </form>
+                <form action="{{ route('profile.supprimer') }}" method="GET">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" onclick="return confirm('Voulez-vous vraiment supprimer votre compte ?');"
+                        class="btn btn-danger">
+                        Supprimer mon compte
+                    </button>
                 </form>
             </div>
         </div>

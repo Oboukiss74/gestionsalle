@@ -18,7 +18,7 @@
 
 <body>
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="color: burlywoods">
         <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
                 alt=""></i>gestion<b> salles</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">

@@ -43,7 +43,7 @@ Bootstrap 5 HTML CSS Template
 
     <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Gestion <span class="tooplate-red">Sall</span><span
+            <a class="navbar-brand" href="{{ route('Accueil') }}">Gestion <span class="tooplate-red">Sall</span><span
                     class="tooplate-green">es</span></a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

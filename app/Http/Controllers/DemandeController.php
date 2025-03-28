@@ -26,6 +26,7 @@ class DemandeController extends Controller
             $validatedData = $request->validate(
                 [
                     "id_salle"=> "required",
+                    "id_user"=> "required",
                     "nom" => "required",
                     "telephone" => "required",
                     "mail" => "required|email",
@@ -41,6 +42,7 @@ class DemandeController extends Controller
                 ]
 
             );
+           // dd($validatedData);
             // Gestion du fichier CNIB
             if ($request->hasFile('cnib')) {
                 $path = $request->file('cnib')->store('cnibs', 'public'); // Stocke dans storage/app/public/cnibs
@@ -50,6 +52,7 @@ class DemandeController extends Controller
             Demandes::create([
 
                 "id_salle" => $request->input("id_salle"),
+                "id_user" => $request->input("id_user"),
                 "nom" => $request->input("nom"),
                 "telephone" => $request->input("telephone"),
                 "mail" => $request->input("mail"),
@@ -168,11 +171,34 @@ class DemandeController extends Controller
         $demande = Demandes::findOrFail($id); // Récupère la demande spécifique
         return view('Demandes.liste_demande', compact('demandes'));
     }
+
     //mes demande
     public function DemandeStatut() {
         $user=Auth::user();
-        $demandes=$user->demande;
+        $demandes=$user->demandes;
         return view('Demandes.mes_demandes', compact('demandes'));
+
+    }
+
+    //verifier mes demandes etats
+    public function VerigfierStatut() {
+        $user=Auth::user();
+        $demandes=$user->demandes;
+        return view('Demandes.verifier_demande', compact('demandes'));
+
+    }
+    //detail de ma demande
+    public function DetailMaDemande($id) {
+        $user=Auth::user();
+        $demandes = $user->demandes()->where('id', $id)->first();
+        if ($demandes->etat=='En attente') {
+            return view('Demandes.detailmademande',compact('demandes'));
+        }
+        else {
+            return back()->with('message','votre est deja traitée');
+        }
+        // dd($demandes);
+
 
     }
     //voir la demande

@@ -21,34 +21,28 @@
 
 <body>
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="background-color: rgb(237, 235, 97)">
         <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
-                alt=""></i>gestion<b> salles</b></a>
+                alt=""></i><b style="color: rgb(241, 236, 99)">Gestion </b > <b style="color: red"> Sall</b><b style="color: rgba(11, 234, 81, 0.899)">es</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Collection of nav links, forms, and other content for toggling -->
-        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-            <form class="navbar-form form-inline">
-                <div class="input-group search-box">
-                    <input type="text" id="search" class="form-control" placeholder="Search here...">
-                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-                </div>
-            </form>
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" >
+
             <div class="navbar-nav ml-auto">
-                <a href="{{ route('profile') }}" class="nav-item nav-link active"><i
+                <a href="{{ route('profile') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('profile.edit') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>mes
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="color: black"><i class="fa fa-gears"></i><span>mes
                         infos</span></a>
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
-                <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a>
+                <a href="{{ route('mes_demande') }}" class="nav-item nav-link" style="color: black"><i class="fa fa-pie-chart" style="color: black"></i><span>Mes demandes</span></a>
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}
-                <a href="#" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Messages</span></a>
-                <a href="#" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a>
+                <a href="#" class="nav-item nav-link" style="color: black"><i class="fa fa-bell"><span style="color: red">1</span></i><span>Notifications</span></a>
                 {{-- photo de profile --}}
-                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" ><i class="fa-solid fa-circle-user avatar" style="font-size: 40px" ></i></a>
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="color: black" ><i class="fa-solid fa-circle-user avatar" style="font-size: 40px" ></i></a>
                 <div class="nav-item dropdown">
-                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"> {{ Auth::user()->nom }} <b
+                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action" style="color: black"> {{ Auth::user()->nom }} <b
                             class="caret"></b></a>
                             <br>
                         {{-- <h5 class="nav-item" >{{ Auth::user()->cnib }}</h5> --}}

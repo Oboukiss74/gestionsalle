@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('etudiants', function (Blueprint $table) {
             $table->id();
-            $table->string ('sexe');
             $table->string ('telephone');
             $table->string('INE');
-            $table->string ('cnib');
-            $table->string ('datecnib');
+            $table->string('universite');
+            $table->string('filiere');
             $table->timestamps();
         });
     }
@@ -30,5 +29,5 @@ return new class extends Migration
         Schema::dropIfExists('etudiants');
 
     }
-    
+
 };

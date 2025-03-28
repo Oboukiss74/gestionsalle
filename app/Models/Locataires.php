@@ -10,12 +10,7 @@ class Locataires extends Model
     //
     protected $fillable=[
         'id',
-        'sexe',
         'telephone',
-        'cnib',
-        'datecnib',
-        
-
     ];
     protected $table = 'locataires';
     public function Locataire(){

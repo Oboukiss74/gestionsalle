@@ -9,15 +9,14 @@ class Etudiants extends Model
     //infos a soumettre
     protected $fillable = [
         'id',
-        'sexe',
-        'INE',
         'telephone',
-        'cnib',
-        'datecnib',
+        'INE',
+        'universite',
+        'filiere',
     ];
     protected $table = 'etudiants';
     protected $hidden = [
-        'passe', 'remember_token',
+        'password', 'remember_token',
     ];
     public function getAuthPassword()
     {

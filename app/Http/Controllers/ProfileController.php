@@ -62,6 +62,18 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    //supprimer compte
+    public function SuppCompte() {
+        $user=Auth::user();
+        if ($user) {
+            $user->delete(); // Supprime l'utilisateur
+            Auth::logout(); // Déconnecte l'utilisateur après suppression
+            return redirect('/')->with('success', 'Votre compte a été supprimé avec succès.');
+        }
+
+        return redirect()->back()->with('error', 'Erreur lors de la suppression.');
+
+    }
     //vue de connection a son profile
     public function ConnectionProfile() {
         return view('Utilisateur.profiles.connection');

@@ -7,7 +7,7 @@
 
 @section('infos')
     <div class="signup-form">
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('valider') }}" method="POST">
             @csrf
             @if (session()->has('success'))
                 <h3 style="color: red">
@@ -26,10 +26,6 @@
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" name="cnib" placeholder="CNIB" required="required">
-            </div>
-
-            <div class="form-group">
                 <label for="choix">Sexe</label>
                 <select name="sexe" id="choixsexe" class="selcetion_sexe">
                     <option value="selection">
@@ -43,14 +39,14 @@
                     <option value="Public">
                         masculin
                     </option>
-
-
                 </select>
-
             </div>
+
+
             <div class="form-group">
                 <label for="choix">Votre profile</label>
-                <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile" style="border: white">
+                <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile"
+                    style="border: white">
                     <option value="selection">
                         selectionne
                     </option>
@@ -67,16 +63,39 @@
 
             </div>
 
-            <div class="form-group" id="matriculeDiv" style="display: none;">
-                <label for="Matricule">Matricule</label>
-                <input type="text" class="form-control" name="matricule" placeholder="Matricule">
+            <div class="form-group">
+                <label for="">numero cnib</label>
+                <input type="text" class="form-control" name="cnib" placeholder="CNIB" required="required">
             </div>
+            {{-- <div class="form-group">
+                <label for="">fichier cnib</label>
+                <input type="file" class="form-control" name="cnibfichier" placeholder="CNIB PDF" >
+            </div> --}}
+
+            <div class="form-group">
+                <label for="">delivré le:</label>
+                <input type="date" class="form-control" name="datecnib" placeholder="delivrée le" required="required">
+            </div>
+
+
+
             <div class="form-group" id="publicDiv" style="display: none;">
-                <label for="Public" style="color: red"> Pas de case pour vous</label>
+                <label for="Public" style="color: red"> suivant</label>
                 {{-- <input type="text" class="form-control" name="Public" placeholder="Public"> --}}
             </div>
 
+            <div class="form-group" id="matriculeDiv" style="display: none;">
+                <label for="">matricule</label>
+                <input type="text" class="form-control"  name="matricule" placeholder="matricule" >
+            </div>
+
+            <div class="form-group" id="fonctionDiv" style="display: none;">
+                <label for="">fonction</label>
+                <input type="text" class="form-control"  name="fonction" placeholder="fonction" >
+            </div>
+
             <div class="form-group">
+                <label for="">telephone</label>
                 <input type="text" class="form-control" name="telephone" placeholder="telephone" required="required">
             </div>
 
@@ -85,17 +104,23 @@
                 <input type="text" class="form-control" name="INE" placeholder="INE">
             </div>
 
-            <div class="form-group">
-                <label for="">delivré le:</label>
-                <input type="date" class="form-control" name="datecnib" placeholder="delivrée le" required="required" >
+            <div class="form-group" id="universiteDiv" style="display: none;">
+                <label for="INE">universite</label>
+                <input type="text" class="form-control" name="universite" placeholder="universite">
             </div>
 
+            <div class="form-group" id="filiereDiv" style="display: none;">
+                <label for="INE">filiere</label>
+                <input type="text" class="form-control" name="filiere" placeholder="filiere">
+            </div>
 
             <div class="form-group">
+                <label for="">votre mail</label>
                 <input type="email" class="form-control" name="email" placeholder="Email" required="required">
             </div>
 
             <div class="form-group">
+                <label for="">creer un mot de passe</label>
                 <input type="password" class="form-control" name="password" placeholder="mot de passe" required="required">
             </div>
 
@@ -110,29 +135,39 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg btn-block bonton_envoyer">Envoyer</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block">Envoyer</button>
+
             </div>
 
         </form>
-        <div class="text-center">J'ai deja un compte ! <a href="#" style="color: blue">Se connecter</a></div>
+        <div class="text-center">J'ai deja un compte ! <a href="{{ route('login') }}" style="color: blue">Se connecter</a></div>
         <script>
             function afficherChamps() {
                 var choix = document.getElementById("choix").value;
 
                 // Sélectionner les div contenant les champs
                 var matriculeDiv = document.getElementById("matriculeDiv");
+                var fonctionDiv = document.getElementById("fonctionDiv");
                 var ineDiv = document.getElementById("ineDiv");
+                var universiteDiv = document.getElementById("universiteDiv");
+                var filiereDiv = document.getElementById("filiereDiv");
 
                 // Cacher les champs par défaut
                 matriculeDiv.style.display = "none";
+                fonctionDiv.style.display = "none";
                 ineDiv.style.display = "none";
                 publicDiv.style.display = "none";
+                universiteDiv.style.display = "none";
+                filiereDiv.style.display = "none";
 
                 // Afficher uniquement le champ correspondant au choix
                 if (choix === "Personnel") {
                     matriculeDiv.style.display = "block";
+                    fonctionDiv.style.display = "block";
                 } else if (choix === "Etudiant") {
                     ineDiv.style.display = "block";
+                    universiteDiv.style.display = "block";
+                    filiereDiv.style.display = "block";
                 } else if (choix === "Public") {
                     publicDiv.style.display = "block";
                 }
