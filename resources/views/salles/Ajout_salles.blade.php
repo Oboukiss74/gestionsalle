@@ -11,7 +11,7 @@
         <!-- Learn More: https://formbold.com -->
         <div class="formbold-form-wrapper">
             {{-- <img src="{{ asset('images/logo.jpg') }}"> --}}
-            <form action="{{ route('enregistrer_salles') }}" method="POST">
+            <form action="{{ route('enregistrer_salle') }}" method="POST">
                 @csrf
                 <div class="formbold-input-flex">
                     <div>

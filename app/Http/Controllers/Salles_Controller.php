@@ -59,7 +59,8 @@ class Salles_Controller extends Controller
     public function liste_salles(Request $request)
     {
         $salles = Salles::paginate(2);
-        return view("salles.liste_salles", compact("salles"));
+        $nombresalles = Salles::count();
+        return view("salles.liste_salles", compact("salles","nombresalles"));
     }
 
 
@@ -80,9 +81,10 @@ class Salles_Controller extends Controller
                                 ->where('datefin', '>=', $datefin);
                         });
                 });
-        })->pluck('id');
+        })->get();
 
         // Correction : Utiliser get() au lieu de first()
+        $paginate = Salles::paginate('3');
         $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
 
         return view('salles.salle_disponible', ['salles' => $salles]);
@@ -112,36 +114,61 @@ class Salles_Controller extends Controller
 
     //salle disponible a la date du jour
 
-
     public function sallesDisponiblesJour(Request $request)
     {
-        // Définir la période pour aujourd'hui
-        $datedebut = Carbon::today()->startOfDay(); // Début de la journée (00:00)
-        $datefin = Carbon::today()->endOfDay();     // Fin de la journée (23:59:59)
+        $now = Carbon::now();
 
-        // Récupérer les IDs des salles occupées aujourd'hui
-        $sallesOccupees = Demandes::where(function ($query) use ($datedebut, $datefin) {
-            $query->whereBetween('datedebut', [$datedebut, $datefin])
-                ->orWhereBetween('datefin', [$datedebut, $datefin])
-                ->orWhere(function ($q) use ($datedebut, $datefin) {
-                    $q->where('datedebut', '<=', $datedebut)
-                        ->where('datefin', '>=', $datefin);
-                });
-        })->pluck('id_salle');
+        $salles = Salles::whereDoesntHave('demandes', function($query) use ($now) {
+            $query->where('datefin', '>=', $now->toDateString());
+        })
+        ->orWhereHas('demandes', function($query) use ($now) {
+            $query->where('datefin', '<', $now->toDateString());
+        })
+        ->orderBy('nom')
+        ->get();
 
-        // Récupérer les salles disponibles
-        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
-
-        return view('salles.salle_disponible', ['salles' => $salles]);
+        return view('salles.salle_disponible', compact('salles', 'now'));
     }
+
+    // public function sallesDisponiblesJour(Request $request)
+    // {
+    //     // Définir la période pour aujourd'hui
+    //     $datedebut = Carbon::today()->startOfDay(); // Début de la journée (00:00)
+    //     $datefin = Carbon::today()->endOfDay();     // Fin de la journée (23:59:59)
+
+    //     // Récupérer les IDs des salles occupées aujourd'hui
+    //     $sallesOccupees = Demandes::where(function ($query) use ($datedebut, $datefin) {
+    //         $query->whereBetween('datedebut', [$datedebut, $datefin])
+    //             ->orWhereBetween('datefin', [$datedebut, $datefin])
+    //             ->orWhere(function ($q) use ($datedebut, $datefin) {
+    //                 $q->where('datedebut', '<=', $datedebut)
+    //                     ->where('datefin', '>=', $datefin);
+    //             });
+    //     })->pluck('id_salle');
+
+    //     // Récupérer les salles disponibles
+    //     $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+
+    //     return view('salles.salle_disponible', ['salles' => $salles]);
+    // }
 
     public function sallesDispo()
     {
-        return view('salles.salle_dipo');
+        return view('Utilisateur.admin.salles_dispo_date');
     }
 
-    public function essais()  {
-        return view('Utilisateur.admin.profile');
+    // public function SallesLibre()
+    // {
+    //     $today = now()->toDateString();
+    //     $nowTime = now()->format('H:i:s');
 
-    }
+    //     $nombreSallesLibres = Salles::whereDoesntHave('demandes', function($query) use ($today, $nowTime) {
+    //         $query->whereDate('date', $today)
+    //             ->where('heuredebut', '<=', $nowTime)
+    //             ->where('heurefin', '>=', $nowTime);
+    //     })->count();
+
+    //     return view('Utilisateur.admin.salles_dispo_date', compact('nombreSallesLibres'));
+    // }
+
 }

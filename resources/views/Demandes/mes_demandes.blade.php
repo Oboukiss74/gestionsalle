@@ -1,4 +1,5 @@
 @extends('layouts.navbar3')
+<link rel="icon" type="image/png" href="images/logo.png"/>
 <div>
     @section('elements')
         <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">soumettre une demande</a>

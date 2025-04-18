@@ -1,4 +1,4 @@
-<form action="{{ route('liste_salle') }}" method="post">
+<form action="{{ route('liste_salles') }}" method="post">
     @csrf
     <label for="datedebut">Date de début :</label>
     <input type="date" name="datedebut" id="datedebut" required>

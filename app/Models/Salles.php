@@ -25,6 +25,10 @@ class Salles extends Model
     {
         return $this->hasMany(Demandes::class, 'id_salle');
     }
+    public function demande()
+    {
+        return $this->belongsTo(Demandes::class);
+    }
 
     public function user(){
         return $this->belongsTo(User::class, 'id_personnel');

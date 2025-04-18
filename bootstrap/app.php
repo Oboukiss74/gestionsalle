@@ -17,3 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+    // $app->middleware([
+    //     \App\Http\Middleware\AdminMiddleware::class,
+    // ]);
+
+    $app->routeMiddleware([
+        'roles' => App\Http\Middleware\AdminMiddleware::class,
+    ]);
+

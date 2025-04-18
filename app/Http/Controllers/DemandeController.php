@@ -9,14 +9,47 @@ use App\Mail\DemandeValidationAdmin;
 use App\Models\Salles;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Carbon\Carbon;
+
 
 class DemandeController extends Controller
 {
+    use AuthorizesRequests;
     //page de demande
-    public function Page_Demande()
+    public function Page_Demande(Request $request)
     {
-        $salles=Salles::all();
-        return view("Demandes.creer_demandes", compact("salles"));
+        $salles = Salles::all();
+        // Dates par défaut (aujourd'hui)
+        $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
+        $heureDebut = $request->input('heuredebut', '08:00');
+        $dateFin = $request->input('datefin', now()->format('Y-m-d'));
+        $heureFin = $request->input('heurefin', '17:00');
+
+        // Convertir en objets Carbon pour la requête
+        $debut = Carbon::createFromFormat('Y-m-d H:i', "$dateDebut $heureDebut");
+        $fin = Carbon::createFromFormat('Y-m-d H:i', "$dateFin $heureFin");
+
+        // Récupérer les salles disponibles
+        $sallesDisponibles = Salles::whereDoesntHave('demandes', function ($query) use ($debut, $fin) {
+            $query->where(function ($q) use ($debut, $fin) {
+                $q->whereBetween('datedebut', [$debut, $fin])
+                    ->orWhereBetween('datefin', [$debut, $fin])
+                    ->orWhere(function ($q2) use ($debut, $fin) {
+                        $q2->where('datedebut', '<=', $debut)
+                            ->where('datefin', '>=', $fin);
+                    });
+            });
+        })->get();
+        return view("Demandes.creer_demandes", compact(
+            "salles",
+            'sallesDisponibles',
+            'dateDebut',
+
+            'dateFin',
+            'heureDebut',
+            'heureFin'
+        ));
         //return view("Demandes.creer_demandes");
     }
 
@@ -25,8 +58,8 @@ class DemandeController extends Controller
         try {
             $validatedData = $request->validate(
                 [
-                    "id_salle"=> "required",
-                    "id_user"=> "required",
+                    "id_salle" => "required",
+                    "id_user" => "required",
                     "nom" => "required",
                     "telephone" => "required",
                     "mail" => "required|email",
@@ -42,7 +75,7 @@ class DemandeController extends Controller
                 ]
 
             );
-           // dd($validatedData);
+            // dd($validatedData);
             // Gestion du fichier CNIB
             if ($request->hasFile('cnib')) {
                 $path = $request->file('cnib')->store('cnibs', 'public'); // Stocke dans storage/app/public/cnibs
@@ -80,45 +113,7 @@ class DemandeController extends Controller
                 "message" => $th->getMessage(),
             ]);
         }
-        // return redirect(back())->with("success", "succes");
-        // try {
-        //     $demande = $request->validate([
-        //         "nom" => "required",
-        //         "telephone" => "required",
-        //         "mail" => "required|email",
-        //         "cnib" => 'nullable|file|max:2048|mimes:pdf,doc,docx,jpg,png',
-        //         "datedebut" => "required|date|after_or_equal:today",
-        //         "datefin" => "required|date|after_or_equal:datedebut",
-        //         "heuredebut" => "required",
-        //         "heurefin" => "required",
-        //         "salle" => "required",
-        //         "effectif" => "required|integer|min:1",
-        //         "motif" => "required",
-        //         "equipement" => "required",
-        //     ]);
 
-        //     // Gestion du fichier CNIB
-        //     $data = $request->all();
-        //     if ($request->hasFile('cnib')) {
-        //         $path = $request->file('cnib')->store('cnibs', 'public');
-        //         $data['cnib'] = $path;
-        //     }
-
-        //     $demande = Demandes::create($data);
-
-        //     // Envoi d'un email à l'admin
-        //     $admin = User::where('role', 'Admin')->value('email');
-        //     Mail::to($admin)->send(new DemandeValidationAdmin($demande));
-
-
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         "status" => false,
-        //         "message" => $th->getMessage(),
-        //     ]);
-        // }
-
-        // Redirection avec message de succès
         return redirect()->back()->with('success', 'Demande créée avec succès.');
 
     }
@@ -135,8 +130,9 @@ class DemandeController extends Controller
         // return back()->with('success', 'État de la demande mis à jour.');
     }
     //choix de salle a la demande de location
-    public function choix_salle(Request $request){
-        $salles=Salles::all();
+    public function choix_salle(Request $request)
+    {
+        $salles = Salles::all();
         return view("Demandes.creer_demandes", compact("salles"));
 
     }
@@ -148,9 +144,7 @@ class DemandeController extends Controller
         if (!$demande) {
             return redirect()->back()->with('error', 'Demande non trouvée.');
         }
-
         $demande->delete();
-
         return redirect()->back()->with('success', 'Demande supprimée avec succès.');
     }
 
@@ -159,11 +153,12 @@ class DemandeController extends Controller
     public function liste_demande()
     {
         // Récupère tous les demandes
-        $demandes = Demandes::all();
+        $demandes = Demandes::paginate(5);
+        $nombredemande = Demandes::count();
 
         // Envoie les données à la vue
 
-        return view('Demandes.liste_demande', compact('demandes'));
+        return view('Demandes.liste_demande', compact('demandes', 'nombredemande'));
     }
 
     public function lademande($id)
@@ -173,29 +168,43 @@ class DemandeController extends Controller
     }
 
     //mes demande
-    public function DemandeStatut() {
-        $user=Auth::user();
-        $demandes=$user->demandes;
+    public function DemandeStatut()
+    {
+        $user = Auth::user();
+        $demandes = $user->demandes;
         return view('Demandes.mes_demandes', compact('demandes'));
 
     }
 
     //verifier mes demandes etats
-    public function VerigfierStatut() {
-        $user=Auth::user();
-        $demandes=$user->demandes;
+    public function VerifierStatut(Request $request, Demandes $demandes)
+    {
+        //$this->authorize('view', $Demandes);
+
+        $user = Auth::user();
+        // if ($user->hasPermissionTo('voir.demande')) {
+        //     return 'la permission ma ete attribuée';
+        // }
+        // return 'le contraire est vrai';
+        $mesDemande = $user->demandes()->first();
+        if ($mesDemande) {
+            $this->authorize('view', $mesDemande); // Vérifie avec la Policy
+        }
+        $demandes = $user->demandes;
         return view('Demandes.verifier_demande', compact('demandes'));
+
 
     }
     //detail de ma demande
-    public function DetailMaDemande($id) {
-        $user=Auth::user();
+    public function DetailMaDemande($id)
+    {
+
+        $user = Auth::user();
         $demandes = $user->demandes()->where('id', $id)->first();
-        if ($demandes->etat=='En attente') {
-            return view('Demandes.detailmademande',compact('demandes'));
-        }
-        else {
-            return back()->with('message','votre est deja traitée');
+        if ($demandes->etat == 'En attente') {
+            return view('Demandes.detailmademande', compact('demandes'));
+        } else {
+            return back()->with('message', 'votre est deja traitée');
         }
         // dd($demandes);
 
@@ -227,7 +236,8 @@ class DemandeController extends Controller
     }
 
     //SG
-    public function ViewSG(request $request){
+    public function ViewSG(request $request)
+    {
         $demandes = Demandes::paginate(3); // 10 demandes par page
         return view('Demandes.Demande_SG', compact('demandes'));
     }

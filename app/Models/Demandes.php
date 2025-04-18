@@ -33,6 +33,10 @@ class Demandes extends Model
     {
         return $this->belongsTo(Salles::class, 'id_salle');
     }
+    public function salles()
+    {
+        return $this->hasMany(Salles::class);
+    }
     public function demande()
     {
         return $this->belongsTo(Demandes::class, 'id');

@@ -57,121 +57,268 @@
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="formbold-form-wrapper">
-            <form action="{{ route('creer_demande') }}" method="POST" enctype="multipart/form-data">
-                @csrf
 
-                <div class="formbold-mb-5 ">
-                    <select name="id_salle" id="" class="formbold-form-label required">
-                        <option value="">choisir le bâtiment</option>
-                        @foreach ($salles as $salle)
-                            <option value="{{ $salle->id }}" class="formbold-form-input ">
-                                {{ $salle->nom }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="container">
+                <div id="etape1" >
+                    <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data">
+                        {{-- @csrf --}}
 
-                <div class="formbold-mb-5 " style="display: none">
-                    <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
-                        class="formbold-form-input " />
-                </div>
 
-                <div class="formbold-mb-5 ">
-                    <label for="name" class="formbold-form-label required"> nom complet</label>
-                    <input type="text" name="nom" id="name"
-                        value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}" class="formbold-form-input " />
-                </div>
-                <div class="formbold-mb-5">
-                    <label for="phone" class="formbold-form-label required"> telephone</label>
-                    <input type="tel" name="telephone" id="phone" placeholder="votre telephone"
-                        class="formbold-form-input" />
-                </div>
-                <div class="formbold-mb-5">
-                    <label for="email" class="formbold-form-label required"> Email </label>
-                    <input type="email" name="mail" id="email" value="{{ Auth::user()->email }}"
-                        class="formbold-form-input" />
-                </div>
-                <div class="formbold-mb-5">
-                    <label for="cnib" class="formbold-form-label ">
-                        <h4 class="required">fichier cnib pdf</h4>
-                    </label>
-                    <input type="file" name="cnib" id="email" placeholder="fichier piece"
-                        class="formbold-form-input" accept="pdf" style="" />
-                </div>
-
-                <div class="flex flex-wrap formbold--mx-3">
-                    <div class="w-full sm:w-half formbold-px-3">
-                        <div class="formbold-mb-5 w-full">
-                            <label for="date" class="formbold-form-label required"> Date de debut</label>
-                            <input type="date" name="datedebut" id="date" class="formbold-form-input" />
+                        {{-- {{-- <div class="formbold-mb-5 " style="display: none">
+                            <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
+                                class="formbold-form-input " />
                         </div>
-                    </div>
-                    <div class="w-full sm:w-half formbold-px-3">
-                        <div class="formbold-mb-5 w-full">
-                            <label for="date" class="formbold-form-label required"> Date de fin</label>
-                            <input type="date" name="datefin" id="date" class="formbold-form-input" />
+
+                        <div class="formbold-mb-5 ">
+                            <label for="name" class="formbold-form-label required"> nom complet</label>
+                            <input type="text" name="nom" id="name"
+                                value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}" class="formbold-form-input " />
                         </div>
-                    </div>
-                    <div class="w-full sm:w-half formbold-px-3">
                         <div class="formbold-mb-5">
-                            <label for="time" class="formbold-form-label required"> Heure de debut </label>
-                            <input type="time" name="heuredebut" id="heuredebut" class="formbold-form-input" />
+                            <label for="phone" class="formbold-form-label required"> telephone</label>
+                            <input type="tel" name="telephone" id="phone" placeholder="votre telephone"
+                                class="formbold-form-input" />
                         </div>
-                    </div>
-                    <div class="w-full sm:w-half formbold-px-3">
-                        <div class="formbold-mb-5 w-full">
-                            <label for="time" class="formbold-form-label required"> Heure de fin</label>
-                            <input type="time" name="heurefin" id="date" class="formbold-form-input" />
+                        <div class="formbold-mb-5">
+                            <label for="email" class="formbold-form-label required"> Email </label>
+                            <input type="email" name="mail" id="email" value="{{ Auth::user()->email }}"
+                                class="formbold-form-input" />
                         </div>
-                    </div>
-                </div>
+                        <div class="formbold-mb-5">
+                            <label for="cnib" class="formbold-form-label ">
+                                <h4 class="required">fichier CNIB pdf</h4>
+                            </label>
+                            <input type="file" name="cnib" id="email" placeholder="fichier piece"
+                                class="formbold-form-input" accept="pdf" style="" />
+                        </div> --}}
 
-                <div class="formbold-mb-5 formbold-pt-3">
-                    <label class="formbold-form-label formbold-form-label-2">
-                        Salle
-                    </label>
-                    <div class="flex flex-wrap formbold--mx-3">
-                        <div class="w-full sm:w-half formbold-px-3">
-                            <div class="formbold-mb-5">
-                                <select name="salle" id="" class="formbold-form-input required">
-                                    <option value="selection" aria-placeholder="selectionne">selectionne la salle
-                                    </option>
-                                    <option value="salle1">salle 1</option>
-                                    <option value="salle2">salle 2</option>
-                                </select>
+                        <div class="flex flex-wrap formbold--mx-3">
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5 w-full">
+                                    <label for="date" class="formbold-form-label required"> Date de debut</label>
+                                    <input type="date" name="datedebut" id="date" class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5 w-full">
+                                    <label for="date" class="formbold-form-label required"> Date de fin</label>
+                                    <input type="date" name="datefin" id="date" class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5">
+                                    <label for="time" class="formbold-form-label required"> Heure de debut </label>
+                                    <input type="time" name="heuredebut" id="heuredebut"
+                                        class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5 w-full">
+                                    <label for="time" class="formbold-form-label required"> Heure de fin</label>
+                                    <input type="time" name="heurefin" id="date" class="formbold-form-input" />
+                                </div>
+                            </div>
+                        </div>
 
+                        {{-- <div class="formbold-mb-5 formbold-pt-3">
+                            <label class="formbold-form-label formbold-form-label-2 required">
+                                Salle
+                            </label>
+                            <div class="flex flex-wrap formbold--mx-3">
+                                <div class="w-full sm:w-half formbold-px-3">
+                                    <div class="formbold-mb-5">
+                                        <select name="salle" id="" class="formbold-form-input required">
+                                            <option value="selection" aria-placeholder="selectionne">selectionne la salle
+                                            </option>
+                                            <option value="salle1">salle enseignant (30 places)</option>
+                                            <option value="salle2">salle visio (30 places)</option>
+                                            <option value="salle2">grande salle (160 places)</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="w-full sm:w-half formbold-px-3">
+                                    <div class="formbold-mb-5">
+                                        <input type="text" name="effectif" id="place"
+                                            placeholder="Nombre de personnes" class="formbold-form-input" />
+                                    </div>
+                                </div>
+                                <div class="w-full sm:w-half formbold-px-3">
+                                    <div class="formbold-mb-5">
+                                        <label for="Motif" class="formbold-form-label required"> Motif </label>
+                                        <input type="text" name="motif" id="state"
+                                            placeholder="motif de la demande" class="formbold-form-input" />
+                                    </div>
+                                </div>
+                                <div class="w-full sm:w-half formbold-px-3">
+                                    <div class="formbold-mb-5">
+                                        <label for="Equipement" class="formbold-form-label required"> Equipements </label>
+                                        <input type="text" name="equipement" id="post-code"
+                                            placeholder="Equipements necessaires" class="formbold-form-input" />
+                                    </div>
+                                </div>
                             </div>
+                        </div> --}}
+
+                        <div id="etape_suivant">
+                            <button class="formbold-btn">suivant</button>
                         </div>
-                        <div class="w-full sm:w-half formbold-px-3">
+                    </form>
+
+                </div>
+                @if ($sallesDisponibles->count() > 0)
+                    <div id="etape2" style="display: none">
+                        <form method="POST" action="{{ route('creer_demande') }}" enctype="multipart/form-data">
+
+                            @csrf
+
+                            <div class="formbold-mb-5 " style="display: none">
+                                <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
+                                    class="formbold-form-input " />
+                            </div>
+
+                            <div class="formbold-mb-5 ">
+                                <label for="name" class="formbold-form-label required"> nom complet</label>
+                                <input type="text" name="nom" id="name"
+                                    value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}"
+                                    class="formbold-form-input " />
+                            </div>
                             <div class="formbold-mb-5">
-                                <input type="text" name="effectif" id="place"
-                                    placeholder="Nombre de personnes" class="formbold-form-input" />
+                                <label for="phone" class="formbold-form-label required"> telephone</label>
+                                <input type="tel" name="telephone" id="phone" placeholder="votre telephone"
+                                    class="formbold-form-input" />
                             </div>
-                        </div>
-                        <div class="w-full sm:w-half formbold-px-3">
                             <div class="formbold-mb-5">
-                                <label for="Motif" class="formbold-form-label required"> Motif </label>
-                                <input type="text" name="motif" id="state"
-                                    placeholder="motif de la demande" class="formbold-form-input" />
+                                <label for="email" class="formbold-form-label required"> Email </label>
+                                <input type="email" name="mail" id="email"
+                                    value="{{ Auth::user()->email }}" class="formbold-form-input" />
                             </div>
-                        </div>
-                        <div class="w-full sm:w-half formbold-px-3">
                             <div class="formbold-mb-5">
-                                <label for="Equipement" class="formbold-form-label required"> Equipements </label>
-                                <input type="text" name="equipement" id="post-code"
-                                    placeholder="Equipements necessaires" class="formbold-form-input" />
+                                <label for="cnib" class="formbold-form-label ">
+                                    <h4 class="required">fichier CNIB pdf</h4>
+                                </label>
+                                <input type="file" name="cnib" id="email" placeholder="fichier piece"
+                                    class="formbold-form-input" accept="pdf" style="" />
                             </div>
-                        </div>
+
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5">
+                                    <input type="text" id="place" type="hidden" name="datedebut"
+                                        value="{{ $dateDebut }}" placeholder="Nombre de personnes"
+                                        class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5">
+                                    <input type="text" id="place" type="hidden" name="datefin"
+                                        value="{{ $dateFin }}" placeholder="Nombre de personnes"
+                                        class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5">
+                                    <input type="text" id="place" type="hidden" name="heuredebut"
+                                        value="{{ $heureDebut }}" placeholder="Nombre de personnes"
+                                        class="formbold-form-input" />
+                                </div>
+                            </div>
+                            <div class="w-full sm:w-half formbold-px-3">
+                                <div class="formbold-mb-5">
+                                    <input type="text" id="place" type="hidden" name="heurefin"
+                                        value="{{ $heureFin }}" placeholder="Nombre de personnes"
+                                        class="formbold-form-input" />
+                                </div>
+                            </div>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+
+                                    <tbody>
+                                        <option value="selection" aria-placeholder="selectionne">selectionne le bâtiment
+                                        </option>
+                                        <select name="salle" id="" class="formbold-form-input required">
+                                            @foreach ($sallesDisponibles as $salle)
+                                                <div class="w-full sm:w-half formbold-px-3">
+                                                    <div class="formbold-mb-5">
+
+                                                        <option id="salle_{{ $salle->id }}"
+                                                            value="{{ $salle->id }}" required
+                                                            class="formbold-form-input required">{{ $salle->nom }}
+                                                        </option>
+
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </select>
+                                    </tbody>
+                                </table>
+                                <div class="formbold-mb-5 formbold-pt-3">
+                                    <label class="formbold-form-label formbold-form-label-2 required">
+                                        Salle
+                                    </label>
+                                    <div class="flex flex-wrap formbold--mx-3">
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <select name="salle" id=""
+                                                    class="formbold-form-input required">
+                                                    <option value="selection" aria-placeholder="selectionne">
+                                                        selectionne la salle
+
+                                                    </option>
+                                                    <option value="salle1">salle enseignant (30 places)</option>
+                                                    <option value="salle2">salle visio (30 places)</option>
+                                                    <option value="salle2">grande salle (160 places)</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <input type="text" name="effectif" id="place"
+                                                    placeholder="Nombre de personnes" class="formbold-form-input" />
+                                            </div>
+                                        </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <label for="Motif" class="formbold-form-label required"> Motif
+                                                </label>
+                                                <input type="text" name="motif" id="state"
+                                                    placeholder="motif de la demande" class="formbold-form-input" />
+                                            </div>
+                                        </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <label for="Equipement" class="formbold-form-label required">
+                                                    Equipements
+                                                </label>
+                                                <input type="text" name="equipement" id="post-code"
+                                                    placeholder="Equipements necessaires"
+                                                    class="formbold-form-input" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                </div>
 
-                <div>
-                    <button class="formbold-btn">Soumettre</button>
                 </div>
-            </form>
+            @endif
+
         </div>
     </div>
-
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#etape_suivant').on('click', function (e) {
+                e.preventDefault(); // empêcher le GET de se faire
+                $('#etape1').hide();
+                $('#etape2').show();
+            });
+        });
+    </script>
 </body>
 
 </html>

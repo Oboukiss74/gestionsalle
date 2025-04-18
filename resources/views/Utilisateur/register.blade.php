@@ -140,7 +140,7 @@
             </div>
 
         </form>
-        <div class="text-center">J'ai deja un compte ! <a href="{{ route('login') }}" style="color: blue">Se connecter</a></div>
+        <div class="text-center">J'ai deja un compte ! <a href="{{ route('connexion') }}" style="color: blue">Se connecter</a></div>
         <script>
             function afficherChamps() {
                 var choix = document.getElementById("choix").value;

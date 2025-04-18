@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <title>Gestion des salles</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -49,7 +49,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Ajout <b>des Salles</b></h2>
+                            <h2>Liste <b>des Salles</b></h2>
                         </div>
                         <div class="col-sm-6">
                             <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i
@@ -79,7 +79,7 @@
                     </thead>
                     <tbody>
                         @foreach ($salles as $salle)
-							
+
                             <tr>
                                 <td>
                                     <span class="custom-checkbox">
@@ -109,8 +109,8 @@
                 </table>
                 <div class="clearfix">
                     <div class="hint-text">
-                        
-                        </b> sur <b>{{ $salle->id }}</b> entries
+
+                        </b>  {{ $salle->id }} <b> éléments </b> sur <b>{{$nombresalles}}</b>
                     </div>
                     <ul class="pagination">
 

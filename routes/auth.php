@@ -22,11 +22,11 @@ Route::middleware('guest')->group(function () {
 
     // Route::get('login', [AuthenticatedSessionController::class, 'create'])
     // ->name('login');
-    Route::get('login', [ProfileController::class, 'ConnectionProfile'])
-        ->name('login');
+    Route::get('connecter', [ProfileController::class, 'ConnectionProfile'])
+        ->name('connexion');
 
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('connexion');
+    Route::post('connecter', [AuthenticatedSessionController::class, 'store'])->name('connexion');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
