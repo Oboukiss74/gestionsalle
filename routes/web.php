@@ -182,6 +182,10 @@ Route::put('demande_accepter/{id}', [DemandeController::class, 'demandeaccepter'
 Route::put('demande_refuser/{id}', [DemandeController::class, 'demanderefuser'])->name(name: 'refuserdemande');
 //voir la liste des demande par SG
 Route::get('listedemandeSG', [DemandeController::class, 'ViewSG'])->name(name: 'listeSG');
+//liste de demandes en cours
+Route::get('liste_demande_en_attente', [DemandeController::class, 'demande_en_cour'])->name(name: 'liste_demadeencour');
+//liste des demandes refusee
+Route::get('liste_demande_refusee', [DemandeController::class, 'demande_refusee'])->name(name: 'liste_demaderefusee');
 
 //profile administrateur
 Route::get('Admin', [AdminController::class, 'AdminProfile'])->name(name: 'profile_admin');
