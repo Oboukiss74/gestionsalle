@@ -74,6 +74,7 @@ class AdminController extends Controller
     //totatal des demandes
     public function total_demandes()
     {
+        $this->authorize('viewAny', Demandes::class);
         $demandes = Demandes::count();
         $demandeValidée = Demandes::where('etat', 'Validée')->count();
         $demandeRefusée = Demandes::where('etat', 'Refusée')->count();
@@ -90,7 +91,8 @@ class AdminController extends Controller
     //details des demandes
     public function details_demandes()
     {
-        $this->authorize('view', Demandes::class);
+
+        $this->authorize('viewAny', Demandes::class);
         $demandes = Demandes::paginate(5);
         $nombredemandes = Demandes::count();
 
@@ -101,6 +103,7 @@ class AdminController extends Controller
     //liste des salles
     public function les_salles()
     {
+        $this->authorize('viewAny', Demandes::class);
         $salles = Salles::count(); //toutes les salles
         $now = now();
         $now = Carbon::now();
@@ -142,6 +145,7 @@ class AdminController extends Controller
     public function SallesOccupee()
     {
         // Récupérer toutes les salles reservées
+        $this->authorize('viewAny', Demandes::class);
         $now = Carbon::now();
 
         $salles = Salles::whereHas('demandes', function($query) use ($now) {
@@ -163,7 +167,7 @@ class AdminController extends Controller
     //rechercher un utilisateur
     public function SallesOccupe()
     {
-
+        $this->authorize('viewAny', Demandes::class);
         $salles = Salles::count();
         // Date et heure actuelles
         $now = Carbon::now();
