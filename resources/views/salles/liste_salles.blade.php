@@ -12,8 +12,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/salles/listesalle.css">
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 
     <script>
         $(document).ready(function() {
@@ -43,6 +43,61 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('profile') }}">
+            <img src="images/logo.png" width="30" height="30" alt="Logo" class="d-inline-block align-top">
+            Gestion des Salles
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Boutons de navigation -->
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    @can('view', App\Models\Salles::class)
+                        <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
+                    @endcan
+
+                </li>
+                <li class="nav-item">
+                    @can('cretae', App\Models\Demandes::class)
+                        <a class="nav-link" href="{{ route('pagedemandes') }}">Réservations</a>
+                    @endcan
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Menu Profil -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2
+                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                            {{ Auth::user()->nom }}</h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="#">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="#">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
@@ -74,12 +129,12 @@
                             <th>nombre place</th>
                             <th>tarife</th>
                             <th>etat</th>
+                            <th>Statut</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($salles as $salle)
-
                             <tr>
                                 <td>
                                     <span class="custom-checkbox">
@@ -94,14 +149,62 @@
                                 <td>{{ $salle->tarif }}</td>
                                 <td>{{ $salle->statut }}</td>
                                 <td>
-                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                            class="material-icons" data-toggle="tooltip"
-                                            title="Modifier">&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                            class="material-icons" data-toggle="tooltip"
-                                            title="Effacer">&#xE872;</i></a>
+                                    @can('create', App\Models\Salles::class)
+                                        <a href="#editEmployeeModal{{ $salle->id }}" class="edit"
+                                            data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+                                                title="Modifier">&#xE254;</i></a>
+                                    @endcan
+
+                                    @can('create', App\Models\Salles::class)
+                                        <a href="#deleteEmployeeModal{{ $salle->id }}" class="delete"
+                                            data-toggle="modal"><i class="material-icons" data-toggle="tooltip"
+                                                title="Effacer">&#xE872;</i></a>
+                                    @endcan
+
                                 </td>
                             </tr>
+                            <!-- modifier salles Modal HTML -->
+                            <div class="modal fade" id="editEmployeeModal{{ $salle->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="modalLabel{{ $salle->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form>
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">modifer la salle</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text" class="form-control" required
+                                                        value="{{ $salle->nom }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Le code</label>
+                                                    <input type="email" class="form-control" required
+                                                        value="{{ $salle->code }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Nombre de place</label>
+                                                    <input type="number" class="form-control" required
+                                                        value="{{ $salle->nombreplace }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Tarif</label>
+                                                    <input type="text" class="form-control" required
+                                                        value="tarif">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal"
+                                                    value="Annuler">
+                                                <input type="submit" class="btn btn-info" value="modifier">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
 
 
@@ -110,7 +213,7 @@
                 <div class="clearfix">
                     <div class="hint-text">
 
-                        </b>  {{ $salle->id }} <b> éléments </b> sur <b>{{$nombresalles}}</b>
+                        </b> {{ $salle->id }} <b> éléments </b> sur <b>{{ $nombresalles }}</b>
                     </div>
                     <ul class="pagination">
 
@@ -146,78 +249,78 @@
             </div>
         </div>
     </div>
-    <!-- Edit Modal HTML -->
+
+    <!-- ajouter salle Modal HTML -->
     <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
+
                 <form method="post" action="{{ route('enregistrer_salle') }}">
                     @csrf
                     <div class="modal-header">
                         <h4 class="modal-title">Ajout de salle</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-success" value="Add">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Edit Employee</h4>
                         <button type="button" class="close" data-dismiss="modal"
                             aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" class="form-control" required>
+                            <label>Nom</label>
+                            <input type="text" class="form-control" name="nom" required
+                                placeholder="nom de la salle">
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" required>
+                            <label>Le code de la salle</label>
+                            <input type="text" class="form-control" name="code" required
+                                placeholder="entrer le code de la salle">
                         </div>
                         <div class="form-group">
-                            <label>Address</label>
-                            <textarea class="form-control" required></textarea>
+                            <label>Nombre de salle</label>
+                            <input type="number" name="nombreplace" class="form-control" required
+                                placeholder="nombre de place">
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" required>
+                            <label>Taille</label>
+                            <select class="form-control" name="taille" id="occupation">
+                                <option value="petite" selected>choix de taille</option>
+                                <option value="petite">petite</option>
+                                <option value="moyenne">moyenne</option>
+                                <option value="grande">grande</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Equipement</label>
+                            <input type="text" name="equipement" class="form-control" required
+                                placeholder="les equipements">
+                        </div>
+                        <div class="form-group">
+                            <label>Tarif de la salle</label>
+                            <input type="text" name="tarif" class="form-control" required
+                                placeholder="tarif de la salle">
+                        </div>
+                        <div class="form-group">
+                            <label>statut</label>
+                            <select class="form-control" name="statut" id="occupation">
+                                <option selected>choix de statut</option>
+                                <option value="payante">Payante</option>
+                                <option value="non payante">Non payante</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Localisation</label>
+                            <input type="text" name="localisation" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                        <input type="submit" class="btn btn-info" value="Save">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Annuler">
+                        <input type="submit" class="btn btn-success" value="Ajouter">
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+
     <!-- Delete Modal HTML -->
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">

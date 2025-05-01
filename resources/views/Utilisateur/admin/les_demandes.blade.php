@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gestion des administrateurs</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -19,111 +26,66 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <!-- Right navbar links -->
-            <ul class="navbar-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
+            Gestion des Salles
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Boutons de navigation -->
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Retour</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" href="{{ route('liste_demandeencour') }}">Démande en attente</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_demanderefusee') }}">Démandes refusées</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_demandevalidee') }}">Démandes validées</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_demande') }}">Traiter les démandes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
                 </li>
             </ul>
-            <div class="navbar-nav pl-2">
-                <ol class="breadcrumb p-0 m-0 bg-white">
-                    <li class="breadcrumb-item"><a href="{{ route('Accueil') }}">G.S</a></li>
-                    <li class="breadcrumb-item active">List</li>
-                </ol>
-            </div>
 
+            <!-- Menu Profil -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                        <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
-
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
-                        <h4 class="h4 mb-0"><strong>Mohit Singh</strong></h4>
-                        <div class="mb-3">example@example.com</div>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2
+                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                            {{ Auth::user()->nom }}</h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-user-cog mr-2"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-lock mr-2"></i> Change Password
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item text-danger">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                        </a>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
                     </div>
                 </li>
             </ul>
-        </nav>
-        <!-- /.navbar -->
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        </div>
+    </nav>
+    <!-- Site wrapper -->
+    <div class="wrapper">
 
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Sidebar user (optional) -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Tableau de bord</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('profile_admin') }}" class="nav-link">
-                                <i class="fa-solid fa-circle-user"></i>
-                                <p>Profile</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('tableau_salles') }}" class="nav-link">
-                                <i class="nav-icon fas fa-file-alt"></i>
-                                <p>Les salles</p>
-                            </a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a href="users.html" class="nav-link">
-                                <i class="nav-icon  fas fa-users"></i>
-                                <p>Utilisateurs</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages.html" class="nav-link">
-                                <i class="fa-solid fa-pen-fancy"></i>
-                                <p>parametres</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages.html" class="nav-link">
-
-                                <p>Se déconnecter</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- /.sidebar-menu -->
-            </div>
-            <!-- /.sidebar -->
-        </aside>
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="background-color: white">
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
@@ -166,7 +128,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="#" class="small-box-footer text-dark"> plus infos <i
+                                <a href="{{ route('liste_demandevalidee') }}" class="small-box-footer text-dark"> plus infos <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -180,7 +142,7 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="#" class="small-box-footer text-dark"> plus infos <i
+                                <a href="{{ route('liste_demanderefusee') }}" class="small-box-footer text-dark"> plus infos <i
                                         class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>
@@ -194,7 +156,7 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="#" class="small-box-footer text-dark"> plus infos <i
+                                <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark"> plus infos <i
                                         class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>

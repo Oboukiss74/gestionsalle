@@ -19,9 +19,9 @@ class SallesPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Salles $salles): bool
+    public function view(User $user): bool
     {
-        return false;
+        return $user->hasRole('Admin'  ) || $user->hasRole('SG') || $user->hasRole ('SC') || $user->hasRole ('DEPS') || $user->hasRole ('DIP');
     }
 
     /**
@@ -29,15 +29,15 @@ class SallesPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->hasRole('Admin') || $user->hasRole('DEPS') || $user->hasRole('DIP');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Salles $salles): bool
+    public function update(User $user): bool
     {
-        return false;
+        return $user->hasRole('Admin') || $user->hasRole('DEPS') || $user->hasRole('DIP');
     }
 
     /**

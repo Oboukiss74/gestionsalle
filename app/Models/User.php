@@ -68,10 +68,6 @@ class User extends Authenticatable
         return $this->belongsTo(Personnels::class, 'id_personnel');
     }
 
-    public function hasRole($role) {
-        return $this->role === $role;
-    }
-
     public function salles()
     {
         return $this->hasMany(Salles::class, 'id');

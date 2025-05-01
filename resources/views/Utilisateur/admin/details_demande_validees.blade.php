@@ -3,63 +3,63 @@
 @section('contenue')
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
+            Gestion des Salles
+        </a>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user (optional) -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                                    with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Tableau de bord</p>
-                        </a>
-                    </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <li class="nav-item">
-                        <a href="{{ route('profile_admin') }}" class="nav-link">
-                            <i class="fa-solid fa-circle-user"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Boutons de navigation -->
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Accueil</a>
+                </li>
+                <li class="nav-item active dropdown">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_demande') }}">Salles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('creer_demande') }}">Réservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
 
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_salles') }}" class="nav-link">
-                            <i class="fa-solid fa-landmark"></i>
-                            <p>Les salles</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('total_demande') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Les demandes</p>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="users.html" class="nav-link">
-                            <i class="nav-icon  fas fa-users"></i>
-                            <p>Utilisateurs</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages.html" class="nav-link">
-                            <i class="fa-solid fa-pen-fancy"></i>
-                            <p>parametres</p>
-                        </a>
-                    </li>
-
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
+            <!-- Menu Profil -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2
+                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                            {{ Auth::user()->nom }}</h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <!-- /.sidebar -->
-    </aside>
+    </nav>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->

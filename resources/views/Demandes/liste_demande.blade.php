@@ -25,7 +25,8 @@
 <body class="listedemande_body">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('profile_admin') }}">Profie</a>
+            <a class="navbar-brand" href="{{ route('profile') }}"
+                style="font-size: 20px; text-decoration: none;color:black">Profie</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -34,19 +35,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="{{ route('tableau_de_bord') }}" aria-disabled="true">Tableau bord</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Demande</a>
+                        @can('view', App\Models\Demandes::class)
+                            <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
+                                aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">Tableau
+                                bord</a>
+                        @endcan
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
+                <form class="d-flex" role="search" style="transform: translate(295%,0)">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">Recherche</button>
                 </form>
             </div>
         </div>
@@ -203,8 +201,42 @@
 
                     </tbody>
                 </table>
+                <div class="clearfix" style="transform: translate(0,40px)">
+                    {{-- <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $demande->id }}</b> entrées</div> --}}
+                    <ul class="pagination">
+                        <!-- Bouton "Précédent" -->
+                        @if ($demandes->onFirstPage())
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Précédent</a>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $demandes->previousPageUrl() }}">Précédent</a>
+                            </li>
+                        @endif
+
+                        <!-- Liens de pagination -->
+                        @foreach ($demandes->getUrlRange(1, $demandes->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $demandes->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+
+                        <!-- Bouton "Suivant" -->
+                        @if ($demandes->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $demandes->nextPageUrl() }}">Suivant</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Suivant</a>
+                            </li>
+                        @endif
+                    </ul>
+
+                </div>
                 <div class="clearfix">
-                    <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $nombredemande }} </div>
+                    <div class="hint-text">{{ $demandes->lastItem() }} <b>sur</b> {{ $nombredemande }} </div>
 
                 </div>
             </div>

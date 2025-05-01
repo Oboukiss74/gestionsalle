@@ -94,7 +94,6 @@ class ProfileController extends Controller
     public function updateinfos(Request $request)
     {
         $user = Auth::user();
-
         $request->validate([
             'nom' => 'string|max:255',
             'prenom' => 'string|max:255',

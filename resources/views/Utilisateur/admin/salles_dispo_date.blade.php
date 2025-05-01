@@ -1,30 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.navbaradmin')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Shop :: Administrative Panel</title>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
-</head>
-
-<body class="hold-transition sidebar-mini">
+@section('contenue')
     <!-- Site wrapper -->
     <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
+                Gestion des Salles
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Boutons de navigation -->
+                <ul class="navbar-nav mr-auto ml-4">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Salles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Réservations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Menu Profil -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            <h2
+                                style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                                {{ Auth::user()->nom }}</h2>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                            <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                            <a class="dropdown-item" href="#">Paramètres</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        {{-- <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Right navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
             <div class="navbar-nav pl-2">
@@ -63,10 +93,10 @@
                     </div>
                 </li>
             </ul>
-        </nav>
+        </nav> --}}
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        {{-- <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('profile_admin') }}" class="brand-link">
                 <img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -80,7 +110,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-                            with font-awesome or any other icon font library -->
+                                with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="{{ route('tableau_de_bord') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -128,7 +158,7 @@
                 <!-- /.sidebar-menu -->
             </div>
             <!-- /.sidebar -->
-        </aside>
+        </aside> --}}
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -183,6 +213,4 @@
     <script src="js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="js/demo.js"></script>
-</body>
-
-</html>
+@endsection

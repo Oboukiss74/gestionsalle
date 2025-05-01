@@ -13,15 +13,16 @@ class DemandesPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        // dd($user->hasRole('Utilisateur'), $user->roles->pluck('name')->toArray());
+        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('DIP');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Demandes $demandes): bool
+    public function view(User $user): bool
     {
-        return $user->hasPermissionTo('voir.demande');
+        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('DIP');
         // return true;
     }
 
@@ -30,7 +31,7 @@ class DemandesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->haspermissioTo('soummetre.demande', 'fairedemande');
+        return $user->hasRole('Admin')||$user->hasRole('Utilisateur');
     }
 
     /**
@@ -45,16 +46,23 @@ class DemandesPolicy
         return $user->hasPermissionTo('modifier.ma.demande');
     }
     //rolle d'approvation
-    public function approve(User $user, Demandes $demande): bool
+    public function approuve(User $user): bool
     {
-        return $user->hasRole('admin') || $user->hasRole('DEPS') || $user->hasRole('DIP');
+        return $user->hasRole('Admin') || $user->hasRole('DEPS') || $user->hasRole('DIP');
+    }
+    public function voirdemande(User $user, Demandes $demande): bool
+    {
+        return $user->hasRole(['SG']);
     }
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Demandes $demandes): bool
+    public function deleteAny(User $user): bool
     {
-        return $user->permissionTo('supprimer.demande');
+        // return $user->hasAllRoles('Admin') || $user->hasRole("DIP") || $user->hasRole("DEPS");
+
+        return $user->hasPermissionTo('supprimer.demande') ;
+
     }
 
     /**
@@ -63,6 +71,10 @@ class DemandesPolicy
     public function restore(User $user, Demandes $demandes): bool
     {
         return false;
+    }
+    public function voirmesdemandes(User $user, Demandes $demandes): bool
+    {
+        return $user->hasPermissionTo('voir.demande');
     }
 
     /**

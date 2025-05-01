@@ -2,70 +2,99 @@
 
 @section('contenue')
     <!-- /.navbar -->
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        @can('view', App\Models\Demandes::class)
+            <a class="navbar-brand" href="{{ route('total_demande') }}">
+                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                    class="d-inline-block align-top">
+                Gestion des Salles
+            </a>
+        @endcan
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user (optional) -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                                    with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Tableau de bord</p>
-                        </a>
-                    </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <li class="nav-item">
-                        <a href="{{ route('profile_admin') }}" class="nav-link">
-                            <i class="fa-solid fa-circle-user"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
+        <div class="collapse navbar-collapse" id="navbarContent">
 
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_salles') }}" class="nav-link">
-                            <i class="fa-solid fa-landmark"></i>
-                            <p>Les salles</p>
-                        </a>
-                    </li>
+            <!-- Boutons de navigation -->
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    @can('view', App\Models\Demandes::class)
+                        <a class="nav-link" href="{{ route('total_demande') }}">Accueil</a>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a href="{{ route('total_demande') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Les demandes</p>
-                        </a>
-                    </li>
+                </li>
+                <!-- Dropdown Demandes -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="demandeDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Demandes <i class="fa fa-list mr-1"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="demandeDropdown">
+                        @can('view', App\Models\Demandes::class)
+                            <a class="dropdown-item" href="{{ route('liste_demande') }}">Liste des demandes</a>
+                        @endcan
 
+                        <a class="dropdown-item" href="{{ route('pagedemandes') }}">Faire une demande</a>
 
-                    <li class="nav-item">
-                        <a href="users.html" class="nav-link">
-                            <i class="nav-icon  fas fa-users"></i>
-                            <p>Utilisateurs</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('liste_demande') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Etudier les demander</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages.html" class="nav-link">
-                            <i class="fa-solid fa-pen-fancy"></i>
-                            <p>parametres</p>
-                        </a>
-                    </li>
+                        @can('view', App\Models\Demandes::class)
+                            <a class="dropdown-item" href="{{ route('liste_demandeencour') }}">demande en cours</a>
+                        @endcan
 
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
+                        @can('view', App\Models\Demandes::class)
+                            <a class="dropdown-item" href="{{ route('demandevalidee') }}">demande validée</a>
+                        @endcan
+
+                        @can('view', $demandes)
+                            <a class="dropdown-item" href="{{ route('liste_demanderefusee') }}">demande refusée</a>
+                        @endcan
+                    </div>
+                </li>
+                <li class="nav-item">
+                    @can('viewAny', App\Models\Salles::class)
+                        <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
+                    @endcan
+
+                </li>
+                <li class="nav-item">
+                    @can('view', App\Models\Demandes::class)
+                        <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
+                    @endcan
+
+                </li>
+                <li class="nav-item">
+                    @can('create', App\Models\Demandes::class)
+                        <a class="nav-link" href="{{ route('creer_demande') }}">Réservations</a>
+                    @endcan
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Menu Profil -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2
+                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                            {{ Auth::user()->nom }}</h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <!-- /.sidebar -->
-    </aside>
+    </nav>
+    <!-- Main Sidebar Container -->
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -73,10 +102,17 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1><a href="{{ route('liste_demande') }}"> Traiter les demandes</a></h1>
+                        <h1>
+                            @can('view', App\Models\Demandes::class)
+                                <a href="{{ route('liste_demande') }}"> Traiter les demandes</a>
+                            @endcan
+                        </h1>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <a href="create-product.html" class="btn btn-primary">Nouvelle demande</a>
+                        @can('create', App\Models\Demandes::class)
+                            <a href="{{ route('creer_demande') }}" class="btn btn-primary">Nouvelle demande</a>
+                        @endcan
+
                     </div>
                 </div>
             </div>
@@ -123,11 +159,11 @@
 
                                         <td><a href="#">{{ $demande->nom }}</a></td>
                                         <td>{{ $demande->telephone }}</td>
-                                        <td>{{ $demande->datedebut}}</td>
+                                        <td>{{ $demande->datedebut }}</td>
                                         <td>{{ $demande->datefin }}</td>
                                         <td>{{ $demande->heuredebut }}</td>
                                         <td>{{ $demande->heurefin }}</td>
-                                        <td>{{ $demande->motif}}</td>
+                                        <td>{{ $demande->motif }}</td>
                                         <td>
                                             <a href="#">
                                                 <svg class="filament-link-icon w-4 h-4 mr-1"
@@ -138,7 +174,8 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="{{ route('demandesupprimer',$demande->id) }}" class="text-danger w-4 h-4 mr-1">
+                                            <a href="{{ route('demandesupprimer', $demande->id) }}"
+                                                class="text-danger w-4 h-4 mr-1">
                                                 <svg wire:loading.remove.delay="" wire:target=""
                                                     class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -155,14 +192,43 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">«</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">»</a></li>
+                    <div class="clearfix" style="transform: translate(80%,25px)">
+                        {{-- <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $demande->id }}</b> entrées</div> --}}
+                        <ul class="pagination">
+                            <!-- Bouton "Précédent" -->
+                            @if ($demandes->onFirstPage())
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Précédent</a>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $demandes->previousPageUrl() }}">Précédent</a>
+                                </li>
+                            @endif
+
+                            <!-- Liens de pagination -->
+                            @foreach ($demandes->getUrlRange(1, $demandes->lastPage()) as $page => $url)
+                                <li class="page-item {{ $page == $demandes->currentPage() ? 'active' : '' }}">
+                                    <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                </li>
+                            @endforeach
+
+                            <!-- Bouton "Suivant" -->
+                            @if ($demandes->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $demandes->nextPageUrl() }}">Suivant</a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">Suivant</a>
+                                </li>
+                            @endif
                         </ul>
+
+                    </div>
+                    <div class="clearfix" style="transform: translate(15px,-8px)">
+                        <div class="hint-text">{{ $demandes->lastItem() }} <b>sur</b> {{ $nombredemandes }} </div>
+
                     </div>
                 </div>
             </div>
@@ -170,9 +236,10 @@
         </section>
         <!-- /.content -->
     </div>
+
     <!-- /.content-wrapper -->
     <footer class="main-footer">
 
-        <strong>Copyright &copy; 2014-2022 AmazingShop All rights reserved.
+        <strong>Gestion et localisation &copy; des salles de l'université Joseph Ki-Zerbo.
     </footer>
 @endsection

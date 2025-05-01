@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salles;
 use App\Models\Demandes;
+use App\Models\User;
 use Carbon\Carbon;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 class Salles_Controller extends Controller
 {
+    use AuthorizesRequests;
     //page enregistrement des salles
     public function AjouterSalles()
     {
+        $this->authorize('create', Salles::class);
         return view("salles.Ajout_salles");
     }
     //validation denregistrement salles
@@ -56,8 +60,9 @@ class Salles_Controller extends Controller
     }
     //liste des salles
 
-    public function liste_salles(Request $request)
+    public function liste_salles(Salles $salles)
     {
+        $this->authorize('view', Salles::class);
         $salles = Salles::paginate(2);
         $nombresalles = Salles::count();
         return view("salles.liste_salles", compact("salles","nombresalles"));
@@ -67,6 +72,7 @@ class Salles_Controller extends Controller
     //salle occupées
     public function sallesOccupe(Request $request)
     {
+        $this->authorize("view", Salles::class);
         $datedebut = $request->input('datedebut');
         $datefin = $request->input('datefin');
 
@@ -93,23 +99,19 @@ class Salles_Controller extends Controller
     //salle disponible a une date donnée
     public function sallesDisponibles(Request $request)
     {
-        $datedebut = $request->input('datedebut');
-        $datefin = $request->input('datefin');
 
-        // Récupérer les IDs des salles occupées directement depuis la table demandes
-        $sallesOccupees = Demandes::where(function ($salle) use ($datedebut, $datefin) {
-            $salle->whereBetween('datedebut', [$datedebut, $datefin])
-                ->orWhereBetween('datefin', [$datedebut, $datefin])
-                ->orWhere(function ($q) use ($datedebut, $datefin) {
-                    $q->where('datedebut', '<=', $datedebut)
-                        ->where('datefin', '>=', $datefin);
-                });
-        })->pluck('id_salle'); // Récupère les id_salle des demandes qui chevauchent
+        $now = Carbon::now();
+        //recuperer les id des salles reservée
+        $sallesOccupees = Demandes::where('datefin', '>', $now->format('Y-m-d'))
+                             ->orWhere(function($query) use ($now) {
+                                 $query->where('datefin', '=', $now->format('Y-m-d'))
+                                       ->where('heurefin', '>', $now->format('H:i:s'));
+                             })
+                             ->pluck('id_salle');
 
-        // Récupérer les salles non occupées
-        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
-
-        return view('salles.salle_disponible', ['salles' => $salles]);
+         // Récupérer les salles dont les réservations sont terminées
+         $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+        return view('salles.salle_disponible', compact('salles'));
     }
 
     //salle disponible a la date du jour

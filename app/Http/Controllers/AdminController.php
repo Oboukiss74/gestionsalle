@@ -8,6 +8,7 @@ use App\Models\Salles;
 use App\Models\Users;
 use Carbon\Carbon;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 $now = Carbon::now();
 
@@ -41,9 +42,12 @@ $nombreSallesOccupees = Salles::whereHas('demandes', function ($query) use ($now
 
 class AdminController extends Controller
 {
+    use AuthorizesRequests;
+
     //profile Admin
     public function AdminProfile(Request $request)
     {
+
         $demandes = Demandes::count();
         $salles = Salles::count();
         $users = User::count();
@@ -86,8 +90,11 @@ class AdminController extends Controller
     //details des demandes
     public function details_demandes()
     {
-        $demandes = Demandes::all();
-        return view('Utilisateur.admin.details_demandes', compact('demandes'));
+        $this->authorize('view', Demandes::class);
+        $demandes = Demandes::paginate(5);
+        $nombredemandes = Demandes::count();
+
+        return view('Utilisateur.admin.details_demandes', compact('demandes','nombredemandes'));
     }
 
     //côté salles
@@ -95,22 +102,19 @@ class AdminController extends Controller
     public function les_salles()
     {
         $salles = Salles::count(); //toutes les salles
-
-
-
-
         $now = now();
         $now = Carbon::now();
 
-        //totale salle libre
-        $nombreSallesLibres = Salles::whereDoesntHave('demandes', function($query) use ($now) {
-            $query->where('datefin', '>=', $now->toDateString());
+        //totale salle occupée par leurs id
+        $sallesOccupees = Demandes::where('datefin', '>', $now->format('Y-m-d'))
+        ->orWhere(function($query) use ($now) {
+            $query->where('datefin', '=', $now->format('Y-m-d'))
+                  ->where('heurefin', '>', $now->format('H:i:s'));
         })
-        ->orWhereHas('demandes', function($query) use ($now) {
-            $query->where('datefin', '<', $now->toDateString());
-        })
-        ->orderBy('nom')
-        ->count();
+        ->pluck('id_salle');
+
+        // Récupérer les salles dont les réservations sont terminées
+        $nombreSallesLibres = Salles::whereNotIn('id', $sallesOccupees)->count();
 
         //total salle occupée
         $nombreSallesOccupees = Salles::whereHas('demandes', function($query) use ($now) {
@@ -153,8 +157,6 @@ class AdminController extends Controller
         ->get();
 
         return view('utilisateur.admin.sallesoccupee', compact('salles', 'now'));
-
-
 
     }
 

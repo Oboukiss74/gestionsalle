@@ -11,82 +11,87 @@
 
 @extends('layouts.navbaradmin')
 
+
+
 @section('body')
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="{{ route('profile_admin') }}" class="brand-link">
-            <img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8">
-            <span class="brand-text font-weight-light">Gestion des salles</span>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('profile') }}">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            Gestion des Salles
         </a>
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user (optional) -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Tableau de bord</p>
-                        </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa-solid fa-circle-user"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_salles') }}" class="nav-link">
-                            <i class="fa-solid fa-landmark"></i>
-                            <p>Les salles</p>
-                        </a>
-                    </li>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <!-- Boutons de navigation -->
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Retour</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    @can('view', App\Models\Salles::class)
+                        <a class="nav-link" href="{{ route('liste_salles_dipsonible') }}">Salles libre</a>
+                    @endcan
 
-                    <li class="nav-item">
-                        <a href="{{ route('total_demande') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Les demandes</p>
-                        </a>
-                    </li>
+                </li>
+                <li class="nav-item">
+                    @can('view', App\Models\Salles::class)
+                        <a class="nav-link" href="{{ route('liste_salles_occupee') }}">Salles occupées</a>
+                    @endcan
 
+                </li>
 
-                    <li class="nav-item">
-                        <a href="users.html" class="nav-link">
-                            <i class="nav-icon  fas fa-users"></i>
-                            <p>Utilisateurs</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages.html" class="nav-link">
-                            <i class="fa-solid fa-pen-fancy"></i>
-                            <p>parametres</p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Menu Profil -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2
+                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                            {{ Auth::user()->nom }}</h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <!-- /.sidebar -->
-    </aside>
+    </nav>
+
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
-                <div class="table-title">
+                <div class="table-title" style="width: auto">
                     <div class="row">
                         <div class="col-sm-4">
                             <h2>Liste <b>des Salles</b></h2>
                         </div>
-                        <div class="col-sm-8">
-                            <a href="#" class="btn btn-primary"><i class="material-icons">&#xE863;</i>
-                                <span>rafraichire</span></a>
-                            {{-- <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i>
+                        <div class="row" style="flex-direction: column; width: 50%; ">
+                            <div class="col-sm-8">
+                                <a href="{{ route('pages_salles') }}" class="btn btn-primary">
+                                    Ajouter Salles</a>
+
+                            </div>
+                            <div class="col-sm-8">
+                                <a href="#" class="btn btn-primary"><i class="material-icons">&#xE863;</i>
+                                    <span>rafraichire</span></a>
+                                {{-- <a href="#" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i>
                                 <span>Export to Excel</span></a> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,10 +101,8 @@
                             <div class="show-entries">
                                 <span>choix</span>
                                 <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>15</option>
-                                    <option>20</option>
+                                    <option>2</option>
+
                                 </select>
                                 <span>entré</span>
                             </div>
@@ -156,13 +159,20 @@
                                         alt="Avatar"> Michael Holz</a></td> --}}
                                 <td>{{ $salle->nom }}</td>
                                 <td>{{ $salle->nombreplace }}</td>
-                                <td><span class="status text-success">&bull;</span> Libre</td>
+                                <td><span class="status text-success">&bull;</span>{{ $salle->statut }}</td>
                                 <td>{{ $salle->taille }}</td>
-                                <td><a href="#" class="view" title="voir Details" data-toggle="tooltip"><i
-                                            class="material-icons">&#xE5C8;</i></a></td>
                                 <td>
-                                    <a href="#" class="view" title="ajouter" data-toggle="tooltip"><i
-                                            class="fa-solid fa-plus"></i></a>
+                                    @can('update', App\Models\Salles::class)
+                                        <a href="#" class="view" title="Modifier" data-toggle="tooltip"><i
+                                                class="material-icons">&#xE5C8;</i></a>
+                                    @endcan
+                                </td>
+                                <td>
+                                    @can('create', App\Models\Salles::class)
+                                        <a href="{{ route('pages_salles') }}" class="view" title="ajouter"
+                                            data-toggle="tooltip"><i class="fa-solid fa-plus"></i></a>
+                                    @endcan
+
                                 </td>
                             </tr>
                         @endforeach
@@ -170,13 +180,15 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a href="#">Precedent</a></li>
-                        <li class="page-item"><a href="#" class="page-link"></a></li>
-
-                        <li class="page-item"><a href="#" class="page-link">Suivant</a></li>
-                    </ul>
+                    <nav aria-label="...">
+                        <ul class="pagination pagination-sm">
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">1</span>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

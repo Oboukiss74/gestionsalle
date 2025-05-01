@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class DemandeController extends Controller
     //page de demande
     public function Page_Demande(Request $request)
     {
+        $this->authorize("create", Demandes::class);
         $salles = Salles::all();
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
@@ -45,7 +47,6 @@ class DemandeController extends Controller
             "salles",
             'sallesDisponibles',
             'dateDebut',
-
             'dateFin',
             'heureDebut',
             'heureFin'
@@ -115,7 +116,6 @@ class DemandeController extends Controller
         }
 
         return redirect()->back()->with('success', 'Demande créée avec succès.');
-
     }
 
     //validation de l'etat de la demande
@@ -134,11 +134,11 @@ class DemandeController extends Controller
     {
         $salles = Salles::all();
         return view("Demandes.creer_demandes", compact("salles"));
-
     }
     //supprimer une demande
     public function deletedemande($id)
     {
+        $this->authorize("deleteAny");
         $demande = Demandes::find($id);
 
         if (!$demande) {
@@ -150,10 +150,12 @@ class DemandeController extends Controller
 
 
     //liste des demandes et la configuration de la validation et refus
-    public function liste_demande()
+    public function liste_demande(Demandes $demande)
     {
+        $this->authorize('view', Demandes::class);
+        //$this->authorize('view', $demande) ;
         // Récupère tous les demandes
-        $demandes = Demandes::paginate(5);
+        $demandes = Demandes::paginate(3);
         $nombredemande = Demandes::count();
 
         // Envoie les données à la vue
@@ -163,40 +165,40 @@ class DemandeController extends Controller
 
     public function lademande($id)
     {
+
         $demande = Demandes::findOrFail($id); // Récupère la demande spécifique
         return view('Demandes.liste_demande', compact('demandes'));
     }
 
     //mes demande
-    public function DemandeStatut()
+    public function DemandeStatut(Demandes $demandes)
     {
+        $this->authorize('viewAny', Demandes::class);
+
         $user = Auth::user();
         $demandes = $user->demandes;
         return view('Demandes.mes_demandes', compact('demandes'));
-
     }
 
     //verifier mes demandes etats
-    public function VerifierStatut(Request $request, Demandes $demandes)
+    public function VerifierStatut(Demandes $demandes)
     {
-        //$this->authorize('view', $Demandes);
+        $this->authorize('view', $demandes);
 
         $user = Auth::user();
         // if ($user->hasPermissionTo('voir.demande')) {
         //     return 'la permission ma ete attribuée';
         // }
         // return 'le contraire est vrai';
-        $mesDemande = $user->demandes()->first();
-        if ($mesDemande) {
-            $this->authorize('view', $mesDemande); // Vérifie avec la Policy
-        }
-        else {
-            return "vous n'êtes pas autorisé";
-        }
+        // $mesDemande = $user->demandes()->first();
+        // if ($mesDemande) {
+        //     $this->authorize('view', $mesDemande); // Vérifie avec la Policy
+        // }
+        // else {
+        //     return "vous n'êtes pas autorisé";
+        // }
         $demandes = $user->demandes;
         return view('Demandes.verifier_demande', compact('demandes'));
-
-
     }
     //detail de ma demande
     public function DetailMaDemande($id)
@@ -219,8 +221,9 @@ class DemandeController extends Controller
         return view('admin.demandes.show', compact('demande'));
     }
     // accpeter demande
-    public function demandeaccepter($id)
+    public function demandeaccepter(Demandes $demandes, $id)
     {
+        $this->authorize('approve', $demandes);
         $demande = Demandes::findOrFail($id);
         $demande->etat = 'Validée';
         $demande->save();
@@ -229,8 +232,9 @@ class DemandeController extends Controller
     }
 
     //refuser demande
-    public function demanderefuser($id)
+    public function demanderefuser(Demandes $demandes, $id)
     {
+        $this->authorize('update', $demandes);
         $demande = Demandes::findOrFail($id);
         $demande->etat = 'Refusée';
         $demande->save();
@@ -241,31 +245,48 @@ class DemandeController extends Controller
     //SG
     public function ViewSG(request $request)
     {
-        $demandes = Demandes::paginate(3); // 10 demandes par page
+        // $demandes = Demandes::paginate(3); // 10 demandes par page
         return view('Demandes.Demande_SG', compact('demandes'));
     }
     //liste de demande en cour
-    public function demande_en_cour() {
-        $demande=Demandes::all();
-        $nombredemande=Demandes::count();
-        $demandeEncours = Demandes::where('etat', 'En attente')->get();
-        return view('Demandes.demande_encour',compact('demandeEncours','nombredemande'));
+    public function demande_en_cour()
+    {
+        $this->authorize('view', Demandes::class);
 
+        // $demandes = Demandes::paginate(3);
+        //rehercher demande
+        $query = Demandes::where('etat', 'En attente');
+
+        if (request()->has('search') && !empty(request('search'))) {
+            $search = request('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('nom', 'like', "%$search%")
+                    ->orWhere('mail', 'like', "%$search%")
+                    ->orWhere('salle', 'like', "%$search%");
+            });
+        }
+        $nombredemande = Demandes::where('etat', 'En attente')->count();
+        $demandeEncours = Demandes::where('etat', 'En attente')->paginate(3);
+        //dd($demandes);
+
+        return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande'));
     }
     //liste de demande refusee
-    public function demande_refusee() {
-        $demande=Demandes::all();
-        $nombredemande=Demandes::count();
+    public function demande_refusee(Demandes $demandes)
+    {
+        $this->authorize('approuve', $demandes);
+        $demandeRejetee = Demandes::where('etat', 'Refusée')->paginate(3);
+        $nombredemande = Demandes::where('etat', 'Refusée')->count();
         $demandeRefusees = Demandes::where('etat', 'Refusée')->get();
-        return view('Demandes.demande_refusee',compact('demandeRefusees','nombredemande'));
-
+        return view('Demandes.demande_refusee', compact('demandeRefusees', 'nombredemande','demandeRejetee'));
     }
     //liste de demande validee
-    public function demande_validee() {
-        $demande=Demandes::all();
-        $nombredemande=Demandes::count();
-        $demandeValidee = Demandes::where('etat', 'Refusée')->get();
-        return view('Demandes.demande_refusee',compact('demandeValidee','nombredemande'));
-
+    public function demande_validee()
+    {
+        $this->authorize('approuve', Demandes::class);
+        $demandeValidee = Demandes::where('etat', 'Validée')->paginate(3);
+        $nombredemande = Demandes::where('etat', 'Validée')->count();
+        $demandes = Demandes::where('etat', 'Validée')->get();
+        return view('Demandes.demande_validee', compact('demandes', 'nombredemande','demandeValidee'));
     }
 }

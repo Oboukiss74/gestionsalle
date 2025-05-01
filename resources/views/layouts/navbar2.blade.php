@@ -26,16 +26,12 @@
         </button>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-            <form class="navbar-form form-inline">
-                <div class="input-group search-box">
-                    <input type="text" id="search" class="form-control" placeholder="Search here...">
-                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-                </div>
-            </form>
-            <div class="navbar-nav ml-auto">
-                <a href="{{ route('Accueil') }}" class="nav-item nav-link active"><i
+
+            <div class="navbar-nav ml-auto" style="transform: translate(-500px,0)">
+                <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="transform: translate(-300px,0)"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('profile.edit') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>paramétre</span></a>
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="transform: translate(-200px,0);color: white"><i class="fa fa-gears"></i><span>paramétre</span></a>
+                @yield('liens')
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
                 {{-- <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a> --}}
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}

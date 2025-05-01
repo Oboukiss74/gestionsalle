@@ -46,7 +46,7 @@
             </div>
             <div class="navbar-nav pl-2">
                 <ol class="breadcrumb p-0 m-0 bg-white">
-                    <li class="breadcrumb-item"><a href="{{ route('tableau_de_bord') }}">Drmande validée</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('tableau_de_bord') }}">Demande validée</a></li>
 
                 </ol>
             </div>

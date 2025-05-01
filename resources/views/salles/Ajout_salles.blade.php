@@ -30,7 +30,7 @@
                 <div class="formbold-input-flex">
                     <div>
                         <label for="email" class="formbold-form-label"> nombre de place </label>
-                        <input type="text" name="nombreplace" id="email" placeholder="nombre de place"
+                        <input type="number" name="nombreplace" id="email" placeholder="nombre de place"
                             class="formbold-form-input" />
                     </div>
 

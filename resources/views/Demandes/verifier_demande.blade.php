@@ -33,6 +33,7 @@
                     <th scope="col">nom</th>
                     <th scope="col">motif</th>
                     <th scope="col">etat</th>
+                    <th scope="col">date de soumission</th>
                     <th scope="col">details</th>
                 </tr>
             </thead>
@@ -44,6 +45,7 @@
                         <td>{{ $demande->nom }}</td>
                         <td>{{ $demande->motif }}</td>
                         <td>{{ $demande->etat }}</td>
+                        <td>{{ $demande->created_at }}</td>
                         <td>
                             <a href="{{ route('ma_demande_detail', ['id' => $demande->id]) }}">
                                 <i class="fa-solid fa-eye-slash"></i>

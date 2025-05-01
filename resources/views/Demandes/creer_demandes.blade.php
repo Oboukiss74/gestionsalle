@@ -31,9 +31,13 @@
             <div class="navbar-nav">
                 <a href="{{ route('profile') }}"class="nav-item nav-link">Acceuil</a>
                 @yield('elements')
-                <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link">voir demande</a>
-                <a href="#" class="nav-item nav-link ">mes infos</a>
-                <a href="#" class="nav-item nav-link">supprimer demande</a>
+                @can('voirmesdemandes', App\Models\Demandes::class)
+                    <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link">voir demande</a>
+                @endcan
+                <a href="{{ route('mesinfos') }}" class="nav-item nav-link ">mes infos</a>
+                @can('view', App\Models\Demandes::class)
+                    <a href="{{ route('deatilsdemandes') }}" class="nav-item nav-link">supprimer demande</a>
+                @endcan
                 <a href="#" class="nav-item nav-link">Contact</a>
             </div>
             <div class="navbar-nav ml-auto">
@@ -59,7 +63,8 @@
         <div class="formbold-form-wrapper">
 
             <div class="container">
-                <div id="etape1" >
+                <div id="etape1">
+                    <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
                     <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data">
                         {{-- @csrf --}}
 
@@ -166,8 +171,10 @@
                     </form>
 
                 </div>
+
                 @if ($sallesDisponibles->count() > 0)
                     <div id="etape2" style="display: none">
+                        <a href="{{ route('pagedemandes') }}">Retour</a>
                         <form method="POST" action="{{ route('creer_demande') }}" enctype="multipart/form-data">
 
                             @csrf
@@ -235,9 +242,10 @@
                                 <table class="table table-hover">
 
                                     <tbody>
-                                        <option value="selection" aria-placeholder="selectionne">selectionne le bâtiment
+                                        <option value="selection" aria-placeholder="selectionne">selectionne le
+                                            bâtiment
                                         </option>
-                                        <select name="salle" id="" class="formbold-form-input required">
+                                        <select name="id_salle" id="" class="formbold-form-input required">
                                             @foreach ($sallesDisponibles as $salle)
                                                 <div class="w-full sm:w-half formbold-px-3">
                                                     <div class="formbold-mb-5">
@@ -297,6 +305,13 @@
                                                     class="formbold-form-input" />
                                             </div>
                                         </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <button type="submit" formbold-form-input>Envoyer</button>
+
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -304,15 +319,15 @@
                         </form>
                     </div>
 
-                </div>
+            </div>
             @endif
 
         </div>
     </div>
     </div>
     <script>
-        $(document).ready(function () {
-            $('#etape_suivant').on('click', function (e) {
+        $(document).ready(function() {
+            $('#etape_suivant').on('click', function(e) {
                 e.preventDefault(); // empêcher le GET de se faire
                 $('#etape1').hide();
                 $('#etape2').show();

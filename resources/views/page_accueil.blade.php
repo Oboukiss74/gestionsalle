@@ -69,7 +69,7 @@ Bootstrap 5 HTML CSS Template
 
 
                     <li class="nav-item">
-                        <a class="nav-link click-scroll" href="{{ route('connexion') }}">Se connecter</a>
+                        <a class="nav-link click-scroll" href="{{ route('login') }}">Se connecter</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link click-scroll" href="#section_5">Contact</a>

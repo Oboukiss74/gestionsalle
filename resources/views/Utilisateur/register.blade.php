@@ -1,10 +1,18 @@
 <title>@yield('title', 'inscription') </title>
 <link rel="stylesheet" href="css/users.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 <link rel="icon" type="image/png" href="images/logo.png" />
 @extends('layouts.navbar2')
 
+@section('liens')
 
+    <a href="{{ route('connexion') }}" class="nav-item nav-link" style="transform: translate(-100px,0); color: white;"><i class="fa-solid fa-unlock-keyhole"></i><span>connexion</span></a>
+    <a href="{{ route('register') }}" class="nav-item nav-link"><i class="fa-solid fa-address-card" style="color: white"></i><span>S'inscrire</span></a>
+
+@endsection
 @section('infos')
     <div class="signup-form">
         <form action="{{ route('valider') }}" method="POST">

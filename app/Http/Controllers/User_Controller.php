@@ -9,6 +9,6 @@ class User_Controller extends Controller
     //
     public function ListeUtilisateurs(){
         $user = User::all();
-        dd($user);
+        return compact("Listeutilisateur");
     }
 }

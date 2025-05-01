@@ -39,7 +39,7 @@ class Demandes extends Model
     }
     public function demande()
     {
-        return $this->belongsTo(Demandes::class, 'id');
+        return $this->belongsTo(Demandes::class, 'id_demande');
     }
     // Relation avec l'utilisateur
     public function user()

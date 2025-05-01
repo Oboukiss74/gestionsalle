@@ -24,32 +24,27 @@
 
 <body class="listedemande_body">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('service_courier') }}">Les demandes</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="{{ route('service_courier') }}"
-                            aria-disabled="true">Tableau bord</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Demande</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-size: 20px; text-decoration: none;color:black">Profie</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    @can('view', App\Models\Demandes::class)
+                        <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
+                            aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">Tableau
+                            bord</a>
+                    @endcan
+                </li>
+            </ul>
+            <form class="d-flex" role="search" style="transform: translate(330%,0)">>
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Recherche</button>
+            </form>
+        </div>
         </div>
     </nav>
     <div class="container-xl">
@@ -141,7 +136,8 @@
 
                             <!-- Modal pour afficher les détails de la demande -->
                             <div class="modal fade" id="editEmployeeModal{{ $demandeRefusee->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="modalLabel{{ $demandeRefusee->id }}" aria-hidden="true">
+                                role="dialog" aria-labelledby="modalLabel{{ $demandeRefusee->id }}"
+                                aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
 
@@ -183,8 +179,42 @@
 
                     </tbody>
                 </table>
+                <div class="clearfix" style="transform: translate(0,40px)">
+                    {{-- <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $demande->id }}</b> entrées</div> --}}
+                    <ul class="pagination">
+                        <!-- Bouton "Précédent" -->
+                        @if ($demandeRejetee->onFirstPage())
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Précédent</a>
+                            </li>
+                        @else
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $demandeRejetee->previousPageUrl() }}">Précédent</a>
+                            </li>
+                        @endif
+
+                        <!-- Liens de pagination -->
+                        @foreach ($demandeRejetee->getUrlRange(1, $demandeRejetee->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $demandeRejetee->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+
+                        <!-- Bouton "Suivant" -->
+                        @if ($demandeRejetee->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $demandeRejetee->nextPageUrl() }}">Suivant</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Suivant</a>
+                            </li>
+                        @endif
+                    </ul>
+
+                </div>
                 <div class="clearfix">
-                    <div class="hint-text">{{ $demandeRefusee->id }} <b>sur</b> {{ $nombredemande }} </div>
+                    <div class="hint-text">{{ $demandeRejetee->lastItem() }} <b>sur</b> {{ $nombredemande }} </div>
 
                 </div>
             </div>

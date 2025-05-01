@@ -22,8 +22,8 @@ Route::middleware('guest')->group(function () {
 
     // Route::get('login', [AuthenticatedSessionController::class, 'create'])
     // ->name('login');
-    Route::get('connecter', [ProfileController::class, 'ConnectionProfile'])
-        ->name('connexion');
+    Route::get('login', [ProfileController::class, 'ConnectionProfile'])
+        ->name('login');
 
 
     Route::post('connecter', [AuthenticatedSessionController::class, 'store'])->name('connexion');
