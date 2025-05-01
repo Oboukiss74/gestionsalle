@@ -190,6 +190,9 @@ class DemandeController extends Controller
         if ($mesDemande) {
             $this->authorize('view', $mesDemande); // Vérifie avec la Policy
         }
+        else {
+            return "vous n'êtes pas autorisé";
+        }
         $demandes = $user->demandes;
         return view('Demandes.verifier_demande', compact('demandes'));
 
@@ -240,5 +243,29 @@ class DemandeController extends Controller
     {
         $demandes = Demandes::paginate(3); // 10 demandes par page
         return view('Demandes.Demande_SG', compact('demandes'));
+    }
+    //liste de demande en cour
+    public function demande_en_cour() {
+        $demande=Demandes::all();
+        $nombredemande=Demandes::count();
+        $demandeEncours = Demandes::where('etat', 'En attente')->get();
+        return view('Demandes.demande_encour',compact('demandeEncours','nombredemande'));
+
+    }
+    //liste de demande refusee
+    public function demande_refusee() {
+        $demande=Demandes::all();
+        $nombredemande=Demandes::count();
+        $demandeRefusees = Demandes::where('etat', 'Refusée')->get();
+        return view('Demandes.demande_refusee',compact('demandeRefusees','nombredemande'));
+
+    }
+    //liste de demande validee
+    public function demande_validee() {
+        $demande=Demandes::all();
+        $nombredemande=Demandes::count();
+        $demandeValidee = Demandes::where('etat', 'Refusée')->get();
+        return view('Demandes.demande_refusee',compact('demandeValidee','nombredemande'));
+
     }
 }

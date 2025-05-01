@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gestion des administrateurs</title>
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link
+        rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Font Awesome -->
@@ -24,13 +25,34 @@
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Right navbar links -->
             <ul class="navbar-nav">
-                <li class="nav-item">
-                      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
+
+                <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Menu
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ route('tableau_de_bord') }}">Demande en cour</a></li>
+                        <li><a class="dropdown-item" href="{{ route('tableau_de_bord') }}">Drmande validée<</a></li>
+                        <li><a class="dropdown-item" href="{{ route('tableau_de_bord') }}">Demande refusée</a></li>
+                      </ul>
+                </div>
             </ul>
             <div class="navbar-nav pl-2">
                 <ol class="breadcrumb p-0 m-0 bg-white">
-                    <li class="breadcrumb-item"><a href="{{ route('tableau_de_bord') }}">G.S</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('tableau_de_bord') }}">Demande en cour</a></li>
+
+                </ol>
+            </div>
+            <div class="navbar-nav pl-2">
+                <ol class="breadcrumb p-0 m-0 bg-white">
+                    <li class="breadcrumb-item"><a href="{{ route('tableau_de_bord') }}">Drmande validée</a></li>
+
+                </ol>
+            </div>
+            <div class="navbar-nav pl-2">
+                <ol class="breadcrumb p-0 m-0 bg-white">
+                    <li class="breadcrumb-item"><a href="{{ route('courier_demande_refuse') }}">Demande refusée</a></li>
 
                 </ol>
             </div>
@@ -43,8 +65,9 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown">
-                    <b class="nav-link p-0 pr-3" data-toggle="dropdown" >
-                        <img src="{{ asset('img/avatar5.png') }}" class='img-circle elevation-2' width="40" height="40" alt="">
+                    <b class="nav-link p-0 pr-3" data-toggle="dropdown">
+                        <img src="{{ asset('img/avatar5.png') }}" class='img-circle elevation-2' width="40"
+                            height="40" alt="">
                     </b>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
                         <h4 class="h4 mb-0"><strong>Mohit Singh</strong></h4>
@@ -59,7 +82,7 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item text-danger">
-                             Se deconnecter
+                            Se deconnecter
                         </a>
                     </div>
                 </li>
@@ -82,12 +105,6 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item">
-                            <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Tableau de bord</p>
-                            </a>
-                        </li>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -96,27 +113,14 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('tableau_salles') }}" class="nav-link">
-                                <i class="fa-solid fa-landmark"></i>
-                                <p>Les salles</p>
-                            </a>
-                        </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('total_demande') }}" class="nav-link">
+                            <a href="{{ route('liste_demadeencour') }}" class="nav-link">
                                 <i class="nav-icon fas fa-file-alt"></i>
-                                <p>Les demandes</p>
+                                <p>Les demandes en cours</p>
                             </a>
                         </li>
 
-
-                        <li class="nav-item">
-                            <a href="users.html" class="nav-link">
-                                <i class="nav-icon  fas fa-users"></i>
-                                <p>Utilisateurs</p>
-                            </a>
-                        </li>
                         <li class="nav-item">
                             <a href="pages.html" class="nav-link">
                                 <i class="fa-solid fa-pen-fancy"></i>
@@ -126,7 +130,7 @@
 
                         <li class="nav-item">
                             <a href="pages.html" class="nav-link">
-                                <i class="fa-solid fa-pen-fancy"></i>
+
                                 <p>se deconnecter</p>
                             </a>
                         </li>
@@ -166,21 +170,21 @@
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="{{ route('total_demande') }}" class="small-box-footer text-dark">plus infos<i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('deatilsdemandes') }}" class="small-box-footer text-dark">plus
+                                    infos<i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{ $salles }}</h3>
-                                    <p>Total Salles</p>
+                                    <h3>{{ $demandeValidée }}</h3>
+                                    <p>Demandes validées</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="{{ route('tableau_salles') }}" class="small-box-footer text-dark"> plus infos <i
+                                <a href="#" class="small-box-footer text-dark"> plus infos <i
                                         class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -188,14 +192,29 @@
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{$users}}</h3>
-                                    <p>Total utilisateur</p>
+                                    <h3>{{ $demandeRefusée }}</h3>
+                                    <p>Demandes refusées</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('tableau_de_bord') }}" class="small-box-footer text-dark"> plus infos <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('liste_demaderefusee') }}" class="small-box-footer text-dark"> plus infos <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                                {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6">
+                            <div class="small-box card">
+                                <div class="inner">
+                                    <h3>{{ $demandeEncour }}</h3>
+                                    <p>Demandes en attente</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="{{ route('liste_demadeencour') }}" class="small-box-footer text-dark"> plus infos <i
+                                        class="fas fa-arrow-circle-right"></i></a>
+                                {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>
                         </div>
                     </div>

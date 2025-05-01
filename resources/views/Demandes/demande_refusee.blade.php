@@ -25,7 +25,7 @@
 <body class="listedemande_body">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('profile_admin') }}">Profie</a>
+            <a class="navbar-brand" href="{{ route('service_courier') }}">Les demandes</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active " aria-current="page" href="{{ route('tableau_de_bord') }}"
+                        <a class="nav-link active " aria-current="page" href="{{ route('service_courier') }}"
                             aria-disabled="true">Tableau bord</a>
                     </li>
                     <li class="nav-item">
@@ -105,26 +105,26 @@
                             </div>
                         @endif
 
-                        @foreach ($demandes as $demande)
+                        @foreach ($demandeRefusees as $demandeRefusee)
                             <tr>
                                 <th>
                                     <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll" {{ $demande->id }}>
+                                        <input type="checkbox" id="selectAll" {{ $demandeRefusee->id }}>
                                         <label for="selectAll"></label>
                                     </span>
                                 </th>
-                                <td>{{ $demande->id }}</td>
-                                <td>{{ $demande->nom }}</td>
-                                <td>{{ $demande->mail }}</td>
-                                <td>{{ $demande->telephone }}</td>
-                                <td>{{ $demande->salle }}</td>
-                                <td>{{ $demande->effectif }}</td>
-                                <td>{{ $demande->created_at }}</td>
-                                <td class="etat">{{ $demande->etat }}</td>
+                                <td>{{ $demandeRefusee->id }}</td>
+                                <td>{{ $demandeRefusee->nom }}</td>
+                                <td>{{ $demandeRefusee->mail }}</td>
+                                <td>{{ $demandeRefusee->telephone }}</td>
+                                <td>{{ $demandeRefusee->salle }}</td>
+                                <td>{{ $demandeRefusee->effectif }}</td>
+                                <td>{{ $demandeRefusee->created_at }}</td>
+                                <td class="etat">{{ $demandeRefusee->etat }}</td>
                                 <td>
 
                                     <a href="#" class="edit" data-toggle="modal"
-                                        data-target="#editEmployeeModal{{ $demande->id }}">
+                                        data-target="#editEmployeeModal{{ $demandeRefusee->id }}">
                                         <i class="material-icons" data-toggle="tooltip" title="Details">&#xE417;</i>
                                     </a>
 
@@ -140,8 +140,8 @@
                             </tr>
 
                             <!-- Modal pour afficher les détails de la demande -->
-                            <div class="modal fade" id="editEmployeeModal{{ $demande->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="modalLabel{{ $demande->id }}" aria-hidden="true">
+                            <div class="modal fade" id="editEmployeeModal{{ $demandeRefusee->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="modalLabel{{ $demandeRefusee->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
 
@@ -153,25 +153,25 @@
                                         <div class="modal-body">
 
                                             <p class="modal-body"><strong>Nom du demandeur:</strong>
-                                                <br>{{ $demande->nom }}
+                                                <br>{{ $demandeRefusee->nom }}
                                             </p>
 
 
                                             <p class="form-group"><strong>date de debut:</strong>
-                                                {{ $demande->datedebut }}</p>
+                                                {{ $demandeRefusee->datedebut }}</p>
 
                                             <p class="form-group"><strong>date de fin:</strong>
-                                                {{ $demande->datefin }}
+                                                {{ $demandeRefusee->datefin }}
                                             </p>
 
                                             <p class="form-group"><strong>heure de debut:</strong>
-                                                {{ $demande->heuredebut }}</p>
+                                                {{ $demandeRefusee->heuredebut }}</p>
 
                                             <p class="form-group"><strong>heure de fin:</strong>
-                                                {{ $demande->heurefin }}</p>
+                                                {{ $demandeRefusee->heurefin }}</p>
 
                                             <p class="form-group"><strong>motif de la demande:</strong> <br>
-                                                {{ $demande->motif }}</p>
+                                                {{ $demandeRefusee->motif }}</p>
                                         </div>
 
 
@@ -184,7 +184,7 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $nombredemande }} </div>
+                    <div class="hint-text">{{ $demandeRefusee->id }} <b>sur</b> {{ $nombredemande }} </div>
 
                 </div>
             </div>
@@ -192,80 +192,7 @@
     </div>
     <!-- Edit Modal HTML -->
 
-    <!-- Edit Modal HTML -->
-    @foreach ($demandes as $demande)
-        <div id="editEmployeeModal{{ $demande->id }}" class="modal fade" tabindex="-1" role="dialog"
-            aria-labelledby="modalLabel{{ $demande->id }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="Poste" action="{{ route('demandevalidee') }}">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Plus de Details de la demande</h4>
-                            <button type="button" class="close" data-dismiss="modal"
-                                aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>
-                                    <h1>nom du demandeur</h1>
-                                </label>
-                                <h3>{{ $demande->nom }}</h3>
 
-                            </div>
-                            <div class="form-group">
-                                <label>date de but</label>
-                                <h3>{{ $demande->datedebut }}</h3>
-
-                            </div>
-                            <div class="form-group">
-                                <label>date de fin</label>
-                                <h3>{{ $demande->datefin }}</h3>
-                            </div>
-                            <div class="form-group">
-                                <label>heure de debut</label>
-                                <h3>{{ $demande->heuredebut }}</h3>
-                            </div>
-                            <div class="form-group">
-                                <label>heure de fin</label>
-                                <h3>{{ $demande->heurefin }}</h3>
-                            </div>
-                            <div class="form-group">
-                                <label>motif de la demande</label>
-                                <h2>{{ $demande->motif }}</h3>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
-
-    <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form method="post" action="{{ route('demandesupprimer', ['id' => $demande->id]) }}"
-                    method="post">
-                    @csrf
-                    @method('DELETE')
-                    <div class="modal-header">
-                        <h4 class="modal-title">Supprimer demande</h4>
-                        <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Vous êtes sur de vouloir supprimer?</p>
-                        <p class="text-warning"><small>Cette action est ireversible</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Retour">
-                        <button type="submit" class="btn btn-danger"value="Supprimer">Supprimer</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"
         integrity="sha512-b+nQTCdtTBIRIbraqNEwsjB6UvL3UEMkXnhzd8awtCYh0Kcsjl9uEgwVFVbhoj3uu1DO1ZMacNvLoyJJiNfcvg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>

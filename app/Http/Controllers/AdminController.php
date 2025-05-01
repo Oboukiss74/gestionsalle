@@ -44,22 +44,25 @@ class AdminController extends Controller
     //profile Admin
     public function AdminProfile(Request $request)
     {
-        $users = User::all();
-        return view('Utilisateur.admin.admin_profile', compact('users'));
-    }
-
-    public function tableau_bord()
-    {
-
         $demandes = Demandes::count();
         $salles = Salles::count();
         $users = User::count();
 
-        return view('Utilisateur.admin.tableau_de_bord', compact(
+        return view('Utilisateur.admin.admin_profile', compact(
             'demandes',
             'salles',
             'users'
         ));
+
+
+    }
+
+    public function  tableau_bord()
+    {
+        $users = User::all();
+        return view('Utilisateur.admin.tableau_de_bord', compact('users'));
+
+
         // return view('Utilisateur.admin.les_salles', compact('salles'));
     }
 
@@ -201,9 +204,7 @@ class AdminController extends Controller
     }
     public function Rechercher_user()
     {
-        return view('Utilisateur.admin.admin_profile', [
-            'users' => User::where('nom', $this->search)->get(),
-        ]);
+        return view('Utilisateur.admin.admin_profile');
     }
 
 

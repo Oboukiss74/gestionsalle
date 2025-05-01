@@ -104,26 +104,26 @@
                             </div>
                         @endif
 
-                        @foreach ($demandes as $demande)
+                        @foreach ($demandeEncours as $demandeEncour)
                             <tr>
                                 <th>
                                     <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll" {{ $demande->id }}>
+                                        <input type="checkbox" id="selectAll" {{ $demandeEncour->id }}>
                                         <label for="selectAll"></label>
                                     </span>
                                 </th>
-                                <td>{{ $demande->id }}</td>
-                                <td>{{ $demande->nom }}</td>
-                                <td>{{ $demande->mail }}</td>
-                                <td>{{ $demande->telephone }}</td>
-                                <td>{{ $demande->salle }}</td>
-                                <td>{{ $demande->effectif }}</td>
-                                <td>{{ $demande->created_at }}</td>
-                                <td class="etat">{{ $demande->etat }}</td>
+                                <td>{{ $demandeEncour->id }}</td>
+                                <td>{{ $demandeEncour->nom }}</td>
+                                <td>{{ $demandeEncour->mail }}</td>
+                                <td>{{ $demandeEncour->telephone }}</td>
+                                <td>{{ $demandeEncour->salle }}</td>
+                                <td>{{ $demandeEncour->effectif }}</td>
+                                <td>{{ $demandeEncour->created_at }}</td>
+                                <td class="etat">{{ $demandeEncour->etat }}</td>
                                 <td>
 
                                     <a href="#" class="edit" data-toggle="modal"
-                                        data-target="#editEmployeeModal{{ $demande->id }}">
+                                        data-target="#editEmployeeModal{{ $demandeEncour->id }}">
                                         <i class="material-icons" data-toggle="tooltip" title="Details">&#xE417;</i>
                                     </a>
 
@@ -140,8 +140,8 @@
                             </tr>
 
                             <!-- Modal pour afficher les détails de la demande -->
-                            <div class="modal fade" id="editEmployeeModal{{ $demande->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="modalLabel{{ $demande->id }}" aria-hidden="true">
+                            <div class="modal fade" id="editEmployeeModal{{ $demandeEncour->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="modalLabel{{ $demandeEncour->id }}" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
 
@@ -153,28 +153,28 @@
                                         <div class="modal-body">
 
                                             <p class="modal-body"><strong>Nom du demandeur:</strong>
-                                                <br>{{ $demande->nom }}
+                                                <br>{{ $demandeEncour->nom }}
                                             </p>
 
 
                                             <p class="form-group"><strong>date de debut:</strong>
-                                                {{ $demande->datedebut }}</p>
+                                                {{ $demandeEncour->datedebut }}</p>
 
                                             <p class="form-group"><strong>date de fin:</strong>
-                                                {{ $demande->datefin }}
+                                                {{ $demandeEncour->datefin }}
                                             </p>
 
                                             <p class="form-group"><strong>heure de debut:</strong>
-                                                {{ $demande->heuredebut }}</p>
+                                                {{ $demandeEncour->heuredebut }}</p>
 
                                             <p class="form-group"><strong>heure de fin:</strong>
-                                                {{ $demande->heurefin }}</p>
+                                                {{ $demandeEncour->heurefin }}</p>
 
                                             <p class="form-group"><strong>motif de la demande:</strong> <br>
-                                                {{ $demande->motif }}</p>
+                                                {{ $demandeEncour->motif }}</p>
                                         </div>
                                         <div class="modal-footer modal-body">
-                                            <form action="{{ route('refuserdemande', ['id' => $demande->id]) }}"
+                                            <form action="{{ route('refuserdemande', ['id' => $demandeEncour->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('PUT')
@@ -182,7 +182,7 @@
                                                     value="refusée">Refuser</button>
                                             </form>
 
-                                            <form action="{{ route('accpeterdemande', ['id' => $demande->id]) }}"
+                                            <form action="{{ route('accpeterdemande', ['id' => $demandeEncour->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('PUT')
@@ -204,7 +204,7 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">{{ $demande->id }} <b>sur</b> {{ $nombredemande }} </div>
+                    <div class="hint-text">{{ $demandeEncour->id }} <b>sur</b> {{ $nombredemande }} </div>
 
                 </div>
             </div>
@@ -213,45 +213,47 @@
     <!-- Edit Modal HTML -->
 
     <!-- Edit Modal HTML -->
-    @foreach ($demandes as $demande)
-        <div id="editEmployeeModal{{ $demande->id }}" class="modal fade" tabindex="-1" role="dialog"
-            aria-labelledby="modalLabel{{ $demande->id }}" aria-hidden="true">
+    @foreach ($demandeEncours as $demandeEncour)
+        <div id="editEmployeeModal{{ $demandeEncour->id }}" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="modalLabel{{ $demandeEncour->id }}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form method="Poste" action="{{ route('demandevalidee') }}">
+
                         <div class="modal-header">
                             <h4 class="modal-title">Mise a jour de la demande</h4>
                             <button type="button" class="close" data-dismiss="modal"
                                 aria-hidden="true">&times;</button>
                         </div>
+
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>
                                     <h1>nom du demandeur</h1>
                                 </label>
-                                <h3>{{ $demande->nom }}</h3>
+                                <h3>{{ $demandeEncour->nom }}</h3>
 
                             </div>
                             <div class="form-group">
                                 <label>date de but</label>
-                                <h3>{{ $demande->datedebut }}</h3>
+                                <h3>{{ $demandeEncour->datedebut }}</h3>
 
                             </div>
                             <div class="form-group">
                                 <label>date de fin</label>
-                                <h3>{{ $demande->datefin }}</h3>
+                                <h3>{{ $demandeEncour->datefin }}</h3>
                             </div>
                             <div class="form-group">
                                 <label>heure de debut</label>
-                                <h3>{{ $demande->heuredebut }}</h3>
+                                <h3>{{ $demandeEncour->heuredebut }}</h3>
                             </div>
                             <div class="form-group">
                                 <label>heure de fin</label>
-                                <h3>{{ $demande->heurefin }}</h3>
+                                <h3>{{ $demandeEncour->heurefin }}</h3>
                             </div>
                             <div class="form-group">
                                 <label>motif de la demande</label>
-                                <h2>{{ $demande->motif }}</h3>
+                                <h2>{{ $demandeEncour->motif }}</h3>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -272,7 +274,7 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{{ route('demandesupprimer', ['id' => $demande->id]) }}"
+                <form method="post" action="{{ route('demandesupprimer', ['id' => $demandeEncour->id]) }}"
                     method="post">
                     @csrf
                     @method('DELETE')

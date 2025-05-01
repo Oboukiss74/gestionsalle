@@ -30,7 +30,7 @@ class DemandesPolicy
      */
     public function create(User $user): bool
     {
-        return $user->haspermissioTo('soummetre.demande');
+        return $user->haspermissioTo('soummetre.demande', 'fairedemande');
     }
 
     /**
@@ -40,7 +40,15 @@ class DemandesPolicy
     {
         return $user->hasPermissionTo('modifier.ma.demande');
     }
-
+    public function traiterdemande(User $user, Demandes $demandes): bool
+    {
+        return $user->hasPermissionTo('modifier.ma.demande');
+    }
+    //rolle d'approvation
+    public function approve(User $user, Demandes $demande): bool
+    {
+        return $user->hasRole('admin') || $user->hasRole('DEPS') || $user->hasRole('DIP');
+    }
     /**
      * Determine whether the user can delete the model.
      */
