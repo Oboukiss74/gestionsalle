@@ -64,7 +64,8 @@ class AdminController extends Controller
     public function  tableau_bord()
     {
         $users = User::all();
-        return view('Utilisateur.admin.tableau_de_bord', compact('users'));
+        $pagination = User::paginate(3);
+        return view('Utilisateur.admin.tableau_de_bord', compact('users','pagination'));
 
 
         // return view('Utilisateur.admin.les_salles', compact('salles'));

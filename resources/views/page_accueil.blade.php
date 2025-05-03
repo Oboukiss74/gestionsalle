@@ -41,43 +41,8 @@ Bootstrap 5 HTML CSS Template
 
 <body>
 
-    <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('Accueil') }}">Gestion <span class="tooplate-red">Sall</span><span
-                    class="tooplate-green">es</span></a>
+        @include('layouts.navebar')
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="{{ route('Accueil') }}">Accueil</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_2">A propos</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link click-scroll" href="{{ route('register') }}">S'incrire</a>
-
-
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="{{ route('login') }}">Se connecter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_5">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     @if (session()->has(session('success')))
         <h1>
             {{ session('success') }}

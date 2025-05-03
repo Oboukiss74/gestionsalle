@@ -72,7 +72,7 @@ class DemandesPolicy
     {
         return false;
     }
-    public function voirmesdemandes(User $user, Demandes $demandes): bool
+    public function voirmesdemandes(User $user): bool
     {
         return $user->hasPermissionTo('voir.demande');
     }

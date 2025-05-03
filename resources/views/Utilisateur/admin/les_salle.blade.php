@@ -1,11 +1,11 @@
 @extends('layouts.navbaradmin')
 @section('contenue')
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-        <a class="navbar-brand" href="{{ route('profile') }}">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                 class="d-inline-block align-top">
-            Gestion des Salles
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
@@ -45,7 +45,7 @@
                     @endcan
                 </li>
                 <li class="nav-item">
-                    @can('create',App\Models\Demandes::class)
+                    @can('create', App\Models\Demandes::class)
                         <a class="nav-link" href="{{ route('creer_demande') }}">Réservation</a>
                     @endcan
 
@@ -104,9 +104,9 @@
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            @can('view',App\Models\Demandes::class)
+                            @can('view', App\Models\Demandes::class)
                                 <a href="{{ route('liste_salles') }}" class="small-box-footer text-dark">plus d'infos <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                                        class="fas fa-arrow-circle-right"></i></a>
                             @endcan
 
                         </div>
@@ -120,8 +120,8 @@
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            <a href="{{ route('liste_salles_occupee') }}" class="small-box-footer text-dark">plus d'infos <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('liste_salles_occupee') }}" class="small-box-footer text-dark">plus d'infos
+                                <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4 col-6">
@@ -133,9 +133,9 @@
                             <div class="icon">
                                 <i class="ion ion-bag"></i>
                             </div>
-                            @can('view',App\Models\Demandes::class)
-                                <a href="{{ route('liste_salles_dipsonible') }}" class="small-box-footer text-dark">plus d'infos <i
-                                    class="fas fa-arrow-circle-right"></i></a>
+                            @can('view', App\Models\Demandes::class)
+                                <a href="{{ route('liste_salles_dipsonible') }}" class="small-box-footer text-dark">plus
+                                    d'infos <i class="fas fa-arrow-circle-right"></i></a>
                             @endcan
 
                         </div>

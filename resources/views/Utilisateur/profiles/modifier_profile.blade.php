@@ -16,7 +16,7 @@
         <h3>mes infos</h3>
         <div class="modifiers">
             <div class="toutesinfos">
-                <form action="{{ route('profile.modifier') }}" method="post">
+                <form action="{{ route('mesinfosmodifier') }}" method="post">
                     @csrf
 
                     <div class="infos">

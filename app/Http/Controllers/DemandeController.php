@@ -173,7 +173,7 @@ class DemandeController extends Controller
     //mes demande
     public function DemandeStatut(Demandes $demandes)
     {
-        $this->authorize('viewAny', Demandes::class);
+        $this->authorize('voirmesdemandes', Demandes::class);
 
         $user = Auth::user();
         $demandes = $user->demandes;

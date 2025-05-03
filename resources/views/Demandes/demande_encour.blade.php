@@ -24,6 +24,13 @@
 
 <body class="listedemande_body">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
+        </a>
+
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('profile_admin') }}"
                 style="font-size: 20px; text-decoration: none;color:black">Profie</a>
@@ -131,7 +138,8 @@
 
                                     @can('deleteAny', App\Models\Demandes::class)
                                         <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                                class="material-icons" data-toggle="tooltip" title="supprimer">&#xE872;</i>
+                                                class="material-icons" data-toggle="tooltip"
+                                                title="supprimer">&#xE872;</i>
                                         </a>
                                     @endcan
 
@@ -245,7 +253,8 @@
                 </div>
 
                 <div class="clearfix">
-                    <div class="hint-text">{{ $demandeEncours->lastItem() }} <b> sur </b> {{ $nombredemande }} demandes
+                    <div class="hint-text">{{ $demandeEncours->lastItem() }} <b> sur </b> {{ $nombredemande }}
+                        demandes
                     </div>
                 </div>
 

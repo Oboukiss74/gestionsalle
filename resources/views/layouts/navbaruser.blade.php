@@ -18,40 +18,27 @@
 
 <body>
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="color: burlywoods">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
         <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
-                alt=""></i>gestion<b> salles</b></a>
+                alt=""></i><b style="color: #FFCE00"> Gestion </b> des <b style="color: red">Sall</b><b
+                style="color: rgb(57, 209, 115)">es</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
 
-            <div class="navbar-nav ml-auto">
-                <a href="{{ route('profile') }}" class="nav-item nav-link active"><i
+            <div class="navbar-nav ml-auto" style="transform: translate(-500px,0)">
+                <a href="{{ route('profile') }}" class="nav-item nav-link active" style="transform: translate(-300px,0)"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('mesinfos') }}" class="nav-item nav-link"><i class="fa fa-gears"></i><span>mes infos</span></a>
-                    @can('view',App\Models\Demandes::class)
-                        <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a>
-                    @endcan
-
+                {{-- <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="transform: translate(-200px,0);color: white"><i class="fa fa-gears"></i><span>paramétre</span></a> --}}
+                @yield('liens')
+                {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
+                {{-- <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i class="fa fa-pie-chart"></i><span>Mes demandes</span></a> --}}
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}
-                <a href="#" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Messages</span></a>
-                <a href="#" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a>
-                <div class="nav-item dropdown">
+                {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Messages</span></a>
+                <a href="#" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a> --}}
 
-                    <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
-                        @csrf
-                        @stack('navbar-items')
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                            this.closest('form').submit();"
-                            class="dropdown-item">
-                            <i class="material-icons">&#xE8AC;</i> Deconnexion
-                        </x-responsive-nav-link>
-                    </form>
-                    {{-- <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> --}}
-                </div>
             </div>
         </div>
         </div>

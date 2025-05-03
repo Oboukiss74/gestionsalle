@@ -23,8 +23,8 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="#"><b style="color: rgb(244, 244, 13);font-size: 30px">Gestion</b> <b
-                style="color:rgb(249, 82, 82);font-size: 30px"> Sall</b><b style="color: rgb(11, 159, 63);font-size: 30px">es</b></a>
+        <a class="navbar-brand" href="#"><b style="color: rgb(11, 159, 63);font-size: 30px">Gestion</b> <b
+                style="color:rgb(11, 159, 63);font-size: 30px"> Sall</b><b style="color: rgb(11, 159, 63);font-size: 30px">es</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>

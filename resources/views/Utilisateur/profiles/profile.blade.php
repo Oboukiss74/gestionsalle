@@ -19,9 +19,14 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 </head>
 
-<body>
+<body style="background-image: url('{{ asset('images/uo.jpg') }}');
+            ;background-size: cover;
+            ;background-position: center;
+            ;background-attachment: fixed;
+            ;background-repeat: no-repeat;
+            position: fixed;">
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="background-color: rgb(237, 235, 97)">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="height: 80px; width: 135%; " >
         <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
                 alt=""></i><b style="color: rgb(241, 236, 99)">Gestion </b> <b style="color: red"> Sall</b><b
                 style="color: rgba(11, 234, 81, 0.899)">es</b></a>
@@ -79,7 +84,7 @@
                             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div> --}}
 
-                        <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> mes infos</a>
+                        <a href="{{ route('mesinfos') }}" class="dropdown-item"><i class="fa fa-calendar-o"></i> mes infos</a>
                         <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> parametre</a>
                         <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> parametre</a>
                         <div class="divider dropdown-divider"></div>

@@ -22,13 +22,15 @@
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
-                Gestion des Salles
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand" href="{{ route('profile') }}"
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                    class="d-inline-block align-top">
+                <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            <button class="navbar-toggler click-scroll" type="button" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,14 +38,14 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <!-- Boutons de navigation -->
                 <ul class="navbar-nav mr-auto ml-4">
-                    <li class="nav-item active">
+                    <li class="nav-item active click-scroll">
                         <a class="nav-link" href="{{ route('profile') }}">Retour</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item active click-scroll">
                         <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
                     </li>
 
-                    <li class="nav-item">
+                    <li class="nav-item click-scroll">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                 </ul>
@@ -74,11 +76,9 @@
                 <div class="container-fluid my-2">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Brands</h1>
+                            <h1>Salles occupées</h1>
                         </div>
-                        <div class="col-sm-6 text-right">
-                            <a href="create-brand.html" class="btn btn-primary">New Brand</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -151,9 +151,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-
                                         @endif
-
                                     @endforeach
                                 </tbody>
 

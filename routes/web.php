@@ -97,7 +97,7 @@ Route::get('role_permission', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('Accueil');
 
 Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -107,9 +107,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.edit');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/suppression', [ProfileController::class, 'SuppCompte'])->name('profile.supprimer');
+
 });
 
-
+//coté utilisateur
+Route::middleware(['auth',])->group(function () {
+    Route::get('modifier_utilisateur', [User_Controller::class,'addutilissateur'])->name('ajouterutilisateur');
+});
 
 //partie accueil
 Route::get('/', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil');
@@ -202,7 +206,7 @@ Route::middleware(['auth'])->group(function () {
     //Profile
     Route::get('profile', action: [ProfileController::class, 'profiles'])->name(name: 'profile');
     //modifier info
-    Route::get('mes_infos', [ProfileController::class, 'VoirInfos'])->name('mesinfos');
+    Route::get('mes_infos', [ProfileController::class, 'profile_modifier'])->name('mesinfos');
     Route::put('mesinfos', [ProfileController::class, 'ModifierProfile'])->name('mesinfosmodifier');
 });
 

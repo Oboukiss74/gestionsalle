@@ -1,169 +1,180 @@
 @extends('layouts.navbaradmin')
 
-<!-- Navbar -->
-@section('contenue')
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <!-- Brand Logo -->
-        <a href="{{ route('profile_admin') }}" class="brand-link">
-            <img src="{{ asset('images/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-                style="opacity: .8">
-            <span class="brand-text font-weight-light">Gestion des salles</span>
+@section('navabar')
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
         </a>
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Sidebar user (optional) -->
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Tableau de bord</p>
-                        </a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa-solid fa-circle-user"></i>
-                            <p>Profile</p>
-                        </a>
-                    </li>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_salles') }}" class="nav-link">
-                            <i class="fa-solid fa-landmark"></i>
-                            <p>Les salles</p>
-                        </a>
-                    </li>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav mr-auto ml-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('liste_salles') }}">Les salles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
 
-                    <li class="nav-item">
-                        <a href="{{ route('total_demande') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Les demandes</p>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item">
-                        <a href="users.html" class="nav-link">
-                            <i class="nav-icon  fas fa-users"></i>
-                            <p>Utilisateurs</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="pages.html" class="nav-link">
-                            <i class="fa-solid fa-pen-fancy"></i>
-                            <p>parametres</p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- /.sidebar-menu -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                        <h2 style="font-size: 12px;">
+                            << {{ Auth::user()->nom }}>>
+                        </h2>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <!-- /.sidebar -->
-    </aside>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid my-2">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Utilisateurs</h1>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        <a href="create-user.html" class="btn btn-primary">Nouveau</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <!-- Default box -->
-            <div class="container-fluid">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-tools">
-                            <div class="input-group input-group" style="width: 250px;">
-                                <input type="text" name="table_search" class="form-control float-right"
-                                    placeholder="Search">
+    </nav>
 
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
+    <style>
+        body {
+            background-image: url('{{ asset('images/uo.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            border-radius: 20px;
+        }
+
+        .table thead {
+            background-color: #f4f6f9;
+        }
+    </style>
+@endsection
+
+@section('contenue')
+    <div class="container">
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid my-2">
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <h1 class="text-dark">👥 Gestion des utilisateurs</h1>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <a href="{{ route('ajouterutilisateur') }}" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i> Ajouter un utilisateur
+                            </a>
                         </div>
                     </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th width="60">ID</th>
-                                    <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Telephone</th>
-                                    <th>Sexe</th>
-                                    <th width="100">Profile</th>
-                                    <th width="100">Actions</th>
-                                </tr>
-                            </thead>
-                            @foreach ($users as $user)
-                                <tbody>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-end">
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher"
+                                    aria-label="Search">
+                                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><i
+                                        class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                                <thead>
                                     <tr>
-                                        <td>5</td>
-                                        <td>{{ $user->nom }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->nom }}</td>
-                                        <td>{{ $user->sexe }}</td>
-                                        <td>
-                                            {{ $user->profile }}
-                                        </td>
-                                        <td>
-                                            <a href="#">
-                                                <svg class="filament-link-icon w-4 h-4 mr-1"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                    fill="currentColor" aria-hidden="true">
-                                                    <path
-                                                        d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                    </path>
-                                                </svg>
-                                            </a>
-                                            <a href="#" class="text-danger w-4 h-4 mr-1">
-                                                <svg wire:loading.remove.delay="" wire:target=""
-                                                    class="filament-link-icon w-4 h-4 mr-1"
-                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                    fill="currentColor" aria-hidden="true">
-                                                    <path ath fill-rule="evenodd"
-                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                            </a>
-                                        </td>
+                                        <th>ID</th>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Téléphone</th>
+                                        <th>Sexe</th>
+                                        <th>Profil</th>
+                                        <th>Actions</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>{{ $user->id }}</td>
+                                            <td>{{ $user->nom }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->telephone ?? '-' }}</td>
+                                            <td>{{ $user->sexe }}</td>
+                                            <td>{{ $user->profile }}</td>
+                                            <td>
+                                                <a href="#" class="text-primary mr-2" title="Modifier"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <a href="{{ route('profile.destroy') }}" class="text-danger"
+                                                    title="Supprimer"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
-                            @endforeach
-                        </table>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <ul class="pagination pagination m-0 float-right">
-                            <li class="page-item"><a class="page-link" href="#">«</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">»</a></li>
-                        </ul>
+                            </table>
+                        </div>
+
+                        <div class="card-footer clearfix d-flex justify-content-between align-items-center">
+                            <span>Page {{ $pagination->currentPage() }} sur {{ $pagination->lastPage() }}</span>
+                            <ul class="pagination mb-0">
+                                <li class="page-item {{ $pagination->onFirstPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $pagination->previousPageUrl() }}">Précédent</a>
+                                </li>
+                                <li class="page-item active">
+                                    <span class="page-link">{{ $pagination->currentPage() }}</span>
+                                </li>
+                                <li class="page-item {{ !$pagination->hasMorePages() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $pagination->nextPageUrl() }}">Suivant</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- /.card -->
-        </section>
-        <!-- /.content -->
+            </section>
+        </div>
     </div>
 @endsection
-<!-- /.navbar -->
-<!-- Main Sidebar Container -->

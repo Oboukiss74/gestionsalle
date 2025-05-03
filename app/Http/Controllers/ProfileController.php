@@ -59,7 +59,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return redirect()->back()->with('status','Utilisateur sur supprimer avec succes');
     }
 
     //supprimer compte
@@ -81,8 +81,8 @@ class ProfileController extends Controller
     }
 
     //vue de modifier les infos du profile
-    public function profile_modier()  {
-        return view('utilisateur.profiles.modifier_profile');
+    public function profile_modifier()  {
+        return view('Utilisateur.profiles.modifier_profile');
     }
     //vue du profile
     public function profiles(request $request) {
@@ -109,12 +109,6 @@ class ProfileController extends Controller
             'telephone' => $request->telephone,
         ]);
 
-        // Mise à jour du téléphone dans la bonne table
-        // if ($user->etudiant) {
-        //     $user->etudiant->update([
-        //         'telephone' => $request->telephone,
-        //     ]);
-        // }
 
         return redirect()->route('profile');
     }

@@ -3,10 +3,12 @@
 @section('contenue')
     <!-- /.navbar -->
     <!-- Main Sidebar Container -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
-            Gestion des Salles
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
@@ -116,14 +118,15 @@
                                 @foreach ($demandes as $demande)
                                     <tr>
                                         <td>{{ $demande->id }}</td>
-                                        <td><img src="{{ asset('img/product-1.jpg') }}" class="img-thumbnail" width="50"></td>
+                                        <td><img src="{{ asset('img/product-1.jpg') }}" class="img-thumbnail"
+                                                width="50"></td>
                                         <td><a href="#">{{ $demande->nom }}</a></td>
                                         <td>{{ $demande->telephone }}</td>
-                                        <td>{{ $demande->datedebut}}</td>
+                                        <td>{{ $demande->datedebut }}</td>
                                         <td>{{ $demande->datefin }}</td>
                                         <td>{{ $demande->heuredebut }}</td>
                                         <td>{{ $demande->heurefin }}</td>
-                                        <td>{{ $demande->motif}}</td>
+                                        <td>{{ $demande->motif }}</td>
 
                                         <td>
                                             <svg class="text-success-500 h-6 w-6 text-success"
@@ -143,7 +146,8 @@
                                                     </path>
                                                 </svg>
                                             </a>
-                                            <a href="{{ route('demandesupprimer',$demande->id) }}" class="text-danger w-4 h-4 mr-1">
+                                            <a href="{{ route('demandesupprimer', $demande->id) }}"
+                                                class="text-danger w-4 h-4 mr-1">
                                                 <svg wire:loading.remove.delay="" wire:target=""
                                                     class="filament-link-icon w-4 h-4 mr-1"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"

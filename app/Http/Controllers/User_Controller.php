@@ -11,4 +11,13 @@ class User_Controller extends Controller
         $user = User::all();
         return compact("Listeutilisateur");
     }
+    //modifier utilisateur
+
+    public function addutilissateur(){
+        return view("Utilisateur.ajouterutiliteur");
+    }
+    //traiter la modification
+    public function confirmermodification(Request $request){
+
+    }
 }

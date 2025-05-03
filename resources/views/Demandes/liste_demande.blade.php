@@ -26,6 +26,12 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
+        </a>
+            <a class="navbar-brand" href="{{ route('profile') }}"
                 style="font-size: 20px; text-decoration: none;color:black">Profie</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

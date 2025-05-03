@@ -26,10 +26,13 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo" class="d-inline-block align-top">
-            Gestion des Salles
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
@@ -46,18 +49,23 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('liste_demandeencour') }}">Démande en attente</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('liste_demanderefusee') }}">Démandes refusées</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('liste_demandevalidee') }}">Démandes validées</a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demande') }}">Traiter les démandes</a>
+                    <a class="nav-link" href="{{ route('liste_demandeencour') }}">Traiter les démandes</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
@@ -128,8 +136,8 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="{{ route('liste_demandevalidee') }}" class="small-box-footer text-dark"> plus infos <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('liste_demandevalidee') }}" class="small-box-footer text-dark">
+                                    plus infos <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
 
@@ -142,8 +150,8 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('liste_demanderefusee') }}" class="small-box-footer text-dark"> plus infos <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('liste_demanderefusee') }}" class="small-box-footer text-dark">
+                                    plus infos <i class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>
                         </div>
@@ -156,8 +164,9 @@
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark"> plus infos <i
-                                        class="fas fa-arrow-circle-right"></i></a>
+                                <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark">
+                                    plus
+                                    infos <i class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>
                         </div>
@@ -170,10 +179,12 @@
         <!-- /.content-wrapper -->
         <footer class="main-footer">
 
-            <strong>Copyright &copy; 2014-2022 AmazingShop All rights reserved.
+            <strong>Plate-forme de gestion &copy; des salles de l'univeristé Joseph Ki-Zerbo
         </footer>
 
     </div>
+
+
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
