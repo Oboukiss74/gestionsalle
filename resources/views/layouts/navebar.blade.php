@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
+
     <div class="container">
         @auth
             <a class="tooplate-green" href="{{ route('profile') }}"
@@ -8,7 +9,7 @@
 
         @guest
             <a class="tooplate-green" href="{{ route('Accueil') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">Gestion
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">E.Gestion
                 <span class="tooplate-green">Sall</span><span class="tooplate-green">es</span></a>
         @endguest
 

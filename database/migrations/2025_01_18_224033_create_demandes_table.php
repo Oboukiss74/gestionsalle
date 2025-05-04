@@ -24,11 +24,13 @@ return new class extends Migration
             $table->date('datefin');
             $table->time('heuredebut');
             $table->time('heurefin');
+            $table->string('batiment');
             $table->string('salle');
             $table->string('effectif');
             $table->string('motif');
             $table->string('equipement');
             $table->enum('etat', ['En attente', 'Validée', 'Refusée'])->default('En attente');
+            $table->enum('reçu', ['Non', 'Oui'])->default('Non');
             $table->timestamps();
         });
     }

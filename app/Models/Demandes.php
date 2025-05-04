@@ -22,11 +22,13 @@ class Demandes extends Model
         "datefin",
         "heuredebut",
         "heurefin",
+        "batiment",
         "salle",
         "effectif",
         "motif",
         "equipement",
         'etat',
+        'reçu',
     ];
     // Relation avec la salle
     public function salle()

@@ -4,12 +4,13 @@
 @endsection
 @section('contenu')
     <div class="formbold-main-wrapper">
-        @if (@session()->has('succes'))
-            <p style="color: red">{{ session('succes') }}</p>
-        @endif
+
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="formbold-form-wrapper">
+            @if (@session()->has('succes'))
+                <p style="color: red">{{ session('succes') }}</p>
+            @endif
             {{-- <img src="{{ asset('images/logo.jpg') }}"> --}}
             <form action="{{ route('enregistrer_salle') }}" method="POST">
                 @csrf
@@ -65,8 +66,13 @@
 
                 <div class="formbold-mb-3">
                     <label for="dob" class="formbold-form-label"> Statut de la salle</label>
-                    <input type="text" name="statut" id="dob" class="formbold-form-input"
-                        placeholder="statut de la salle" />
+                    <select name="statut" id="statut" class="formbold-form-input">
+                        <option value="selctionne">Selectionnez</option>
+                        <option value="payante">payante</option>
+                        <option value="non payante">non payante</option>
+                    </select>
+                    {{-- <input type="text" name="statut" id="dob" class="formbold-form-input"
+                        placeholder="statut de la salle" /> --}}
                 </div>
 
                 <div class="formbold-mb-3">

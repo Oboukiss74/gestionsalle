@@ -67,36 +67,7 @@
                 <div id="etape1">
                     <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
                     <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data">
-                        {{-- @csrf --}}
 
-
-                        {{-- {{-- <div class="formbold-mb-5 " style="display: none">
-                            <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
-                                class="formbold-form-input " />
-                        </div>
-
-                        <div class="formbold-mb-5 ">
-                            <label for="name" class="formbold-form-label required"> nom complet</label>
-                            <input type="text" name="nom" id="name"
-                                value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}" class="formbold-form-input " />
-                        </div>
-                        <div class="formbold-mb-5">
-                            <label for="phone" class="formbold-form-label required"> telephone</label>
-                            <input type="tel" name="telephone" id="phone" placeholder="votre telephone"
-                                class="formbold-form-input" />
-                        </div>
-                        <div class="formbold-mb-5">
-                            <label for="email" class="formbold-form-label required"> Email </label>
-                            <input type="email" name="mail" id="email" value="{{ Auth::user()->email }}"
-                                class="formbold-form-input" />
-                        </div>
-                        <div class="formbold-mb-5">
-                            <label for="cnib" class="formbold-form-label ">
-                                <h4 class="required">fichier CNIB pdf</h4>
-                            </label>
-                            <input type="file" name="cnib" id="email" placeholder="fichier piece"
-                                class="formbold-form-input" accept="pdf" style="" />
-                        </div> --}}
 
                         <div class="flex flex-wrap formbold--mx-3">
                             <div class="w-full sm:w-half formbold-px-3">
@@ -126,45 +97,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="formbold-mb-5 formbold-pt-3">
-                            <label class="formbold-form-label formbold-form-label-2 required">
-                                Salle
-                            </label>
-                            <div class="flex flex-wrap formbold--mx-3">
-                                <div class="w-full sm:w-half formbold-px-3">
-                                    <div class="formbold-mb-5">
-                                        <select name="salle" id="" class="formbold-form-input required">
-                                            <option value="selection" aria-placeholder="selectionne">selectionne la salle
-                                            </option>
-                                            <option value="salle1">salle enseignant (30 places)</option>
-                                            <option value="salle2">salle visio (30 places)</option>
-                                            <option value="salle2">grande salle (160 places)</option>
-                                        </select>
 
-                                    </div>
-                                </div>
-                                <div class="w-full sm:w-half formbold-px-3">
-                                    <div class="formbold-mb-5">
-                                        <input type="text" name="effectif" id="place"
-                                            placeholder="Nombre de personnes" class="formbold-form-input" />
-                                    </div>
-                                </div>
-                                <div class="w-full sm:w-half formbold-px-3">
-                                    <div class="formbold-mb-5">
-                                        <label for="Motif" class="formbold-form-label required"> Motif </label>
-                                        <input type="text" name="motif" id="state"
-                                            placeholder="motif de la demande" class="formbold-form-input" />
-                                    </div>
-                                </div>
-                                <div class="w-full sm:w-half formbold-px-3">
-                                    <div class="formbold-mb-5">
-                                        <label for="Equipement" class="formbold-form-label required"> Equipements </label>
-                                        <input type="text" name="equipement" id="post-code"
-                                            placeholder="Equipements necessaires" class="formbold-form-input" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
 
                         <div id="etape_suivant">
                             <button class="formbold-btn">suivant</button>
@@ -247,6 +180,7 @@
                                             bâtiment
                                         </option>
                                         <select name="id_salle" id="" class="formbold-form-input required">
+                                             <option value="selectionne">selectionne</option>
                                             @foreach ($sallesDisponibles as $salle)
                                                 <div class="w-full sm:w-half formbold-px-3">
                                                     <div class="formbold-mb-5">

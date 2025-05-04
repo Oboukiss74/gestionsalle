@@ -22,38 +22,36 @@ use App\Http\Controllers\couriercontroller;
 
 
 Route::get('role_permission', function () {
-    //     // $createAdmin = Role::create(['name'=> 'SuperAdmin']);
-    //     // Role::create(['name'=> 'Utilisateur']);
-    //     // Role::create(['name'=> 'Gestionnaier1']);
-    // Role::create(['name'=> 'Gestionnaire2']);
-    // Role::create(['name'=> 'SG']);
-    // Role::create(['name'=> 'DEPS']);
-    // Role::create(['name'=> 'SC']);
-    // Role::create(['name'=> 'SupperAdmin']);
+    // Role::create(['name' => 'Admin']);
+    // Role::create(['name' => 'SuperAdmin']);
+    // Role::create(['name' => 'Utilisateur']);
+    // Role::create(['name' => 'Gestionnaier']);
+    // Role::create(['name' => 'SG']);
+    // Role::create(['name' => 'DEPS']);
+    // Role::create(['name' => 'SC']);
+    // Role::create(['name' => 'SupperAdmin']);
     // Permission::create(['name' => 'modifier.ma.demande']);
-    //     // Permission::create(['name' => 'supprimer.demande']);
-    //     // Permission::create(['name' => 'soummetre.demande']);
-    //     // Permission::create(['name' => 'valider.demande']);
-    //     // Permission::create(['name' => 'refuser.demande']);
-    //     // Permission::create(['name' => 'voir.demande']);
-    //     // Permission::create(['name' => 'suivre.demande']);
-    //     // Permission::create(['name' => 'modifier.utilisateur']);
-    //     // Permission::create(['name' => 'supprimer.utilisateurs']);
+    // Permission::create(['name' => 'supprimer.demande']);
+    // Permission::create(['name' => 'soummetre.demande']);
+    // Permission::create(['name' => 'valider.demande']);
+    // Permission::create(['name' => 'refuser.demande']);
+    // Permission::create(['name' => 'voir.demande']);
+    // Permission::create(['name' => 'suivre.demande']);
+    // Permission::create(['name' => 'modifier.utilisateur']);
+    // Permission::create(['name' => 'supprimer.utilisateurs']);
 
-    //     // Permission::create(['name' => 'creer.utilisateurs']);
-    //     // Permission::create(['name' => 'voir.utilisateurs']);
-    //     // Permission::create(['name' => 'modifier.profile']);
-    //     // Permission::create(['name' => 'voir.profile']);
-    //     // Permission::create(['name' => 'voir.demandevalidee']);
-    //     // Permission::create(['name' => 'voir.demandeerefusee']);
-    //     // Permission::create(['name' => 'voir.demandeencour']);
-    //     //
-
-    //     // Permission::create(['name'=>'ecrire.demande']);
+    // Permission::create(['name' => 'creer.utilisateurs']);
+    // Permission::create(['name' => 'voir.utilisateurs']);
+    // Permission::create(['name' => 'modifier.profile']);
+    // Permission::create(['name' => 'voir.profile']);
+    // Permission::create(['name' => 'voir.demandevalidee']);
+    // Permission::create(['name' => 'voir.demandeerefusee']);
+    // Permission::create(['name' => 'voir.demandeencour']);
+    // Permission::create(['name'=>'ecrire.demande']);
 
 
     //     // $roleSuperAdmin = Role::where('name','Utilisateur')->first();
-    //     // $roleSuperAdmin->givePermissionTo(['modifier.profile', 'voir.profile','ecrire.demande','suivre.demande']);
+    //     // $roleAdmin->givePermissionTo(['modifier.profile', 'voir.profile','ecrire.demande','suivre.demande']);
     // $rolegestionaire=Role::where('name','SuperAdmin')->first();
     // $rolegestionaire->givePermissionTo([
     //     'modifier.demande',
@@ -71,25 +69,25 @@ Route::get('role_permission', function () {
 
 
     //assigner role
-    // $users = User::all();
-    // foreach ($users as $user) {
-    //     // $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
-    //     $user->givePermissionTo(['ecrire.demande']);
-    // }
+    $users = User::all();
+    foreach ($users as $user) {
+        $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
+        $user->givePermissionTo(['ecrire.demande']);
+    }
 
     // Assigne le rôle "admin"
     //    $role-> givePermissionTo('ok');
     //    $role->givePermissionTo('ok');
 
     //     return view('welcome');
-    // $user = User::find(2); // Récupère l'utilisateur
-    // $user->assignRole('SC'); // Assigne le rôle "admin"
+    $user = User::find(1); // Récupère l'utilisateur
+    $user->assignRole('Admin'); // Assigne le rôle "admin"
     //Tu peux aussi attribuer plusieurs permissions à un rôle :
     // $role = Role::findByName('DEPS');
     $role = Role::findByName('Admin');
     $role->givePermissionTo([
-        'supprimer.demande',
-        'modifier.ma.demande',
+        'voir.demande',
+
     ]);
 });
 
@@ -107,12 +105,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.edit');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/suppression', [ProfileController::class, 'SuppCompte'])->name('profile.supprimer');
-
 });
 
 //coté utilisateur
 Route::middleware(['auth',])->group(function () {
-    Route::get('modifier_utilisateur', [User_Controller::class,'addutilissateur'])->name('ajouterutilisateur');
+    Route::get('modifier_utilisateur', [User_Controller::class, 'addutilissateur'])->name('ajouterutilisateur');
 });
 
 //partie accueil
@@ -167,7 +164,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
     //detail de ma demande en vue de modifier
     Route::get('detail_demande/{id}', [DemandeController::class, 'DetailMaDemande'])->name('ma_demande_detail');
-
+    //confirmer reception des demandes
+    Route::get('demande/valider/reception', [DemandeController::class, 'updatereception'])->name('validerreception');
     //valider demande
     Route::post('validerdemande', [DemandeController::class, 'updateEtat'])->name(name: 'demandevalidee');
     //voir la demande

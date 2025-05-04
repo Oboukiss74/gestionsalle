@@ -21,7 +21,7 @@ class DemandeController extends Controller
     public function Page_Demande(Request $request)
     {
         $this->authorize("create", Demandes::class);
-        $salles = Salles::all();
+
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
         $heureDebut = $request->input('heuredebut', '08:00');
@@ -44,7 +44,7 @@ class DemandeController extends Controller
             });
         })->get();
         return view("Demandes.creer_demandes", compact(
-            "salles",
+
             'sallesDisponibles',
             'dateDebut',
             'dateFin',
@@ -69,6 +69,7 @@ class DemandeController extends Controller
                     "datefin" => "required|date|after_or_equal:datedebut",
                     "heuredebut" => "required",
                     "heurefin" => "required",
+                    "batiment"=> "null",
                     "salle" => "required",
                     "effectif" => "required|integer|min:1",
                     "motif" => "required",
@@ -83,23 +84,23 @@ class DemandeController extends Controller
                 $request['cnib'] = $path; // Ajoute le chemin du fichier à l'array
             }
 
-            Demandes::create([
+            // Demandes::create([
 
-                "id_salle" => $request->input("id_salle"),
-                "id_user" => $request->input("id_user"),
-                "nom" => $request->input("nom"),
-                "telephone" => $request->input("telephone"),
-                "mail" => $request->input("mail"),
-                "cnib" => $request->input("cnib"),
-                "datedebut" => $request->input("datedebut"),
-                "datefin" => $request->input("datefin"),
-                "heuredebut" => $request->input("heuredebut"),
-                "heurefin" => $request->input("heurefin"),
-                "salle" => $request->input("salle"),
-                "effectif" => $request->input("effectif"),
-                "motif" => $request->input("motif"),
-                "equipement" => $request->input("equipement"),
-            ]);
+            //     "id_salle" => $request->input("id_salle"),
+            //     "id_user" => $request->input("id_user"),
+            //     "nom" => $request->input("nom"),
+            //     "telephone" => $request->input("telephone"),
+            //     "mail" => $request->input("mail"),
+            //     "cnib" => $request->input("cnib"),
+            //     "datedebut" => $request->input("datedebut"),
+            //     "datefin" => $request->input("datefin"),
+            //     "heuredebut" => $request->input("heuredebut"),
+            //     "heurefin" => $request->input("heurefin"),
+            //     "salle" => $request->input("salle"),
+            //     "effectif" => $request->input("effectif"),
+            //     "motif" => $request->input("motif"),
+            //     "equipement" => $request->input("equipement"),
+            // ]);
             Demandes::create($validatedData);
 
             //mail depuis le DB
@@ -128,6 +129,13 @@ class DemandeController extends Controller
         $demande->update(['etat' => $request->etat]);
 
         // return back()->with('success', 'État de la demande mis à jour.');
+    }
+    //valider la reception de la demande par le S.C
+    public function updatereception(Request $request, Demandes $demande){
+        $request->validate([
+            'reçcu'=> 'required|in:Non,Oui'
+        ]);
+        $demande->update(['reçu'=> $request->reçu]);
     }
     //choix de salle a la demande de location
     public function choix_salle(Request $request)

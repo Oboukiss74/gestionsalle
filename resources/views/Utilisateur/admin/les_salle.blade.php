@@ -46,7 +46,7 @@
                 </li>
                 <li class="nav-item">
                     @can('create', App\Models\Demandes::class)
-                        <a class="nav-link" href="{{ route('creer_demande') }}">Réservation</a>
+                        <a class="nav-link" href="{{ route('pagedemandes') }}">Réservation</a>
                     @endcan
 
                 </li>

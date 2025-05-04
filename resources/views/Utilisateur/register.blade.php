@@ -8,10 +8,10 @@
 @extends('layouts.navbar2')
 
 @section('liens')
-
-    <a href="{{ route('connexion') }}" class="nav-item nav-link" style="transform: translate(-100px,0); color: white;"><i class="fa-solid fa-unlock-keyhole"></i><span>connexion</span></a>
-    <a href="{{ route('register') }}" class="nav-item nav-link"><i class="fa-solid fa-address-card" style="color: white"></i><span>S'inscrire</span></a>
-
+    <a href="{{ route('connexion') }}" class="nav-item nav-link" style="transform: translate(-100px,0); color: white;"><i
+            class="fa-solid fa-unlock-keyhole"></i><span>connexion</span></a>
+    <a href="{{ route('register') }}" class="nav-item nav-link"><i class="fa-solid fa-address-card"
+            style="color: white"></i><span>S'inscrire</span></a>
 @endsection
 @section('infos')
     <div class="signup-form">
@@ -22,54 +22,56 @@
                     {{ session('success') }}
                 </h3>
             @endif
-
+            <div class="form-group">
+                <label for="">Nom</label>
+                <input type="text" class="form-control" name="nom" placeholder="Nom" required="required">
+            </div>
+            <div class="form-group">
+                <label for="">Prenom</label>
+                <input type="text" class="form-control" name="prenom" placeholder="Prenom" required="required">
+            </div>
             <div class="form-group">
                 <div class="row">
-                    <div class="col"><input type="text" class="form-control" name="nom" placeholder="Nom"
-                            required="required"></div>
-                    <div class="col"><input type="text" class="form-control" name="prenom" placeholder="prenom"
-                            required="required"></div>
+
+                    <div class="col">
+                        <label for="choix">Sexe</label>
+                        <select name="sexe" id="choixsexe" class="selcetion_sexe">
+                            <option value="selection">
+                                selectionne
+                            </option>
+
+                            <option value="Feminin">
+                                Feminin
+                            </option>
+
+                            <option value="Public">
+                                masculin
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="choix">Votre profile</label>
+                        <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile"
+                            style="border: white">
+                            <option value="selection">
+                                selectionne
+                            </option>
+                            <option value="Public">
+                                Public
+                            </option>
+                            <option value="Etudiant">
+                                Etudiant
+                            </option>
+                            <option value="Personnel">
+                                Personnel
+                            </option>
+                        </select>
+                    </div>
 
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="choix">Sexe</label>
-                <select name="sexe" id="choixsexe" class="selcetion_sexe">
-                    <option value="selection">
-                        selectionne
-                    </option>
 
-                    <option value="Feminin">
-                        Feminin
-                    </option>
-
-                    <option value="Public">
-                        masculin
-                    </option>
-                </select>
-            </div>
-
-
-            <div class="form-group">
-                <label for="choix">Votre profile</label>
-                <select name="profile" id="choix" onchange="afficherChamps()" class="selcetion_profile"
-                    style="border: white">
-                    <option value="selection">
-                        selectionne
-                    </option>
-                    <option value="Public">
-                        Public
-                    </option>
-                    <option value="Etudiant">
-                        Etudiant
-                    </option>
-                    <option value="Personnel">
-                        Personnel
-                    </option>
-                </select>
-
-            </div>
 
             <div class="form-group">
                 <label for="">numero cnib</label>
@@ -94,17 +96,18 @@
 
             <div class="form-group" id="matriculeDiv" style="display: none;">
                 <label for="">matricule</label>
-                <input type="text" class="form-control"  name="matricule" placeholder="matricule" >
+                <input type="text" class="form-control" name="matricule" placeholder="matricule">
             </div>
 
             <div class="form-group" id="fonctionDiv" style="display: none;">
                 <label for="">fonction</label>
-                <input type="text" class="form-control"  name="fonction" placeholder="fonction" >
+                <input type="text" class="form-control" name="fonction" placeholder="fonction">
             </div>
 
             <div class="form-group">
                 <label for="">telephone</label>
-                <input type="text" class="form-control" name="telephone" placeholder="telephone" required="required">
+                <input type="text" class="form-control" name="telephone" placeholder="telephone"
+                    required="required">
             </div>
 
             <div class="form-group" id="ineDiv" style="display: none;">
@@ -129,7 +132,8 @@
 
             <div class="form-group">
                 <label for="">creer un mot de passe</label>
-                <input type="password" class="form-control" name="password" placeholder="mot de passe" required="required">
+                <input type="password" class="form-control" name="password" placeholder="mot de passe"
+                    required="required">
             </div>
 
             <div class="form-group">
@@ -148,7 +152,8 @@
             </div>
 
         </form>
-        <div class="text-center">J'ai deja un compte ! <a href="{{ route('connexion') }}" style="color: blue">Se connecter</a></div>
+        <div class="text-center">J'ai deja un compte ! <a href="{{ route('connexion') }}" style="color: blue">Se
+                connecter</a></div>
         <script>
             function afficherChamps() {
                 var choix = document.getElementById("choix").value;
