@@ -57,8 +57,7 @@ Bootstrap 5 HTML CSS Template
                     <div class="col-lg-8 col-12 text-center mx-auto">
                         <img src="images/slideshow/ujkz.jpg" alt="ujkz" style="border-radius: 00px">
                         <div class="hero-section-text">
-                            <small class="section-small-title" style="font-family: Arial, Helvetica, sans-serif">Gestion
-                                des salles<i class="hero-icon bi-house"></i></small>
+                            <small class="section-small-title" style="font-family: Arial, Helvetica, sans-serif">gs.ujkz<i class="hero-icon bi-house"></i></small>
 
                             <h1 class="hero-title text-white mt-2 mb-4">Université Pr Joseph Ki Zerbo</h1>
 

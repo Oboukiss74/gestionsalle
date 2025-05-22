@@ -39,7 +39,7 @@ class DemandesPolicy
      */
     public function update(User $user, Demandes $demandes): bool
     {
-        return $user->hasPermissionTo('modifier.ma.demande');
+        return $user->hasPermissionTo('valider.demande') || $user->hasPermissionTo('refuser.demande');
     }
     public function traiterdemande(User $user, Demandes $demandes): bool
     {

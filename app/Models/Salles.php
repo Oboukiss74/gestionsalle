@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Demande;
+use App\Models\equipements;
 use App\Http\Controllers\Salles_Controller;
 
 class Salles extends Model
@@ -18,12 +19,17 @@ class Salles extends Model
         'equipement',
         'tarif',
         'statut',
-        'localisation',
+        'longitude',
+        'latitude',
     ];
     protected $table="salles";
     public function demandes()
     {
         return $this->hasMany(Demandes::class, 'id_salle');
+    }
+
+    public function equipements(){
+        return $this->hasMany(equipement::class,('id'));
     }
     public function demande()
     {

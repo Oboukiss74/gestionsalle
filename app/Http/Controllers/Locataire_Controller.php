@@ -31,7 +31,7 @@ class Locataire_Controller extends Controller
             'confirmepassword' => 'required|min:8',
         ]);
 
-        Locataire::create([
+        $request->Locataire::create([
             'id' => $request->id,
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -45,20 +45,5 @@ class Locataire_Controller extends Controller
         return redirect()->back()->with('message', 'inscrit avec succes');
     }
 
-    //page connexion de locataire
-    public function connection_locataire()
-    {
-        return view('Utilisateur.locataire.locataire_connecter');
-    }
-    //validation connection des locataires
-    public function connecter_Locataire(Request $request)
-    {
-        $locataire = Locataire::where('email', $request->email)->first();
-        if ($locataire && Hash::check($request->password, $locataire->password)) {
-            Auth::login($locataire);
-            return redirect()->route('Accueil');
-        } else {
-            return redirect()->back()->with('message', 'mail ou de passe incorrecte');
-        }
-    }
+
 }

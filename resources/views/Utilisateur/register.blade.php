@@ -15,7 +15,7 @@
 @endsection
 @section('infos')
     <div class="signup-form">
-        <form action="{{ route('valider') }}" method="POST">
+        <form action="{{ route('valider') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if (session()->has('success'))
                 <h3 style="color: red">
@@ -87,6 +87,10 @@
                 <input type="date" class="form-control" name="datecnib" placeholder="delivrée le" required="required">
             </div>
 
+            <div class="form-group">
+                <label for="">fichier cnib</label>
+                <input type="file" class="form-control" name="cnibfichier" placeholder="fichier pdf" required="required">
+            </div>
 
 
             <div class="form-group" id="publicDiv" style="display: none;">

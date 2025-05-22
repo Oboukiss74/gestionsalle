@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>@yield('titre','mes demandes')</title>
+    <title>@yield('titre')</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Raleway">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -12,13 +12,11 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel="icon" type="image/png" href="images/logo.png"/>
+    <link rel="icon" type="image/png" href="{{ asset("images/logo.png") }}" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/salles/salle.css') }}">
     @yield('liens')
-    <style>
 
-    </style>
 </head>
 
 <body>
@@ -27,12 +25,13 @@
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                 class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
+            <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
         </a>
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
             <div class="navbar-nav">
                 <a href="{{ route('profile') }}"class="nav-item nav-link">Acceuil</a>
+                <a href="{{ route('ajoutequipement') }}"class="nav-item nav-link">Ajouter materiels</a>
                 @yield('elements')
 
                 <a href="#" class="nav-item nav-link">Contact</a>

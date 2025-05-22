@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,8 +21,9 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="{{ route('profile') }}"><b style="color: rgb(11, 159, 63);font-size: 30px">Gestion</b> <b
-                style="color:(11, 159, 63);font-size: 30px"> Sall</b><b
+        <a class="navbar-brand" href="{{ route('profile') }}"><b
+                style="color: rgb(11, 159, 63);font-size: 30px">e.Gestion</b> <b
+                style="color:rgb(11, 159, 63);font-size: 30px"> Sall</b><b
                 style="color: rgb(11, 159, 63);font-size: 30px">es</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -58,6 +60,7 @@
         </div>
     </nav>
 
+
     <div class="formbold-main-wrapper">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
@@ -66,20 +69,19 @@
             <div class="container">
                 <div id="etape1">
                     <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
-                    <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data">
-
-
+                    <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data"
+                        id="form-etape1">
                         <div class="flex flex-wrap formbold--mx-3">
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5 w-full">
                                     <label for="date" class="formbold-form-label required"> Date de debut</label>
-                                    <input type="date" name="datedebut" id="date" class="formbold-form-input" />
+                                    <input type="date" name="datedebut" id="datedebut" class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5 w-full">
                                     <label for="date" class="formbold-form-label required"> Date de fin</label>
-                                    <input type="date" name="datefin" id="date" class="formbold-form-input" />
+                                    <input type="date" name="datefin" id="datefin" class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
@@ -92,7 +94,7 @@
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5 w-full">
                                     <label for="time" class="formbold-form-label required"> Heure de fin</label>
-                                    <input type="time" name="heurefin" id="date" class="formbold-form-input" />
+                                    <input type="time" name="heurefin" id="heurefin" class="formbold-form-input" />
                                 </div>
                             </div>
                         </div>
@@ -100,7 +102,7 @@
 
 
                         <div id="etape_suivant">
-                            <button class="formbold-btn">suivant</button>
+                            <button class="formbold-btn" type="button">suivant</button>
                         </div>
                     </form>
 
@@ -134,122 +136,112 @@
                                 <input type="email" name="mail" id="email"
                                     value="{{ Auth::user()->email }}" class="formbold-form-input" />
                             </div>
-                            <div class="formbold-mb-5">
-                                <label for="cnib" class="formbold-form-label ">
-                                    <h4 class="required">fichier CNIB pdf</h4>
-                                </label>
-                                <input type="file" name="cnib" id="email" placeholder="fichier piece"
-                                    class="formbold-form-input" accept="pdf" style="" />
-                            </div>
+
 
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="text" id="place" type="hidden" name="datedebut"
+                                    <input type="hidden" id="datedebut" type="hidden" name="datedebut"
                                         value="{{ $dateDebut }}" placeholder="Nombre de personnes"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="text" id="place" type="hidden" name="datefin"
-                                        value="{{ $dateFin }}" placeholder="Nombre de personnes"
+                                    <input type="hidden" id="datefin" type="hidden" name="datefin"
+                                        value="{{ $dateFin }}" placeholder="date de fin"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="text" id="place" type="hidden" name="heuredebut"
-                                        value="{{ $heureDebut }}" placeholder="Nombre de personnes"
+                                    <input type="hidden" id="heuredebut" type="hidden" name="heuredebut"
+                                        value="{{ $heureDebut }}" placeholder="heure de debut"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="text" id="place" type="hidden" name="heurefin"
-                                        value="{{ $heureFin }}" placeholder="Nombre de personnes"
+                                    <input type="hidden" id="heurefin" type="hidden" name="heurefin"
+                                        value="{{ $heureFin }}" placeholder="heure de fin"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
 
 
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <div class="accordion" id="accordionExample">
 
-                                    <tbody>
-                                        <option value="selection" aria-placeholder="selectionne">selectionne le
-                                            bâtiment
-                                        </option>
-                                        <select name="id_salle" id="" class="formbold-form-input required">
-                                             <option value="selectionne">selectionne</option>
-                                            @foreach ($sallesDisponibles as $salle)
+
+                                    <div class="formbold-mb-5 formbold-pt-3">
+
+                                        <label class="formbold-form-label formbold-form-label-2 required">
+                                            Salle
+                                        </label>
+                                        <div class="flex flex-wrap formbold--mx-3">
+                                            <div class="w-full sm:w-half formbold-px-3">
+                                                <div class="formbold-mb-5">
+                                                    <ul class="list-group">
+                                                        @foreach ($sallesDisponibles as $salle)
+                                                            <li class="list-group-item">
+                                                                <div
+                                                                    class="d-flex justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <input type="radio" name="id_salle"
+                                                                            value="{{ $salle->id }}" required>
+                                                                        <strong>{{ $salle->nom }}</strong> — Capacité
+                                                                        : {{ $salle->nombreplace }}
+                                                                    </div>
+                                                                    <button type="button"
+                                                                        class="btn btn-sm btn-outline-primary"
+                                                                        onclick="afficherEquipements({{ $salle->id }})">
+                                                                        Voir les équipements
+                                                                    </button>
+                                                                </div>
+
+                                                                <!-- Zone d’affichage des équipements (masquée au départ) -->
+                                                                <div id="equipements-{{ $salle->id }}"
+                                                                    class="equipements mt-2" style="display: none;">
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+
+                                                </div>
+
                                                 <div class="w-full sm:w-half formbold-px-3">
                                                     <div class="formbold-mb-5">
-
-                                                        <option id="salle_{{ $salle->id }}"
-                                                            value="{{ $salle->id }}" required
-                                                            class="formbold-form-input required">{{ $salle->nom }}
-                                                        </option>
-
+                                                        <label for="Motif" class="formbold-form-label required">
+                                                            Motif
+                                                        </label>
+                                                        <input type="text" name="motif" id="state"
+                                                            placeholder="motif de la demande"
+                                                            class="formbold-form-input" />
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        </select>
-                                    </tbody>
-                                </table>
-                                <div class="formbold-mb-5 formbold-pt-3">
-                                    <label class="formbold-form-label formbold-form-label-2 required">
-                                        Salle
-                                    </label>
-                                    <div class="flex flex-wrap formbold--mx-3">
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <select name="salle" id=""
-                                                    class="formbold-form-input required">
-                                                    <option value="selection" aria-placeholder="selectionne">
-                                                        selectionne la salle
+                                                <div class="w-full sm:w-half formbold-px-3">
+                                                    <div class="formbold-mb-5">
+                                                        <label for="Equipement" class="formbold-form-label required">
+                                                            nombre de personnes
+                                                        </label>
+                                                        <input type="text" name="effectif" id="post-code"
+                                                            placeholder="nombre de personnes"
+                                                            class="formbold-form-input" />
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                    </option>
-                                                    <option value="salle1">salle enseignant (30 places)</option>
-                                                    <option value="salle2">salle visio (30 places)</option>
-                                                    <option value="salle2">grande salle (160 places)</option>
-                                                </select>
 
-                                            </div>
-                                        </div>
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <input type="text" name="effectif" id="place"
-                                                    placeholder="Nombre de personnes" class="formbold-form-input" />
-                                            </div>
-                                        </div>
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <label for="Motif" class="formbold-form-label required"> Motif
-                                                </label>
-                                                <input type="text" name="motif" id="state"
-                                                    placeholder="motif de la demande" class="formbold-form-input" />
-                                            </div>
-                                        </div>
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <label for="Equipement" class="formbold-form-label required">
-                                                    Equipements
-                                                </label>
-                                                <input type="text" name="equipement" id="post-code"
-                                                    placeholder="Equipements necessaires"
-                                                    class="formbold-form-input" />
-                                            </div>
-                                        </div>
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <button type="submit" formbold-form-input>Envoyer</button>
+                                            <div class="w-full sm:w-half formbold-px-3">
+                                                <div class="formbold-mb-5">
+                                                    <button type="submit"
+                                                        class="formbold-form-input" style="background-color: lightgreen">Envoyer</button>
 
+                                                </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
                         </form>
                     </div>
@@ -260,14 +252,56 @@
         </div>
     </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#etape_suivant').on('click', function(e) {
-                e.preventDefault(); // empêcher le GET de se faire
+                e.preventDefault();
+
+                // Récupérer les valeurs saisies
+                const datedebut = $('#datedebut').val();
+                const datefin = $('#datefin').val();
+                const heuredebut = $('#heuredebut').val();
+                const heurefin = $('#heurefin').val();
+                if (!datedebut || !datefin || !heuredebut || !heurefin) {
+                    alert('Veuillez remplir toutes les dates et heures');
+                    return;
+                }
+                // Mettre à jour les champs cachés du formulaire d'étape 2
+                $('input[name="datedebut"]').val(datedebut);
+                $('input[name="datefin"]').val(datefin);
+                $('input[name="heuredebut"]').val(heuredebut);
+                $('input[name="heurefin"]').val(heurefin);
+
                 $('#etape1').hide();
                 $('#etape2').show();
             });
         });
+
+        const salle = @json($sallesDisponibles);
+
+        const salleData = @json($sallesDisponibles);
+
+        function afficherEquipements(id) {
+            const selectedSalle = salleData.find(s => s.id == id);
+            const container = document.getElementById('equipements-' + id);
+
+            // Masquer tous les autres
+            document.querySelectorAll('.equipements').forEach(div => div.style.display = 'none');
+
+            if (selectedSalle && selectedSalle.equipements.length > 0) {
+                let html = '<strong>Équipements :</strong><ul>';
+                selectedSalle.equipements.forEach(e => {
+                    html += `<li>${e.nom}</li>`;
+                });
+                html += '</ul>';
+                container.innerHTML = html;
+            } else {
+                container.innerHTML = 'Aucun équipement pour cette salle.';
+            }
+
+            container.style.display = 'block';
+        }
     </script>
 </body>
 

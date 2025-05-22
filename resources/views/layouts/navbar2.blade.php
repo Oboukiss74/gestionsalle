@@ -20,7 +20,7 @@
     {{-- <i class="fa fa-cube"> --}}
     <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
         <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
-                alt=""></i><b style="color: #24ea73"> Gestion Salles</b></a>
+                alt=""></i><b style="color: #24ea73"> e.Gestion Salles</b></a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>

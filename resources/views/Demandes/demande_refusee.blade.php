@@ -28,7 +28,7 @@
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                 class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
+            <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
         </a>
 
         <a class="navbar-brand" href="{{ route('profile') }}"
@@ -150,7 +150,7 @@
                                     <div class="modal-content">
 
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Mise a jour de la demande</h4>
+                                            <h4 class="modal-title">Details de la demande</h4>
                                             <button type="button" class="close" data-dismiss="modal"
                                                 aria-hidden="true">&times;</button>
                                         </div>

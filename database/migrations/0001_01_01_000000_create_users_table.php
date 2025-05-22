@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('profile');
             $table->string('cnib');
             $table->string('datecnib');
+            $table->string('cnibfichier');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -1,5 +1,9 @@
 @extends('layouts.navbar3')
+@section('titre')
+    ajout de salles
+@endsection
 @section('liens')
+
     <link rel="stylesheet" href="{{ asset('css/salles/salle.css') }}">
 @endsection
 @section('contenu')
@@ -75,21 +79,24 @@
                         placeholder="statut de la salle" /> --}}
                 </div>
 
-                <div class="formbold-mb-3">
-                    <label for="address" class="formbold-form-label"> Localisation </label>
 
-                    {{-- <input type="text" name="localisation" id="address" placeholder="Street address"
-                        class="formbold-form-input formbold-mb-3" /> --}}
-                    <input type="text" name="localisation" id="address2" placeholder="lien geographique"
-                        class="formbold-form-input" />
+                <div class="formbold-input-flex">
+                    <div>
+                        <label for="email" class="formbold-form-label"> la longitude </label>
+                        <input type="text" name="longitude" id="email" placeholder="la longitude"
+                            class="formbold-form-input" />
+                    </div>
+
+                    <div>
+                        <label for="latitude" class="formbold-form-label"> la latitude </label>
+                        <input type="text" name="latitude" id="email" placeholder="la latitude"
+                            class="formbold-form-input" />
+                    </div>
+
+
                 </div>
 
-                {{-- <div class="formbold-mb-3">
-                    <label for="message" class="formbold-form-label">
-                        Cover Letter
-                    </label>
-                    <textarea rows="6" name="message" id="message" class="formbold-form-input"></textarea>
-                </div> --}}
+
 
                 <button class="formbold-btn">Enregistrer</button>
             </form>

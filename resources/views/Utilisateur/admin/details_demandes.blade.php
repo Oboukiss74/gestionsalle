@@ -1,15 +1,75 @@
 @extends('layouts.navbaradmin')
-
-@section('contenue')
-    <!-- /.navbar -->
+@section('navabar')
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
-
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <a class="navbar-brand" href="{{ route('profile') }}"
                 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
                 <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                     class="d-inline-block align-top">
-                <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
+                <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+
+                <!-- Boutons de navigation -->
+                <ul class="navbar-nav mr-auto ml-4">
+
+                    <li class="nav-item">
+                        @can('viewAny', App\Models\Salles::class)
+                            <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
+                        @endcan
+
+                    </li>
+                    <li class="nav-item">
+                        @can('view', App\Models\Demandes::class)
+                            <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
+                        @endcan
+
+                    </li>
+                    <li class="nav-item">
+                        @can('create', App\Models\Demandes::class)
+                            <a class="nav-link" href="{{ route('creer_demande') }}">Réservations</a>
+                        @endcan
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Menu Profil -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            <h2
+                                style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                                {{ Auth::user()->nom }}</h2>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
+                            <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
+                            <a class="dropdown-item" href="#">Paramètres</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+@endsection
+@section('contenue')
+
+    <!-- /.navbar -->
+    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-white"> --}}
+
+        {{-- <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand" href="{{ route('profile') }}"
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                    class="d-inline-block align-top">
+                <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                 aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +152,7 @@
                     </li>
                 </ul>
             </div>
-        </nav>
+        </nav> --}}
         <!-- Main Sidebar Container -->
 
         <!-- Content Wrapper. Contains page content -->

@@ -3,14 +3,14 @@
     <div class="container">
         @auth
             <a class="tooplate-green" href="{{ route('profile') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">Gestion
-                <span class="tooplate-green">Sall</span><span class="tooplate-green">es</span></a>
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">gs.
+                <span class="tooplate-green">ujkz</span></a>
         @endauth
 
         @guest
             <a class="tooplate-green" href="{{ route('Accueil') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">E.Gestion
-                <span class="tooplate-green">Sall</span><span class="tooplate-green">es</span></a>
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">gs.
+                <span class="tooplate-green">ujkz</span></a>
         @endguest
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"

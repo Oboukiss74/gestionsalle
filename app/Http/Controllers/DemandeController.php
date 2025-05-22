@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
+use Illuminate\Validation\Rule;
 
 
 class DemandeController extends Controller
@@ -24,9 +25,9 @@ class DemandeController extends Controller
 
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
-        $heureDebut = $request->input('heuredebut', '08:00');
+        $heureDebut = $request->input('heuredebut', '06:00');
         $dateFin = $request->input('datefin', now()->format('Y-m-d'));
-        $heureFin = $request->input('heurefin', '17:00');
+        $heureFin = $request->input('heurefin', '23:00');
 
         // Convertir en objets Carbon pour la requête
         $debut = Carbon::createFromFormat('Y-m-d H:i', "$dateDebut $heureDebut");
@@ -35,12 +36,10 @@ class DemandeController extends Controller
         // Récupérer les salles disponibles
         $sallesDisponibles = Salles::whereDoesntHave('demandes', function ($query) use ($debut, $fin) {
             $query->where(function ($q) use ($debut, $fin) {
-                $q->whereBetween('datedebut', [$debut, $fin])
-                    ->orWhereBetween('datefin', [$debut, $fin])
-                    ->orWhere(function ($q2) use ($debut, $fin) {
-                        $q2->where('datedebut', '<=', $debut)
-                            ->where('datefin', '>=', $fin);
-                    });
+                $q->where(function ($sub) use ($debut, $fin) {
+                    $sub->where('datedebut', '<', $fin)
+                        ->where('datefin', '>', $debut);
+                });
             });
         })->get();
         return view("Demandes.creer_demandes", compact(
@@ -64,43 +63,22 @@ class DemandeController extends Controller
                     "nom" => "required",
                     "telephone" => "required",
                     "mail" => "required|email",
-                    "cnib" => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+                    //"cnib" => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
                     "datedebut" => "required|date|after_or_equal:today",
                     "datefin" => "required|date|after_or_equal:datedebut",
                     "heuredebut" => "required",
                     "heurefin" => "required",
-                    "batiment"=> "null",
-                    "salle" => "required",
+                    "batiment" => "nullable",
+                    "salle" => "nullable",
                     "effectif" => "required|integer|min:1",
                     "motif" => "required",
                     "equipement" => "required",
                 ]
 
+
+
             );
-            // dd($validatedData);
-            // Gestion du fichier CNIB
-            if ($request->hasFile('cnib')) {
-                $path = $request->file('cnib')->store('cnibs', 'public'); // Stocke dans storage/app/public/cnibs
-                $request['cnib'] = $path; // Ajoute le chemin du fichier à l'array
-            }
-
-            // Demandes::create([
-
-            //     "id_salle" => $request->input("id_salle"),
-            //     "id_user" => $request->input("id_user"),
-            //     "nom" => $request->input("nom"),
-            //     "telephone" => $request->input("telephone"),
-            //     "mail" => $request->input("mail"),
-            //     "cnib" => $request->input("cnib"),
-            //     "datedebut" => $request->input("datedebut"),
-            //     "datefin" => $request->input("datefin"),
-            //     "heuredebut" => $request->input("heuredebut"),
-            //     "heurefin" => $request->input("heurefin"),
-            //     "salle" => $request->input("salle"),
-            //     "effectif" => $request->input("effectif"),
-            //     "motif" => $request->input("motif"),
-            //     "equipement" => $request->input("equipement"),
-            // ]);
+            //dd($validatedData);
             Demandes::create($validatedData);
 
             //mail depuis le DB
@@ -119,6 +97,38 @@ class DemandeController extends Controller
         return redirect()->back()->with('success', 'Demande créée avec succès.');
     }
 
+    public function UpdateDemande(Request $request, $id)
+    {
+        try {
+            // Validation des données
+            $request->validate([
+                'datedebut' => 'required|date',
+                'datefin' => 'required|date|after_or_equal:datedebut',
+                'heuredebut' => 'required',
+                'heurefin' => 'required|after:heuredebut',
+                'effectif' => 'required|integer|min:1',
+                'motif' => 'required|string|max:255',
+            ]);
+            //dd($validated);
+            // Mise à jour de la demande
+            $demande = Demandes::findOrFail($id);
+            $demande->update([
+                'datedebut' => $request->datedebut,
+                'datefin' => $request->datefin,
+                'heuredebut' => $request->heuredebut,
+                'heurefin' => $request->heurefin,
+                'effectif' => $request->effectif,
+                'motif' => $request->motif,
+            ]);
+
+            //dd($demande);
+            return redirect()->route('Verifie_demande');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erreur lors de la mise à jour: ' . $e->getMessage());
+        }
+    }
+
+
     //validation de l'etat de la demande
     public function updateEtat(Request $request, Demandes $demande)
     {
@@ -131,11 +141,12 @@ class DemandeController extends Controller
         // return back()->with('success', 'État de la demande mis à jour.');
     }
     //valider la reception de la demande par le S.C
-    public function updatereception(Request $request, Demandes $demande){
+    public function updatereception(Request $request, Demandes $demande)
+    {
         $request->validate([
-            'reçcu'=> 'required|in:Non,Oui'
+            'reçcu' => 'required|in:Non,Oui'
         ]);
-        $demande->update(['reçu'=> $request->reçu]);
+        $demande->update(['reçu' => $request->reçu]);
     }
     //choix de salle a la demande de location
     public function choix_salle(Request $request)
@@ -286,7 +297,7 @@ class DemandeController extends Controller
         $demandeRejetee = Demandes::where('etat', 'Refusée')->paginate(3);
         $nombredemande = Demandes::where('etat', 'Refusée')->count();
         $demandeRefusees = Demandes::where('etat', 'Refusée')->get();
-        return view('Demandes.demande_refusee', compact('demandeRefusees', 'nombredemande','demandeRejetee'));
+        return view('Demandes.demande_refusee', compact('demandeRefusees', 'nombredemande', 'demandeRejetee'));
     }
     //liste de demande validee
     public function demande_validee()
@@ -295,6 +306,6 @@ class DemandeController extends Controller
         $demandeValidee = Demandes::where('etat', 'Validée')->paginate(3);
         $nombredemande = Demandes::where('etat', 'Validée')->count();
         $demandes = Demandes::where('etat', 'Validée')->get();
-        return view('Demandes.demande_validee', compact('demandes', 'nombredemande','demandeValidee'));
+        return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee'));
     }
 }

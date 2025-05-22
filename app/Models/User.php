@@ -28,6 +28,7 @@ class User extends Authenticatable
         'profile',
         'cnib',
         'datecnib',
+        'cnibfichier',
         'email',
         'password',
         'role',

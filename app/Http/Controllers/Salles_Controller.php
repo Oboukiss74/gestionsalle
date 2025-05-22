@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+
 class Salles_Controller extends Controller
 {
     use AuthorizesRequests;
@@ -31,7 +32,8 @@ class Salles_Controller extends Controller
                 "equipement" => "required",
                 "tarif" => "required",
                 "statut" => "required",
-                "localisation" => "required",
+                "longitude" => "required",
+                "latitude" => "required",
 
             ]);
 
@@ -44,7 +46,8 @@ class Salles_Controller extends Controller
                 "equipement" => $request->input("equipement"),
                 "tarif" => $request->input("tarif"),
                 "statut" => $request->input("statut"),
-                "localisation" => $request->input("localisation"),
+                "longitude" => $request->input("longitude"),
+                "latitude" => $request->input("latitude"),
 
             ]);
             //dd($salles);
@@ -65,7 +68,7 @@ class Salles_Controller extends Controller
         $this->authorize('view', Salles::class);
         $salles = Salles::paginate(2);
         $nombresalles = Salles::count();
-        return view("salles.liste_salles", compact("salles","nombresalles"));
+        return view("salles.liste_salles", compact("salles", "nombresalles"));
     }
 
 
@@ -103,14 +106,14 @@ class Salles_Controller extends Controller
         $now = Carbon::now();
         //recuperer les id des salles reservée
         $sallesOccupees = Demandes::where('datefin', '>', $now->format('Y-m-d'))
-                             ->orWhere(function($query) use ($now) {
-                                 $query->where('datefin', '=', $now->format('Y-m-d'))
-                                       ->where('heurefin', '>', $now->format('H:i:s'));
-                             })
-                             ->pluck('id_salle');
+            ->orWhere(function ($query) use ($now) {
+                $query->where('datefin', '=', $now->format('Y-m-d'))
+                    ->where('heurefin', '>', $now->format('H:i:s'));
+            })
+            ->pluck('id_salle');
 
-         // Récupérer les salles dont les réservations sont terminées
-         $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
+        // Récupérer les salles dont les réservations sont terminées
+        $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
         return view('salles.salle_disponible', compact('salles'));
     }
 
@@ -120,14 +123,14 @@ class Salles_Controller extends Controller
     {
         $now = Carbon::now();
 
-        $salles = Salles::whereDoesntHave('demandes', function($query) use ($now) {
+        $salles = Salles::whereDoesntHave('demandes', function ($query) use ($now) {
             $query->where('datefin', '>=', $now->toDateString());
         })
-        ->orWhereHas('demandes', function($query) use ($now) {
-            $query->where('datefin', '<', $now->toDateString());
-        })
-        ->orderBy('nom')
-        ->get();
+            ->orWhereHas('demandes', function ($query) use ($now) {
+                $query->where('datefin', '<', $now->toDateString());
+            })
+            ->orderBy('nom')
+            ->get();
 
         return view('salles.salle_disponible', compact('salles', 'now'));
     }
@@ -159,18 +162,27 @@ class Salles_Controller extends Controller
         return view('Utilisateur.admin.salles_dispo_date');
     }
 
-    // public function SallesLibre()
-    // {
-    //     $today = now()->toDateString();
-    //     $nowTime = now()->format('H:i:s');
+    //statistique des salle louée
 
-    //     $nombreSallesLibres = Salles::whereDoesntHave('demandes', function($query) use ($today, $nowTime) {
-    //         $query->whereDate('date', $today)
-    //             ->where('heuredebut', '<=', $nowTime)
-    //             ->where('heurefin', '>=', $nowTime);
-    //     })->count();
+    public function statistique()
+    {
+        $totalSalles = Salles::count();
+        $totalDemandes = Demandes::count();
+        $demandesParMois = Demandes::selectRaw('MONTH(created_at) as mois, COUNT(*) as total')
+            ->groupBy('datefin')
+            ->orderBy('datefin')
+            ->get();
 
-    //     return view('Utilisateur.admin.salles_dispo_date', compact('nombreSallesLibres'));
-    // }
+        $sallesLesPlusReservees = Salles::withCount('demandes')
+            ->orderByDesc('nom')
+            ->take(5)
+            ->get();
 
+        return view('salles.statistique', compact(
+            'totalSalles',
+            'totalDemandes',
+            'demandesParMois',
+            'sallesLesPlusReservees'
+        ));
+    }
 }

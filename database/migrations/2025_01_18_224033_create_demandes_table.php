@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nom');
             $table->string('telephone');
             $table->string('mail');
-            $table->string('cnib');
             $table->date('datedebut');
             $table->date('datefin');
             $table->time('heuredebut');

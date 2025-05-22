@@ -8,8 +8,10 @@ use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\DemandeController;
 
 use App\Http\Controllers\Salles_Controller;
+use App\Http\Controllers\Controllerequipement;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller_equipement;
 use App\Http\Controllers\User_Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -52,20 +54,20 @@ Route::get('role_permission', function () {
 
     //     // $roleSuperAdmin = Role::where('name','Utilisateur')->first();
     //     // $roleAdmin->givePermissionTo(['modifier.profile', 'voir.profile','ecrire.demande','suivre.demande']);
-    // $rolegestionaire=Role::where('name','SuperAdmin')->first();
-    // $rolegestionaire->givePermissionTo([
-    //     'modifier.demande',
-    //     'supprimer.demande',
-    //     'ecrire.demande',
-    //     'valider.demande',
-    //     'refuser.demande',
-    //     'creer.utilisateurs',
-    //     'supprimer.utilisateurs',
-    //     'voir.utilisateurs',
-    //     'modifier.profile',
-    //     'voir.profile',
-    //     'ecrire.demande'
-    // ]);
+    $rolegestionaire=Role::where('name','Admin')->first();
+    $rolegestionaire->givePermissionTo([
+        'modifier.ma.demande',
+        'supprimer.demande',
+        'ecrire.demande',
+        'valider.demande',
+        'refuser.demande',
+        'creer.utilisateurs',
+        'supprimer.utilisateurs',
+        'voir.utilisateurs',
+        'modifier.profile',
+        'voir.profile',
+        'ecrire.demande'
+    ]);
 
 
     //assigner role
@@ -123,8 +125,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('salles/ajouter', [Salles_Controller::class, 'AjouterSalles'])->name(name: 'pages_salles');
     //validation des salles
     Route::post('Ajouter_salles', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salle');
-
-
     //validation des salles
     Route::post('Ajouter_salle', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salles');
     //liste des salles
@@ -146,34 +146,52 @@ Route::middleware(['auth'])->group(function () {
     //Route::post('salle_occupe', action: [Salles_Controller::class, 'sallesOccupe'])->name(name: 'liste_salle_occupe');
     //salles occupees
     Route::get('admin/salleoccupee', [AdminController::class, 'SallesOccupee'])->name('liste_salles_occupee');
+    //statistiques des salles sur demande
+    Route::get('salles/statistiquesalles/', [Salles_Controller::class,'statistique'])->name('statistique');
 });
 //cote demandes
 Route::middleware(['auth'])->group(function () {
 
     //accueil des demandes
     Route::get('Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
+
     //faire une demande
     Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
+
     //liste des demandes
     Route::get('demandes_liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
+
     //ma demande
     Route::get('ma_demande/', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
+
     //verification des mes demandes etats
     Route::get('verifie_demande', [DemandeController::class, 'VerifierStatut'])->name(name: 'Verifie_demande');
+
     //creation demande
     Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
+
     //detail de ma demande en vue de modifier
     Route::get('detail_demande/{id}', [DemandeController::class, 'DetailMaDemande'])->name('ma_demande_detail');
+
+
+    //modifier sa demande
+    Route::put('modifiermademande/{id}', [DemandeController::class,'UpdateDemande'])->name('modifier_mademande');
+
     //confirmer reception des demandes
     Route::get('demande/valider/reception', [DemandeController::class, 'updatereception'])->name('validerreception');
+
     //valider demande
     Route::post('validerdemande', [DemandeController::class, 'updateEtat'])->name(name: 'demandevalidee');
+
     //voir la demande
     Route::post('lademande', [DemandeController::class, 'lademande'])->name(name: 'voirdemande');
+
     //supprimer une demande
     Route::delete('supprimer_demande/{id}', [DemandeController::class, 'deletedemande'])->name(name: 'demandesupprimer');
+
     //valider demande
     Route::put('accepter_demande/{id}', [DemandeController::class, 'demandeaccepter'])->name(name: 'accpeterdemande');
+
     //refuser demande
     Route::put('refuser_demande/{id}', [DemandeController::class, 'demanderefuser'])->name(name: 'refuserdemande');
     //total des salles
@@ -196,6 +214,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tableau_bord/demandes', [AdminController::class, 'total_demandes'])->name(name: 'total_demande');
     //details de demandes
     Route::get('admin/tableau_bord/details_demandes', [AdminController::class, 'details_demandes'])->name(name: 'deatilsdemandes');
+});
+
+//cote equipement
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('equipements/ajout', [Controllerequipement::class,'Ajouter'])->name('ajoutequipement');
+    //valider l'enregistrement des equipements
+    Route::post('equipements/valider', [Controllerequipement::class,'valider'])->name('validerequipement');
+
 });
 
 //cote profile

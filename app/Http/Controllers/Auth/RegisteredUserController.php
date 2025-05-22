@@ -14,6 +14,8 @@ use Illuminate\View\View;
 use App\Models\Locataires;
 use App\Models\Etudiants;
 use App\Models\Personnels;
+use App\Http\Controllers\Auth\DB;
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -36,22 +38,29 @@ class RegisteredUserController extends Controller
         try {
             $request->validate([
 
-                'matricule' => ['nullable','unique:personnels,matricule'],
-                'fonction' => ['nullable','string'],
-                'telephone' => ['required','max:12'],
-                'INE' => ['nullable','unique:etudiants,INE'],
-                'universite' => ['nullable','string'],
-                'filiere' => ['nullable','string'],
+                'matricule' => ['nullable', 'unique:personnels,matricule'],
+                'fonction' => ['nullable', 'string'],
+                'telephone' => ['required', 'max:12'],
+                'INE' => ['nullable', 'unique:etudiants,INE'],
+                'universite' => ['nullable', 'string'],
+                'filiere' => ['nullable', 'string'],
                 'nom' => ['required', 'string', 'max:255'],
                 'prenom' => ['required', 'string'],
                 'sexe' => ['required'],
                 'profile' => ['required'],
                 'cnib' => ['required', 'max:24', 'unique:' . User::class],
                 'datecnib' => ['required', 'date'],
+                'cnibfichier' => ['required', 'file', 'mimes:pdf'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'password' => ['required', Rules\Password::defaults()],
             ]);
-           // dd($request);
+
+            // Gestion du fichier CNIB
+            if ($request->hasFile('cnibfichier')) {
+                $path = $request->file('cnibfichier')->store('cnibfichier', 'public');
+                $request['cnibfichier'] = $path;
+            }
+            // dd($request);
             if ($request->profile == 'Public') {
                 $locataire = Locataires::create([
                     'telephone' => $request->telephone,
@@ -65,16 +74,16 @@ class RegisteredUserController extends Controller
                     'profile' => $request->profile,
                     'cnib' => $request->cnib,
                     'datecnib' => $request->datecnib,
+                    'cnibfichier' => $request->cnibfichier,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);
-
             } else if ($request->profile == 'Etudiant') {
                 $etudiant = Etudiants::create([
                     'telephone' => $request->telephone,
                     'INE' => $request->INE,
-                    'universite'=>$request->universite,
-                    'filiere'=>$request->filiere,
+                    'universite' => $request->universite,
+                    'filiere' => $request->filiere,
                 ]);
 
                 $user = User::create([
@@ -85,10 +94,10 @@ class RegisteredUserController extends Controller
                     'profile' => $request->profile,
                     'cnib' => $request->cnib,
                     'datecnib' => $request->datecnib,
+                    'cnibfichier' => $request->cnibfichier,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);
-
             } elseif ($request->profile == 'Personnel') {
                 $personnel = Personnels::create([
                     'matricule' => $request->matricule,
@@ -105,6 +114,7 @@ class RegisteredUserController extends Controller
                     'profile' => $request->profile,
                     'cnib' => $request->cnib,
                     'datecnib' => $request->datecnib,
+                    'cnibfichier' => $request->cnibfichier,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                 ]);
