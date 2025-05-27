@@ -64,7 +64,8 @@
     <div class="formbold-main-wrapper">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
-        <div class="formbold-form-wrapper">
+        <div class="container">
+            <div class="formbold-form-wrapper">
 
             <div class="container">
                 <div id="etape1">
@@ -140,28 +141,27 @@
 
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="hidden" id="datedebut" type="hidden" name="datedebut"
+                                    <input type="hidden" id="datedebut" name="datedebut"
                                         value="{{ $dateDebut }}" placeholder="Nombre de personnes"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="hidden" id="datefin" type="hidden" name="datefin"
-                                        value="{{ $dateFin }}" placeholder="date de fin"
-                                        class="formbold-form-input" />
+                                    <input type="hidden" id="datefin" name="datefin" value="{{ $dateFin }}"
+                                        placeholder="date de fin" class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="hidden" id="heuredebut" type="hidden" name="heuredebut"
+                                    <input type="hidden" id="heuredebut" name="heuredebut"
                                         value="{{ $heureDebut }}" placeholder="heure de debut"
                                         class="formbold-form-input" />
                                 </div>
                             </div>
                             <div class="w-full sm:w-half formbold-px-3">
                                 <div class="formbold-mb-5">
-                                    <input type="hidden" id="heurefin" type="hidden" name="heurefin"
+                                    <input type="hidden" id="heurefin" name="heurefin"
                                         value="{{ $heureFin }}" placeholder="heure de fin"
                                         class="formbold-form-input" />
                                 </div>
@@ -208,39 +208,42 @@
 
                                                 </div>
 
-                                                <div class="w-full sm:w-half formbold-px-3">
-                                                    <div class="formbold-mb-5">
-                                                        <label for="Motif" class="formbold-form-label required">
-                                                            Motif
-                                                        </label>
-                                                        <input type="text" name="motif" id="state"
-                                                            placeholder="motif de la demande"
-                                                            class="formbold-form-input" />
-                                                    </div>
-                                                </div>
-                                                <div class="w-full sm:w-half formbold-px-3">
-                                                    <div class="formbold-mb-5">
-                                                        <label for="Equipement" class="formbold-form-label required">
-                                                            nombre de personnes
-                                                        </label>
-                                                        <input type="text" name="effectif" id="post-code"
-                                                            placeholder="nombre de personnes"
-                                                            class="formbold-form-input" />
-                                                    </div>
-                                                </div>
+
                                             </div>
 
 
-                                            <div class="w-full sm:w-half formbold-px-3">
-                                                <div class="formbold-mb-5">
-                                                    <button type="submit"
-                                                        class="formbold-form-input" style="background-color: lightgreen">Envoyer</button>
-
-                                                </div>
-                                            </div>
 
                                         </div>
+
                                     </div>
+                                    <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <label for="Equipement" class="formbold-form-label required">
+                                                    nombre de personnes
+                                                </label>
+                                                <input type="text" name="effectif" id="post-code"
+                                                    placeholder="nombre de personnes" class="formbold-form-input" />
+                                            </div>
+                                        </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <label for="motif" class="formbold-form-label required">
+                                                    Motif
+                                                </label>
+                                                <input type="text" name="motif" id="post-code"
+                                                    placeholder="motif de la demande" class="formbold-form-input" />
+                                            </div>
+                                        </div>
+
+
+
+                                    <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <button type="submit" class="formbold-form-input"
+                                                    style="background-color: lightgreen">Envoyer</button>
+
+                                            </div>
+                                        </div>
                                 </div>
 
                         </form>
@@ -250,6 +253,8 @@
             @endif
 
         </div>
+        </div>
+
     </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

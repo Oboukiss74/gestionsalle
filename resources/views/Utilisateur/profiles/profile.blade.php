@@ -45,7 +45,7 @@
                 <a href="{{ route('profile') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
 
-                <a href="{{ route('ajoutequipement') }}" class="nav-item nav-link active" style="color: black"><i
+                <a href="{{ route('equipementdetails') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa-solid fa-recycle"></i><span>Materiels</span></a>
 
                 @can('view', App\Models\Demandes::class)

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use Spatie\LaravelPdf\Facades\Pdf;
+use Spatie\LaravelPdf\PdfBuilder;
 
 
 class DemandeController extends Controller
@@ -72,7 +74,7 @@ class DemandeController extends Controller
                     "salle" => "nullable",
                     "effectif" => "required|integer|min:1",
                     "motif" => "required",
-                    "equipement" => "required",
+
                 ]
 
 
@@ -228,7 +230,7 @@ class DemandeController extends Controller
         if ($demandes->etat == 'En attente') {
             return view('Demandes.detailmademande', compact('demandes'));
         } else {
-            return back()->with('message', 'votre est deja traitée');
+            return back()->with('message', 'votre demande est deja traitée');
         }
         // dd($demandes);
 
@@ -242,7 +244,7 @@ class DemandeController extends Controller
     // accpeter demande
     public function demandeaccepter(Demandes $demandes, $id)
     {
-        $this->authorize('approve', $demandes);
+
         $demande = Demandes::findOrFail($id);
         $demande->etat = 'Validée';
         $demande->save();
@@ -308,4 +310,24 @@ class DemandeController extends Controller
         $demandes = Demandes::where('etat', 'Validée')->get();
         return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee'));
     }
+
+    //quittance demandes
+   public function demandequittance(Demandes $demande)
+    {
+
+        // Seules les demandes validée peuvent générer une quittance
+        if ($demande->etat !== 'Validée') {
+            return redirect()->back()
+                ->with('error', 'La quittance n\'est disponible que pour les demandes approuvées.');
+        }
+
+        $pdf = Pdf::view('Demandes.quittance', compact('demande'))
+            ->format('a4')
+            ->margins(10, 10, 10, 10)
+            ->name('quittance-' . $demande->id . '.pdf');
+
+        return $pdf->download();
+    }
+
+    //rechercher une demande
 }

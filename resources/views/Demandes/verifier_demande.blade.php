@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 <div>
     @section('elements')
         <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">soumettre une demande</a>
@@ -24,7 +25,6 @@
     @section('contenu')
         @if (@session()->has('message'))
             <p style="color: red">{{ session('message') }}</p>
-
         @endif
         <table class="table">
             <thead>
@@ -47,9 +47,16 @@
                         <td>{{ $demande->etat }}</td>
                         <td>{{ $demande->created_at }}</td>
                         <td>
-                            <a href="{{ route('ma_demande_detail', ['id' => $demande->id]) }}">
+                            <a href="{{ route('ma_demande_detail', ['id' => $demande->id]) }}" style="color: red">
                                 <i class="fa-solid fa-eye-slash"></i>
                             </a>
+                            @if ($demande->etat === 'Validée')
+                                <a href="{{ route('quittance', $demande) }}" style="color: green">
+                                    <i class="fas fa-download" style="text: green; "></i>
+                                    telecharger
+                                </a>
+                            @endif
+
                         </td>
 
                     </tr>

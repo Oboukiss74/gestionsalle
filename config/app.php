@@ -1,7 +1,15 @@
 <?php
 
 return [
-
+    'default_format' => 'A4',
+    'orientation' => 'portrait',
+    'font_directory' => resource_path('fonts/'),
+    'fonts' => [
+        'arial' => [
+            'normal' => 'arial.ttf',
+            'bold' => 'arialbd.ttf',
+        ]
+        ],
     /*
     |--------------------------------------------------------------------------
     | Application Name

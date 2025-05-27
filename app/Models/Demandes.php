@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\LaravelPdf\Facades\Pdf as FacadesPdf;
+use Spatie\Pdf\Pdf;
 
 class Demandes extends Model
 {
@@ -52,6 +54,20 @@ class Demandes extends Model
     public function demandes() {
         return $this->hasMany(Demandes::class,'id_user');
 
+    }
+
+    //pdf
+    public function genererquittance()
+    {
+        $pdf = FacadesPdf::view('Demandes.quittance', [
+            'demande' => $this,
+            'datedebut' => now()->format('d/m/Y'),
+            'datefin' => now()->format('d/m/Y'),
+        ])
+        ->format('A4')
+        ->name("quittance-{$this->id}.pdf");
+
+        return $pdf->save(storage_path("app/public/quittance/{$this->id}.pdf"));
     }
 
 

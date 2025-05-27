@@ -28,7 +28,7 @@
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                 class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
+            <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
         </a>
 
         <div class="container-fluid">

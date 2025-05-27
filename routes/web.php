@@ -50,6 +50,7 @@ Route::get('role_permission', function () {
     // Permission::create(['name' => 'voir.demandeerefusee']);
     // Permission::create(['name' => 'voir.demandeencour']);
     // Permission::create(['name'=>'ecrire.demande']);
+    Permission::create(['name'=>'approuvee']);
 
 
     //     // $roleSuperAdmin = Role::where('name','Utilisateur')->first();
@@ -66,7 +67,8 @@ Route::get('role_permission', function () {
         'voir.utilisateurs',
         'modifier.profile',
         'voir.profile',
-        'ecrire.demande'
+        'ecrire.demande',
+        'approuvee'
     ]);
 
 
@@ -153,7 +155,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     //accueil des demandes
-    Route::get('Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
+    Route::get('/Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
 
     //faire une demande
     Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
@@ -165,13 +167,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ma_demande/', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
 
     //verification des mes demandes etats
-    Route::get('verifie_demande', [DemandeController::class, 'VerifierStatut'])->name(name: 'Verifie_demande');
+    Route::get('demandes/verifie_demande', [DemandeController::class, 'VerifierStatut'])->name(name: 'Verifie_demande');
 
     //creation demande
     Route::post('demande', [DemandeController::class, 'StoreDemande'])->name(name: 'creer_demande');
 
     //detail de ma demande en vue de modifier
-    Route::get('detail_demande/{id}', [DemandeController::class, 'DetailMaDemande'])->name('ma_demande_detail');
+    Route::get('demandes/detail_demande/{id}', [DemandeController::class, 'DetailMaDemande'])->name('ma_demande_detail');
 
 
     //modifier sa demande
@@ -202,7 +204,7 @@ Route::middleware(['auth'])->group(function () {
     //rechercher user
     Route::get('recherche', [AdminController::class, 'Rechercher_user'])->name(name: 'Rechercher_users');
     //liste de demandes en cours
-    Route::get('liste_demande_en_attente', [DemandeController::class, 'demande_en_cour'])->name(name: 'liste_demandeencour');
+    Route::get('/demandes/liste_demande_en_attente', [DemandeController::class, 'demande_en_cour'])->name(name: 'liste_demandeencour');
 
     //liste des demandes refusee
     Route::get('liste_demande_refusee', [DemandeController::class, 'demande_refusee'])->name(name: 'liste_demanderefusee');
@@ -214,6 +216,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tableau_bord/demandes', [AdminController::class, 'total_demandes'])->name(name: 'total_demande');
     //details de demandes
     Route::get('admin/tableau_bord/details_demandes', [AdminController::class, 'details_demandes'])->name(name: 'deatilsdemandes');
+    //quittance des demandes
+    Route::get('/{demande}/quittance', [DemandeController::class, 'demandequittance'])->name(name: 'quittance');
 });
 
 //cote equipement
@@ -222,6 +226,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('equipements/ajout', [Controllerequipement::class,'Ajouter'])->name('ajoutequipement');
     //valider l'enregistrement des equipements
     Route::post('equipements/valider', [Controllerequipement::class,'valider'])->name('validerequipement');
+    //afficher les equipements
+    Route::get('equipements/voir', [Controllerequipement::class,'view'])->name('listeequipement');
+    //liqte total et infos des equipements
+    Route::get('equipements', [Controllerequipement::class,'listeequipement'])->name('equipementdetails');
+    //modifier les equipements
+    Route::post('equipements/modifier', [Controllerequipement::class,'store'])->name('modifierequipement');
+    //supprimer equipement
+    Route::post('equipements/supprimer', [Controllerequipement::class,'delete'])->name('supprimerequipement');
 
 });
 

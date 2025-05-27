@@ -1,4 +1,4 @@
-@extends('layouts.navbar1')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +17,7 @@
 </head>
 
 <body class="body_etudiant_connection">
-
+    @include('layouts.navbarfinal')
     <div class="login-form body_etudiant_connections">
         <form action="{{ route('connexion') }}" method="POST">
             @csrf

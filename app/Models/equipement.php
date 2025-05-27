@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class equipement extends Model
 {
-    protected $table = ["equipements"];
+    protected $table = "equipements";
     protected $fillable = ['salle_id','nom', 'code', 'quantite', 'etat' ];
     public function salles()
     {
@@ -17,4 +17,5 @@ class equipement extends Model
         return $this->hasManyy(Salles::class,'salle_id');
 
     }
+
 }

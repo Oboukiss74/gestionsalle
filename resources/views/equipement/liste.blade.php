@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>liste demandes</title>
+    <title>liste equipements</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -28,18 +28,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
-    {{-- @include('layouts.navbarfinal')
 
-    @section('elements')
-        <a href="{{ route('ajoutequipement') }}"class="nav-item nav-link">Ajouter materiels</a>
-        <a class="nav-item nav-link" href="{{ route('profile') }}">Retour</a>
-        <a class="nav-item nav-link" href="{{ route('profile') }}">Accueil</a>
-        <a class="nav-item nav-link" href="{{ route('liste_demandeencour') }}">Démande en attente</a>
-        <a class="nav-item nav-link" href="{{ route('liste_demanderefusee') }}">Démandes refusées</a>
-        <a class="nav-item nav-link" href="{{ route('liste_demandevalidee') }}">Démandes validées</a>
-        <a class="nav-item nav-link" href="{{ route('liste_demandeencour') }}">Traiter les démandes</a>
-        <a class="nav-item nav-link" href="#">Contact</a>
-    @endsection --}}
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <a class="navbar-brand" href="{{ route('profile') }}"
@@ -65,19 +54,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demandeencour') }}">Démande en attente</a>
+                    <a class="nav-link" href="{{ route('ajoutequipement') }}">ajouter</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demanderefusee') }}">Démandes refusées</a>
+                    <a class="nav-link" href="{{ route('listeequipement') }}">liste equipements</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demandevalidee') }}">Démandes validées</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demandeencour') }}">Traiter les démandes</a>
+                    <a class="nav-link" href="{{ route('liste_salles') }}">les salles</a>
                 </li>
 
                 <li class="nav-item">
@@ -125,18 +110,19 @@
             <!-- Main content -->
             <section class="content">
                 <!-- Default box -->
-                <div class="container-fluid">
+
+                <div class="container-fluid" style="content: ">
                     <div class="row">
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{ $demandes }}</h3>
-                                    <p>Total demandes</p>
+                                    <h3>{{ $equipementneuf }}</h3>
+                                    <p>Total equipements</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="{{ route('deatilsdemandes') }}" class="small-box-footer text-dark">plus
+                                <a href="{{ route('ajoutequipement') }}" class="small-box-footer text-dark">plus
                                     infos<i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -144,13 +130,13 @@
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{ $demandeValidée }}</h3>
-                                    <p>Demandes validées</p>
+                                    <h3>{{ $equipementneuf }}</h3>
+                                    <p>euipements neuf</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="{{ route('liste_demandevalidee') }}" class="small-box-footer text-dark">
+                                <a href="{{ route('ajoutequipement') }}" class="small-box-footer text-dark">
                                     plus infos <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
@@ -158,13 +144,13 @@
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{ $demandeRefusée }}</h3>
-                                    <p>Demandes refusées</p>
+                                    <h3>{{ $equipementbon }}</h3>
+                                    <p>Bon état</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('liste_demanderefusee') }}" class="small-box-footer text-dark">
+                                <a href="{{ route('ajoutequipement') }}" class="small-box-footer text-dark">
                                     plus infos <i class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                             </div>
@@ -172,13 +158,27 @@
                         <div class="col-lg-4 col-6">
                             <div class="small-box card">
                                 <div class="inner">
-                                    <h3>{{ $demandeEncour }}</h3>
-                                    <p>Demandes en attente</p>
+                                    <h3>{{ $equipementuse }}</h3>
+                                    <p>Usé</p>
                                 </div>
                                 <div class="icon">
                                     <i class="ion ion-person-add"></i>
                                 </div>
-                                <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark">
+                                <a href="{{ route('ajoutequipement') }}" class="small-box-footer text-dark">
+                                    plus infos <i class="fas fa-arrow-circle-right"></i></a>
+                                {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-6">
+                            <div class="small-box card">
+                                <div class="inner">
+                                    <h3>{{ $equipementmauvais }}</h3>
+                                    <p>Mauvais état</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="{{ route('ajoutequipement') }}" class="small-box-footer text-dark">
                                     plus
                                     infos <i class="fas fa-arrow-circle-right"></i></a>
                                 {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
