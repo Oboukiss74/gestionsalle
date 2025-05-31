@@ -211,7 +211,7 @@ Route::middleware(['auth'])->group(function () {
     //liste des demandes validées
     Route::get('liste_demande_validee', [DemandeController::class, 'demande_validee'])->name(name: 'liste_demandevalidee');
     //tableau de bord
-    Route::get('tableau_bord', [AdminController::class, 'tableau_bord'])->name(name: 'tableau_de_bord');
+    Route::get('tableau_bord/utilisateurs', [AdminController::class, 'tableau_bord'])->name(name: 'tableau_de_bord');
     //liste total des demandes
     Route::get('tableau_bord/demandes', [AdminController::class, 'total_demandes'])->name(name: 'total_demande');
     //details de demandes

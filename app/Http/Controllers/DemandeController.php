@@ -207,17 +207,7 @@ class DemandeController extends Controller
         $this->authorize('view', $demandes);
 
         $user = Auth::user();
-        // if ($user->hasPermissionTo('voir.demande')) {
-        //     return 'la permission ma ete attribuée';
-        // }
-        // return 'le contraire est vrai';
-        // $mesDemande = $user->demandes()->first();
-        // if ($mesDemande) {
-        //     $this->authorize('view', $mesDemande); // Vérifie avec la Policy
-        // }
-        // else {
-        //     return "vous n'êtes pas autorisé";
-        // }
+
         $demandes = $user->demandes;
         return view('Demandes.verifier_demande', compact('demandes'));
     }
@@ -286,11 +276,12 @@ class DemandeController extends Controller
                     ->orWhere('salle', 'like', "%$search%");
             });
         }
+        $salle = Salles::all();
         $nombredemande = Demandes::where('etat', 'En attente')->count();
         $demandeEncours = Demandes::where('etat', 'En attente')->paginate(3);
         //dd($demandes);
 
-        return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande'));
+        return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande','salle'));
     }
     //liste de demande refusee
     public function demande_refusee(Demandes $demandes)
@@ -312,22 +303,19 @@ class DemandeController extends Controller
     }
 
     //quittance demandes
-   public function demandequittance(Demandes $demande)
+    public function demandequittance(Demandes $demande)
     {
-
-        // Seules les demandes validée peuvent générer une quittance
         if ($demande->etat !== 'Validée') {
             return redirect()->back()
                 ->with('error', 'La quittance n\'est disponible que pour les demandes approuvées.');
         }
+        $salle=Salles::all();
+        return Pdf::view('Demandes.quittance', compact('demande','salle'))
+            ->format('A4')
 
-        $pdf = Pdf::view('Demandes.quittance', compact('demande'))
-            ->format('a4')
-            ->margins(10, 10, 10, 10)
-            ->name('quittance-' . $demande->id . '.pdf');
+            ->name('quittance' . $demande->id . '.pdf')
 
-        return $pdf->download();
+            ->download();
     }
-
     //rechercher une demande
 }

@@ -20,14 +20,9 @@
 </head>
 
 <body
-    style="background-image: url('{{ asset('images/uo.jpg') }}');
-            ;background-size: cover;
-            ;background-position: center;
-            ;background-attachment: fixed;
-            ;background-repeat: no-repeat;
-            position: fixed;">
+
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="height: 80px; width: 120%; ">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" >
         <a class="navbar-brand" href="{{ route('profile') }}"
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
@@ -116,6 +111,8 @@
             </div>
         </div>
     </nav>
+
+
 </body>
 
 </html>

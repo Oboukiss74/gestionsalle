@@ -51,7 +51,7 @@
                                 <i class="fa-solid fa-eye-slash"></i>
                             </a>
                             @if ($demande->etat === 'Validée')
-                                <a href="{{ route('quittance', $demande) }}" style="color: green">
+                                <a href="{{ route('quittance', $demande->id) }}" style="color: green">
                                     <i class="fas fa-download" style="text: green; "></i>
                                     telecharger
                                 </a>

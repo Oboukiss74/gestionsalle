@@ -101,7 +101,7 @@
                 <div class="container-fluid my-2">
                     <div class="row mb-3">
                         <div class="col-sm-6">
-                            <h1 class="text-dark">👥 Gestion des utilisateurs</h1>
+                            <h1 class="text-dark">Gestion des utilisateurs</h1>
                         </div>
                         <div class="col-sm-6 text-right">
                             <a href="{{ route('ajouterutilisateur') }}" class="btn btn-primary">

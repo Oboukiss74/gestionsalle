@@ -26,38 +26,7 @@
 
 <body class="listedemande_body">
     @include('layouts.navbarfinal')
-    {{-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('profile') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                    class="d-inline-block align-top">
-                <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
-            </a>
-            <a class="navbar-brand" href="{{ route('profile') }}"
-                style="font-size: 20px; text-decoration: none;color:black">Profie</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
-                                aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">Tableau
-                                bord</a>
-                        @endcan
-                    </li>
-                </ul>
-                <form class="d-flex" role="search" style="transform: translate(295%,0)">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Recherche</button>
-                </form>
-            </div>
-        </div>
-    </nav> --}}
+
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">

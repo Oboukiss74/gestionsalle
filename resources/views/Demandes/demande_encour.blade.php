@@ -28,11 +28,11 @@
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
                 class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
+            <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
         </a>
 
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('profile_admin') }}"
+            <a class="navbar-brand" href="{{ route('profile') }}"
                 style="font-size: 20px; text-decoration: none;color:black">Profie</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -156,7 +156,7 @@
                                 role="dialog" aria-labelledby="modalLabel{{ $demandeEncour->id }}"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content">
+                                    <div class="modal-content" style="text-align: center">
 
                                         <div class="modal-header">
                                             <h4 class="modal-title">Mise a jour de la demande</h4>
@@ -165,7 +165,7 @@
                                         </div>
                                         <div class="modal-body">
 
-                                            <p class="modal-body"><strong>Nom du demandeur:</strong>
+                                            <p class="modal-body" ><strong >Nom du demandeur:</strong>
                                                 <br>{{ $demandeEncour->nom }}
                                             </p>
 
@@ -185,6 +185,8 @@
 
                                             <p class="form-group"><strong>motif de la demande:</strong> <br>
                                                 {{ $demandeEncour->motif }}</p>
+                                            <p class="form-group"><strong>salle demandée:</strong> <br>
+                                                {{ $demandeEncour->salle->nom }}</p>
                                         </div>
                                         <div class="modal-footer modal-body">
                                             <form action="{{ route('refuserdemande', ['id' => $demandeEncour->id]) }}"

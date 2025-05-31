@@ -9,8 +9,10 @@
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
             <div class="navbar-nav">
                 <a href="{{ route('profile') }}"class="nav-item nav-link">Acceuil</a>
+                @auth
+                    <a href="{{ route('ajoutequipement') }}"class="nav-item nav-link">Ajouter materiels</a>
+                @endauth
 
-                <a href="{{ route('ajoutequipement') }}"class="nav-item nav-link">Ajouter materiels</a>
                 @yield('elements')
 
                 <a href="#" class="nav-item nav-link">Contact</a>
