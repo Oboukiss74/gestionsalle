@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('code');
             $table->string('nombreplace');
             $table->string('taille');
-            $table->string('equipement');
             $table->string('tarif');
             $table->string('statut');
             $table->decimal('latitude', 10, 7)->nullable();

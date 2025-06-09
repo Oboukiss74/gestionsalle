@@ -121,7 +121,7 @@
                                 <td>{{ $demande->nom }}</td>
                                 <td>{{ $demande->mail }}</td>
                                 <td>{{ $demande->telephone }}</td>
-                                <td>{{ $demande->salle }}</td>
+                                <td>{{ $demande->salle->nom }}</td>
                                 <td>{{ $demande->effectif }}</td>
                                 <td>{{ $demande->created_at }}</td>
                                 <td class="etat">{{ $demande->etat }}</td>

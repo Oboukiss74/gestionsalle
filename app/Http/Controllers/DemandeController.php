@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\PdfBuilder;
+use App\Notifications\DemandeAcceptee;
+
 
 
 class DemandeController extends Controller
@@ -27,23 +29,25 @@ class DemandeController extends Controller
 
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
-        $heureDebut = $request->input('heuredebut', '06:00');
+        $heureDebut = $request->input('heuredebut', '07:00');
         $dateFin = $request->input('datefin', now()->format('Y-m-d'));
-        $heureFin = $request->input('heurefin', '23:00');
+        $heureFin = $request->input('heurefin', '18:00');
 
         // Convertir en objets Carbon pour la requête
         $debut = Carbon::createFromFormat('Y-m-d H:i', "$dateDebut $heureDebut");
         $fin = Carbon::createFromFormat('Y-m-d H:i', "$dateFin $heureFin");
 
-        // Récupérer les salles disponibles
+        // Récupérer les salles disponibles (qui n'ont PAS de demandes qui se chevauchent)
         $sallesDisponibles = Salles::whereDoesntHave('demandes', function ($query) use ($debut, $fin) {
             $query->where(function ($q) use ($debut, $fin) {
-                $q->where(function ($sub) use ($debut, $fin) {
-                    $sub->where('datedebut', '<', $fin)
-                        ->where('datefin', '>', $debut);
-                });
+                // Condition de chevauchement : une demande chevauche si :
+                // - sa date de début est avant notre date de fin ET
+                // - sa date de fin est après notre date de début
+                $q->where('datedebut', '<', $fin)
+                    ->where('datefin', '>', $debut);
             });
         })->get();
+
         return view("Demandes.creer_demandes", compact(
 
             'sallesDisponibles',
@@ -57,6 +61,7 @@ class DemandeController extends Controller
 
     public function StoreDemande(Request $request)
     {
+
         try {
             $validatedData = $request->validate(
                 [
@@ -70,8 +75,6 @@ class DemandeController extends Controller
                     "datefin" => "required|date|after_or_equal:datedebut",
                     "heuredebut" => "required",
                     "heurefin" => "required",
-                    "batiment" => "nullable",
-                    "salle" => "nullable",
                     "effectif" => "required|integer|min:1",
                     "motif" => "required",
 
@@ -101,6 +104,7 @@ class DemandeController extends Controller
 
     public function UpdateDemande(Request $request, $id)
     {
+
         try {
             // Validation des données
             $request->validate([
@@ -232,12 +236,15 @@ class DemandeController extends Controller
         return view('admin.demandes.show', compact('demande'));
     }
     // accpeter demande
-    public function demandeaccepter(Demandes $demandes, $id)
+    public function demandeaccepter($id)
     {
 
         $demande = Demandes::findOrFail($id);
         $demande->etat = 'Validée';
         $demande->save();
+
+        $user = $demande->user; // ou User::find($demande->id_user);
+        $user->notify(new DemandeAcceptee($demande));
 
         return redirect()->back()->with('success', 'Demande acceptée avec succès.');
     }
@@ -281,7 +288,7 @@ class DemandeController extends Controller
         $demandeEncours = Demandes::where('etat', 'En attente')->paginate(3);
         //dd($demandes);
 
-        return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande','salle'));
+        return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande', 'salle'));
     }
     //liste de demande refusee
     public function demande_refusee(Demandes $demandes)
@@ -309,8 +316,8 @@ class DemandeController extends Controller
             return redirect()->back()
                 ->with('error', 'La quittance n\'est disponible que pour les demandes approuvées.');
         }
-        $salle=Salles::all();
-        return Pdf::view('Demandes.quittance', compact('demande','salle'))
+        $salle = Salles::all();
+        return Pdf::view('Demandes.quittance', compact('demande', 'salle'))
             ->format('A4')
 
             ->name('quittance' . $demande->id . '.pdf')

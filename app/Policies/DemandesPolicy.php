@@ -22,7 +22,7 @@ class DemandesPolicy
      */
     public function view(User $user): bool
     {
-        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('DIP');
+        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('Utilisateur');
         // return true;
     }
 

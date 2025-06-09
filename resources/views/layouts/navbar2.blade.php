@@ -18,9 +18,13 @@
 
 <body>
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-        <a href="{{ route('profile') }}" class="navbar-brand"> <img src="{{ asset('images/logo.png') }}"
-                alt=""></i><b style="color: #24ea73"> e.Gestion Salles</b></a>
+    <nav class="navbar navbar-expand-lg navbar-light">
+       <a class="navbar-brand" href="{{ route('profile') }}"
+            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
+            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                class="d-inline-block align-top">
+            <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
+        </a>
         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -30,7 +34,7 @@
             <div class="navbar-nav ml-auto" style="transform: translate(-500px,0)">
                 <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="transform: translate(-300px,0)"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
-                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="transform: translate(-200px,0);color: white"><i class="fa fa-gears"></i><span>paramétre</span></a>
+                <a href="{{ route('profile.edit') }}" class="nav-item nav-link" style="transform: translate(-200px,0);color: rgb(29, 28, 28)"><i class="fa fa-gears"></i><span>paramétre</span></a>
                 @yield('liens')
 
             </div>

@@ -3,20 +3,17 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Demande;
-use App\Models\equipements;
-use App\Http\Controllers\Salles_Controller;
+use App\Models\Demandes;
+use App\Models\equipement;
 
 class Salles extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'code',
         'nom',
         'code',
         'nombreplace',
         'taille',
-        'equipement',
         'tarif',
         'statut',
         'longitude',
@@ -29,14 +26,7 @@ class Salles extends Model
     }
 
     public function equipements(){
-        return $this->hasMany(equipement::class,('id'));
-    }
-    public function demande()
-    {
-        return $this->belongsTo(Demandes::class);
+        return $this->hasMany(equipement::class,('id_salle'));
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'id_personnel');
-    }
 }

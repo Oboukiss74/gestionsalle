@@ -8,10 +8,10 @@
 @extends('layouts.navbar2')
 
 @section('liens')
-    <a href="{{ route('connexion') }}" class="nav-item nav-link" style="transform: translate(-100px,0); color: white;"><i
+    <a href="{{ route('login') }}" class="nav-item nav-link" style="transform: translate(-100px,0); color: rgb(29, 28, 28);"><i
             class="fa-solid fa-unlock-keyhole"></i><span>connexion</span></a>
     <a href="{{ route('register') }}" class="nav-item nav-link"><i class="fa-solid fa-address-card"
-            style="color: white"></i><span>S'inscrire</span></a>
+            style="color: rgb(29, 28, 28)"></i><span>S'inscrire</span></a>
 @endsection
 @section('infos')
     <div class="signup-form">

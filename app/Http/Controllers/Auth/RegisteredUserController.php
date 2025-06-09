@@ -15,6 +15,7 @@ use App\Models\Locataires;
 use App\Models\Etudiants;
 use App\Models\Personnels;
 use App\Http\Controllers\Auth\DB;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -121,6 +122,9 @@ class RegisteredUserController extends Controller
 
                 # code...
             }
+
+            // Attribution automatique du rôle "Utilisateur"
+            $user->assignRole('Utilisateur');
 
             event(new Registered($user));
 

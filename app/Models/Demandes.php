@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\LaravelPdf\Facades\Pdf as FacadesPdf;
-use Spatie\Pdf\Pdf;
 
 class Demandes extends Model
 {
@@ -24,14 +23,12 @@ class Demandes extends Model
         "datefin",
         "heuredebut",
         "heurefin",
-        "batiment",
-        "salle",
         "effectif",
         "motif",
-        "equipement",
         'etat',
         'reçu',
     ];
+
     // Relation avec la salle
     public function salle()
     {
@@ -39,11 +36,11 @@ class Demandes extends Model
     }
     public function salles()
     {
-        return $this->hasMany(Salles::class);
+        return $this->hasMany(Salles::class,'id_demande');
     }
     public function demande()
     {
-        return $this->belongsTo(Demandes::class, 'id_demande');
+        return $this->belongsTo(Demandes::class, 'id_salle');
     }
     // Relation avec l'utilisateur
     public function user()

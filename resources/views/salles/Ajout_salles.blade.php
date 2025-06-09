@@ -51,17 +51,6 @@
                     </div>
                 </div>
 
-                <div class="formbold-mb-3 formbold-input-wrapp">
-                    <label for="phone" class="formbold-form-label"> Equipement </label>
-
-                    <div>
-                        <input type="text" name="equipement" id="areacode" placeholder="les equipements"
-                            class="formbold-form-input formbold-w-45" />
-
-
-                    </div>
-                </div>
-
                 <div class="formbold-mb-3">
                     <label for="age" class="formbold-form-label"> Le prix de location </label>
                     <input type="text" name="tarif" id="age" class="formbold-form-input"

@@ -62,7 +62,7 @@
                 <a href="#" class="float-right">Mot de password oublié?</a>
             </div>
         </form>
-        <p class="text-center small">Pas de compte! <a href="#">Creer un compte</a>.</p>
+        <p class="text-center small">Pas de compte! <a href="{{ route("register") }}">Creer un compte</a>.</p>
     </div>
 </body>
 

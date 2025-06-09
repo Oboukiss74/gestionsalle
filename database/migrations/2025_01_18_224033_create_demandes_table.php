@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
+    /*
      * Run the migrations.
      */
     public function up(): void
@@ -19,15 +19,12 @@ return new class extends Migration
             $table->string('nom');
             $table->string('telephone');
             $table->string('mail');
-            $table->date('datedebut');
-            $table->date('datefin');
+            $table->dateTime('datedebut');
+            $table->dateTime('datefin');
             $table->time('heuredebut');
             $table->time('heurefin');
-            $table->string('batiment');
-            $table->string('salle');
             $table->string('effectif');
             $table->string('motif');
-            $table->string('equipement');
             $table->enum('etat', ['En attente', 'Validée', 'Refusée'])->default('En attente');
             $table->enum('reçu', ['Non', 'Oui'])->default('Non');
             $table->timestamps();

@@ -34,7 +34,9 @@
                     <th scope="col">motif</th>
                     <th scope="col">etat</th>
                     <th scope="col">date de soumission</th>
+                    <th scope="col">etat de paiement</th>
                     <th scope="col">details</th>
+                    <th scope="col">Quittances</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,9 +49,37 @@
                         <td>{{ $demande->etat }}</td>
                         <td>{{ $demande->created_at }}</td>
                         <td>
+
+                            @if ($demande->etat === 'Validée')
+                                <a href="">
+                                    <button
+                                        style="border-radius: 4px; color: red; border-color: red; background-color: red; color:aliceblue;">non
+                                        payé</button>
+                                </a>
+                            @endif
+
+                            @if ($demande->etat === 'En attente')
+                                <button
+                                    style="border-radius: 4px; color: rgb(28, 241, 85); border-color: rgb(28, 241, 85); background-color: rgb(28, 241, 85); color:black;">en
+                                    attente
+                                </button>
+                            @endif
+                            @if ($demande->etat === 'Refusée')
+                                <button
+                                    style="border-radius: 4px; color: rgb(28, 241, 85); border-color: rgb(28, 241, 85); background-color: rgb(28, 241, 85); color:black;">paiement
+                                    impossible
+                                </button>
+                            @endif
+
+
+                        </td>
+                        <td>
                             <a href="{{ route('ma_demande_detail', ['id' => $demande->id]) }}" style="color: red">
                                 <i class="fa-solid fa-eye-slash"></i>
                             </a>
+                        </td>
+                        <td>
+
                             @if ($demande->etat === 'Validée')
                                 <a href="{{ route('quittance', $demande->id) }}" style="color: green">
                                     <i class="fas fa-download" style="text: green; "></i>

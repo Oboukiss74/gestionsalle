@@ -29,7 +29,7 @@ class Salles_Controller extends Controller
                 "code" => "required",
                 "nombreplace" => "required",
                 "taille" => "required",
-                "equipement" => "required",
+
                 "tarif" => "required",
                 "statut" => "required",
                 "longitude" => "required",
@@ -43,7 +43,7 @@ class Salles_Controller extends Controller
                 "code" => $request->input("code"),
                 "nombreplace" => $request->input("nombreplace"),
                 "taille" => $request->input("taille"),
-                "equipement" => $request->input("equipement"),
+
                 "tarif" => $request->input("tarif"),
                 "statut" => $request->input("statut"),
                 "longitude" => $request->input("longitude"),
