@@ -149,7 +149,7 @@ Route::middleware('auth')->group(function () {
 
 //coté utilisateur
 Route::middleware(['auth',])->group(function () {
-    Route::get('modifier_utilisateur', [User_Controller::class, 'addutilissateur'])->name('ajouterutilisateur');
+    Route::get('/ajout/utilisateur', [User_Controller::class, 'addutilissateur'])->name('ajouterutilisateur');
 });
 
 //partie accueil
@@ -157,7 +157,7 @@ Route::get('/', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil'
 
 
 
-//connexion avant action sur le profile
+//côté salles
 Route::middleware(['auth'])->group(function () {
     //page d'enregistrement salles
     Route::get('admin/salles/ajouter', [Salles_Controller::class, 'AjouterSalles'])->name(name: 'pages_salles');
@@ -180,13 +180,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/salle_disponible', action: [Salles_Controller::class, 'sallesDisponibles'])->name(name: 'liste_salles_dipsonible');
     //liste des salles du jour
     Route::post('admin/salle_disponible_jour', action: [Salles_Controller::class, 'sallesDisponiblesJour'])->name(name: 'liste_salle_jour');
+    //total des salles
+    Route::post('admin/tableau_bord/salles', [Salles_Controller::class, 'les_salles'])->name(name: 'tableau_salles');
     //liste des salles occupées
     //Route::post('salle_occupe', action: [Salles_Controller::class, 'sallesOccupe'])->name(name: 'liste_salle_occupe');
     //salles occupees
-    Route::get('admin/salleoccupee', [AdminController::class, 'SallesOccupee'])->name('liste_salles_occupee');
+    Route::get('admin/salleoccupee', [Salles_Controller::class, 'SallesOccupee'])->name('liste_salles_occupee');
     //statistiques des salles sur demande
     Route::get('admin/salles/statistiquesalles/', [Salles_Controller::class, 'statistique'])->name('statistique');
 });
+
 //cote demandes
 Route::middleware(['auth'])->group(function () {
 
@@ -197,7 +200,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
 
     //liste des demandes
-    Route::get('demandes_liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
+    Route::get('/demandes/liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
 
     //ma demande
     Route::get('ma_demande/', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
@@ -233,10 +236,9 @@ Route::middleware(['auth'])->group(function () {
     //refuser demande
     Route::put('refuser_demande/{id}', [DemandeController::class, 'demanderefuser'])->name(name: 'refuserdemande');
     //total des salles
-    Route::get('admin/tableau_bord/salles', [AdminController::class, 'les_salles'])->name(name: 'salles_tableau');
+    Route::get('admin/tableau_bord/salles', [Salles_Controller::class, 'les_salles'])->name(name: 'salles_tableau');
     //details des salles
-    //total des salles
-    Route::post('admin/tableau_bord/salles', [AdminController::class, 'les_salles'])->name(name: 'tableau_salles');
+
     //rechercher user
     Route::get('recherche', [AdminController::class, 'Rechercher_user'])->name(name: 'Rechercher_users');
     //liste de demandes en cours
@@ -254,6 +256,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/tableau_bord/details_demandes', [AdminController::class, 'details_demandes'])->name(name: 'deatilsdemandes');
     //quittance des demandes
     Route::get('/{demande}/quittance', [DemandeController::class, 'demandequittance'])->name(name: 'quittance');
+    //notification des demandes
+    Route::get('demande/notification/{id}', [DemandeController::class, 'NotificationDemande'])->name(name: 'notifiation');
 });
 
 //cote equipement

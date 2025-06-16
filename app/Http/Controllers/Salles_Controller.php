@@ -157,6 +157,67 @@ class Salles_Controller extends Controller
     //     return view('salles.salle_disponible', ['salles' => $salles]);
     // }
 
+    //liste des salles
+    public function les_salles()
+    {
+        $this->authorize('viewAny', Demandes::class);
+        $salles = Salles::count(); //toutes les salles
+        $now = now();
+        $now = Carbon::now();
+
+        //totale salle occupée par leurs id
+        $sallesOccupees = Demandes::where('datefin', '>', $now->format('Y-m-d'))
+            ->orWhere(function ($query) use ($now) {
+                $query->where('datefin', '=', $now->format('Y-m-d'))
+                    ->where('heurefin', '>', $now->format('H:i:s'));
+            })
+            ->pluck('id_salle');
+
+        // Récupérer les salles dont les réservations sont terminées
+        $nombreSallesLibres = Salles::whereNotIn('id', $sallesOccupees)->count();
+
+        //total salle occupée
+        $nombreSallesOccupees = Salles::whereHas('demandes', function ($query) use ($now) {
+            $query->where('datefin', '>=', $now->toDateString())
+                ->where('datedebut', '<=', $now->toDateString());
+        })
+            ->with(['demandes' => function ($query) use ($now) {
+                $query->where('datefin', '>=', $now->toDateString())
+                    ->where('datedebut', '<=', $now->toDateString())
+                    ->orderBy('datefin');
+            }])
+            ->orderBy('nom')
+            ->count();
+        //$salles=Salles::count();
+        return view('salles.les_salle', compact(
+            'nombreSallesLibres',
+            'salles',
+            'nombreSallesOccupees'
+        ));
+    }
+
+    //salles occupées
+
+    public function SallesOccupee()
+    {
+        // Récupérer toutes les salles reservées
+        $this->authorize('viewAny', Demandes::class);
+        $now = Carbon::now();
+
+        $salles = Salles::whereHas('demandes', function ($query) use ($now) {
+            $query->where('datefin', '>=', $now->toDateString())
+                ->where('datedebut', '<=', $now->toDateString());
+        })
+            ->with(['demandes' => function ($query) use ($now) {
+                $query->where('datefin', '>=', $now->toDateString())
+                    ->where('datedebut', '<=', $now->toDateString())
+                    ->orderBy('datefin');
+            }])
+            ->orderBy('nom')
+            ->get();
+
+        return view('salles.sallesoccupee', compact('salles', 'now'));
+    }
     public function sallesDispo()
     {
         return view('Utilisateur.admin.salles_dispo_date');

@@ -1,24 +1,46 @@
-@extends('layouts.navbar3')
-<link rel="icon" type="image/png" href="images/logo.png"/>
-<div>
-    @section('elements')
-        <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">soumettre une demande</a>
-        <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link">verifier demande</a>
-        <a href="#" class="nav-item nav-link">supprimer</a>
-        {{-- <div class="nav-item dropdown">
-            <a href="#" class="nav-item nav-link dropdown-toggle" data-toggle="dropdown">Demandes</a>
-            <div class="dropdown-menu">
+<!DOCTYPE html>
+<html lang="en">
 
-                <a href="#" class="dropdown-item">verifier demande</a>
-                <a href="{{ route('pagedemandes') }}" class="dropdown-item">soumettre une demande</a>
-                <a href="#" class="dropdown-item">modifier demande</a>
-                <a href="#" class="dropdown-item">Digital Marketing</a>
-            </div>
-        </div> --}}
-    @endsection
-    @section('contenu')
+<head>
+    <title>Mes demandes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Raleway">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+     <link
+        rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <link rel="stylesheet" href="{{asset('css/salles/listesalle.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
 
 
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    @endsection
-</div>
+    <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
+    <link rel="icon" type="image/png" href="images/logo.png" />
+
+
+</head>
+
+<body>
+    @include('layouts.navbarunique')
+
+</body>
+
+</html>

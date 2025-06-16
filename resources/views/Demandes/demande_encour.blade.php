@@ -15,49 +15,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('css/demande/liste_demande.css') }}">
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 
 
 </head>
 
 <body class="listedemande_body">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <a class="navbar-brand" href="{{ route('profile') }}"
-            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
-        </a>
+    @include('layouts.navbarunique')
 
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('profile') }}"
-                style="font-size: 20px; text-decoration: none;color:black">Profie</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
-                                aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">Tableau
-                                bord</a>
-                        @endcan
-                    </li>
-                </ul>
-                <form class="d-flex" role="search" action="{{ route('liste_demandeencour') }}" method="GET"
-                    style="transform: translate(330%,0)">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Recherche</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-    <div class="container-xl">
+    <div class="container-xl" style=" width: 78%;  justify-content: center; margin-left: 1px; margin-right: 1px">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">

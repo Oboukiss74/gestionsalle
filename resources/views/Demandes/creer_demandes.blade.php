@@ -12,6 +12,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link
+        rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <!-- Theme style -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Creer une demande</title>
     <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
@@ -20,31 +33,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <a class="navbar-brand" href="{{ route('profile') }}"><b style="color: rgb(11, 159, 63);">gs.ujkz</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Collection of nav links, forms, and other content for toggling -->
-        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
-            <div class="navbar-nav">
-                <a href="{{ route('profile') }}"class="nav-item nav-link">Acceuil</a>
-                @yield('elements')
-                @can('voirmesdemandes', App\Models\Demandes::class)
-                    <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link">verifier demandes</a>
-                @endcan
-                <a href="{{ route('mesinfos') }}" class="nav-item nav-link ">mes infos</a>
-                @can('view', App\Models\Demandes::class)
-                    <a href="{{ route('deatilsdemandes') }}" class="nav-item nav-link">supprimer demande</a>
-                @endcan
-                <a href="#" class="nav-item nav-link">Contact</a>
-            </div>
-
-        </div>
-    </nav>
+    @include('layouts.navbarunique')
 
 
-    <div class="formbold-main-wrapper">
+
+    <div class="formbold-main-wrapper" style="transform: translate(150px);">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
         <div class="container">
@@ -53,11 +46,16 @@
                 <div class="container">
                     <div id="etape1">
                         <h1>
-                           @if (session()->has('success'))
+                            @if (session()->has('success'))
                                 <p style="color: red">{{ session('success') }}</p>
-                            </p>
-
-                           @endif
+                                </p>
+                            @endif
+                        </h1>
+                        <h1>
+                            @if (session()->has('message'))
+                                <p style="color: red">{{ session('success') }}</p>
+                                </p>
+                            @endif
                         </h1>
                         <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
                         <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data"
@@ -95,8 +93,9 @@
                                 </div>
                             </div>
 
-                            <div id="etape_suivant">
-                                <button class="formbold-btn" type="submit">suivant</button>
+                            <div id="etape_suivant"
+                                style="display: flex; justify-content: center; margin-top: 20px; background-color: rgb(16, 237, 119); width: 450px; margin-left: -10px; border-radius: 5px;">
+                                <buttonclass="formbold-btn" type="submit">suivant</button>
                             </div>
                         </form>
 
@@ -110,8 +109,8 @@
                                 @csrf
 
                                 <div class="formbold-mb-5 " style="display: none">
-                                    <input type="text" name="id_user" id="name"
-                                        value="{{ Auth::user()->id }}" class="formbold-form-input " />
+                                    <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
+                                        class="formbold-form-input " />
                                 </div>
 
                                 <div class="formbold-mb-5 ">
@@ -155,7 +154,7 @@
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5">
-                                        <input type="hidden" id="heurefin" name="heurefin"
+                                        <input type="hidden" id="heurefin" name="heurefin" max="17:00"
                                             value="{{ $heureFin }}" placeholder="heure de fin"
                                             class="formbold-form-input" />
                                     </div>
@@ -168,7 +167,8 @@
 
                                         <div class="formbold-mb-5 formbold-pt-3">
 
-                                            <label class="formbold-form-label formbold-form-label-2 required">
+                                            <label class="formbold-form-label formbold-form-label-2 required"
+                                                style="margin-left: 15px;">
                                                 Salle
                                             </label>
                                             <div class="flex flex-wrap formbold--mx-3">
@@ -206,8 +206,6 @@
 
 
                                                 </div>
-
-
 
                                             </div>
 

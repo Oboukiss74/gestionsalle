@@ -40,10 +40,7 @@ body{
 .navbar .navbar-nav a:hover, .navbar .navbar-nav a:focus {
 	color: #f08373 !important;
 }
-.navbar .navbar-nav a.active, .navbar .navbar-nav a.active:hover {
-	color: #eb5844 !important;
-	background: transparent !important;
-}
+
 .search-box {
 	position: relative;
 }

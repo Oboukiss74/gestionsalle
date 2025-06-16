@@ -1,161 +1,39 @@
-@extends('layouts.navbaradmin')
-@section('navabar')
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-            <a class="navbar-brand" href="{{ route('profile') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                    class="d-inline-block align-top">
-                <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<!DOCTYPE html>
+<html lang="en">
 
-            <div class="collapse navbar-collapse" id="navbarContent">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>details demandes</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/salles/listesalle.css">
 
-                <!-- Boutons de navigation -->
-                <ul class="navbar-nav mr-auto ml-4">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
+</head>
 
-                    <li class="nav-item">
-                        @can('viewAny', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
-                        @endcan
+<body class="hold-transition sidebar-mini">
 
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
-                        @endcan
-
-                    </li>
-                    <li class="nav-item">
-                        @can('create', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('creer_demande') }}">Réservations</a>
-                        @endcan
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-
-                <!-- Menu Profil -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                            <h2
-                                style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
-                                {{ Auth::user()->nom }}</h2>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
-                            <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
-                            <a class="dropdown-item" href="#">Paramètres</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-@endsection
-@section('contenue')
-
-    <!-- /.navbar -->
-    {{-- <nav class="navbar navbar-expand-lg navbar-light bg-white"> --}}
-
-        {{-- <nav class="navbar navbar-expand-lg navbar-light bg-white">
-            <a class="navbar-brand" href="{{ route('profile') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                    class="d-inline-block align-top">
-                <b style="color: rgb(57, 209, 115)"> e.Gestion des Salles</b>
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarContent">
-
-                <!-- Boutons de navigation -->
-                <ul class="navbar-nav mr-auto ml-4">
-                    <li class="nav-item active">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('total_demande') }}">Accueil</a>
-                        @endcan
-
-                    </li>
-                    <!-- Dropdown Demandes -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" id="demandeDropdown" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            Demandes <i class="fa fa-list mr-1"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="demandeDropdown">
-                            @can('view', App\Models\Demandes::class)
-                                <a class="dropdown-item" href="{{ route('liste_demande') }}">Liste des demandes</a>
-                            @endcan
-
-                            <a class="dropdown-item" href="{{ route('pagedemandes') }}">Faire une demande</a>
-
-                            @can('view', App\Models\Demandes::class)
-                                <a class="dropdown-item" href="{{ route('liste_demandeencour') }}">demande en cours</a>
-                            @endcan
-
-                            @can('view', App\Models\Demandes::class)
-                                <a class="dropdown-item" href="{{ route('demandevalidee') }}">demande validée</a>
-                            @endcan
-
-                            @can('view', $demandes)
-                                <a class="dropdown-item" href="{{ route('liste_demanderefusee') }}">demande refusée</a>
-                            @endcan
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        @can('viewAny', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
-                        @endcan
-
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
-                        @endcan
-
-                    </li>
-                    <li class="nav-item">
-                        @can('create', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('creer_demande') }}">Réservations</a>
-                        @endcan
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-
-                <!-- Menu Profil -->
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                            <h2
-                                style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
-                                {{ Auth::user()->nom }}</h2>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
-                            <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
-                            <a class="dropdown-item" href="#">Paramètres</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav> --}}
-        <!-- Main Sidebar Container -->
-
-        <!-- Content Wrapper. Contains page content -->
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        @include('layouts.navbarunique')
+        @include('layouts.sider')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -302,4 +180,46 @@
 
             <strong>Gestion et localisation &copy; des salles de l'université Joseph Ki-Zerbo.
         </footer>
-    @endsection
+        @yield('body')
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+
+        <!-- Content Wrapper. Contains page content -->
+
+        <!-- /.content-wrapper -->
+
+
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function() {
+                if (this.checked) {
+                    checkbox.each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    checkbox.each(function() {
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function() {
+                if (!this.checked) {
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

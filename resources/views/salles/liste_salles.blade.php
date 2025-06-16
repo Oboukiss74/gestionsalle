@@ -3,8 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Gestion des salles</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>les salles</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -12,95 +20,21 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link
+        rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <link rel="stylesheet" href="{{asset('css/salles/listesalle.css')}}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-
-    <script>
-        $(document).ready(function() {
-            // Activate tooltip
-            $('[data-toggle="tooltip"]').tooltip();
-
-            // Select/Deselect checkboxes
-            var checkbox = $('table tbody input[type="checkbox"]');
-            $("#selectAll").click(function() {
-                if (this.checked) {
-                    checkbox.each(function() {
-                        this.checked = true;
-                    });
-                } else {
-                    checkbox.each(function() {
-                        this.checked = false;
-                    });
-                }
-            });
-            checkbox.click(function() {
-                if (!this.checked) {
-                    $("#selectAll").prop("checked", false);
-                }
-            });
-        });
-    </script>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <a class="navbar-brand" href="{{ route('profile') }}"
-            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> E.Gestion des Salles</b>
-        </a>
+<body class="hold-transition sidebar-mini">
+    @include('layouts.navbarunique')
+    <!-- Site wrapper -->
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <!-- Boutons de navigation -->
-            <ul class="navbar-nav mr-auto ml-4">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    @can('view', App\Models\Salles::class)
-                        <a class="nav-link" href="{{ route('tableau_salles') }}">Salles</a>
-                    @endcan
-
-                </li>
-                <li class="nav-item">
-                    @can('cretae', App\Models\Demandes::class)
-                        <a class="nav-link" href="{{ route('pagedemandes') }}">Réservations</a>
-                    @endcan
-
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-
-            <!-- Menu Profil -->
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                        <h2
-                            style="font-size: 12px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
-                            {{ Auth::user()->nom }}</h2>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menuDropdown">
-                        <a class="dropdown-item" href="#">Mon profil</a>
-                        <a class="dropdown-item" href="#">Paramètres</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="#">Déconnexion</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-
-
-    <div class="container-xl">
+    <div class="container-xl d-flex" style="transform: translate(50px,0px)">
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
@@ -130,8 +64,8 @@
                             <th>code</th>
                             <th>nombre place</th>
                             <th>tarife</th>
-                            <th>etat</th>
                             <th>Statut</th>
+                            <th>localiser</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -150,6 +84,11 @@
                                 <td>{{ $salle->nombreplace }}</td>
                                 <td>{{ $salle->tarif }}</td>
                                 <td>{{ $salle->statut }}</td>
+                                <td>
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $salle->latitude }},{{ $salle->longitude }}" target="_blank">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </a>
+                                </td>
                                 <td>
                                     @can('create', App\Models\Salles::class)
                                         <a href="#editEmployeeModal{{ $salle->id }}" class="edit"
@@ -290,11 +229,7 @@
                             </select>
 
                         </div>
-                        <div class="form-group">
-                            <label>Equipement</label>
-                            <input type="text" name="equipement" class="form-control" required
-                                placeholder="les equipements">
-                        </div>
+                        {{-- ajout de option materiels --}}
                         <div class="form-group">
                             <label>Tarif de la salle</label>
                             <input type="text" name="tarif" class="form-control" required
@@ -309,8 +244,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Localisation</label>
-                            <input type="text" name="localisation" class="form-control" required>
+                            <label>Latitude</label>
+                            <input type="text" name="latitude" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="text" name="longitude" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -345,6 +284,65 @@
             </div>
         </div>
     </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function() {
+                if (this.checked) {
+                    checkbox.each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    checkbox.each(function() {
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function() {
+                if (!this.checked) {
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Activate tooltip
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select/Deselect checkboxes
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function() {
+                if (this.checked) {
+                    checkbox.each(function() {
+                        this.checked = true;
+                    });
+                } else {
+                    checkbox.each(function() {
+                        this.checked = false;
+                    });
+                }
+            });
+            checkbox.click(function() {
+                if (!this.checked) {
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

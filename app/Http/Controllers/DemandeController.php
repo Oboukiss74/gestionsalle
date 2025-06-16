@@ -70,20 +70,19 @@ class DemandeController extends Controller
                     "nom" => "required",
                     "telephone" => "required",
                     "mail" => "required|email",
-                    //"cnib" => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
                     "datedebut" => "required|date|after_or_equal:today",
                     "datefin" => "required|date|after_or_equal:datedebut",
-                    "heuredebut" => "required",
-                    "heurefin" => "required",
+                    "heuredebut" => "required|date_format:H:i|after_or_equal:07:30|before:heurefin",
+                    "heurefin" => "required|date_format:H:i|after:heuredebut|before:17:00",
                     "effectif" => "required|integer|min:1",
                     "motif" => "required",
-
                 ]
 
 
 
             );
             //dd($validatedData);
+
             Demandes::create($validatedData);
 
             //mail depuis le DB
@@ -211,9 +210,9 @@ class DemandeController extends Controller
         $this->authorize('view', $demandes);
 
         $user = Auth::user();
-
+        $localisation= Salles::all();
         $demandes = $user->demandes;
-        return view('Demandes.verifier_demande', compact('demandes'));
+        return view('Demandes.verifier_demande', compact('demandes','localisation'));
     }
     //detail de ma demande
     public function DetailMaDemande($id)
@@ -227,8 +226,6 @@ class DemandeController extends Controller
             return back()->with('message', 'votre demande est deja traitée');
         }
         // dd($demandes);
-
-
     }
     //voir la demande
     public function show(Demandes $demande)
@@ -299,14 +296,14 @@ class DemandeController extends Controller
         $demandeRefusees = Demandes::where('etat', 'Refusée')->get();
         return view('Demandes.demande_refusee', compact('demandeRefusees', 'nombredemande', 'demandeRejetee'));
     }
-    //liste de demande validee
+    //demande a valider
     public function demande_validee()
     {
         $this->authorize('approuve', Demandes::class);
         $demandeValidee = Demandes::where('etat', 'Validée')->paginate(3);
         $nombredemande = Demandes::where('etat', 'Validée')->count();
         $demandes = Demandes::where('etat', 'Validée')->get();
-        return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee'));
+        return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee','localisation'));
     }
 
     //quittance demandes
@@ -316,8 +313,10 @@ class DemandeController extends Controller
             return redirect()->back()
                 ->with('error', 'La quittance n\'est disponible que pour les demandes approuvées.');
         }
+        $user = Auth::user();
+        $demandes = Demandes::where('id_user', $user->id)->orderByDesc('updated_at')->get();
         $salle = Salles::all();
-        return Pdf::view('Demandes.quittance', compact('demande', 'salle'))
+        return Pdf::view('Demandes.quittance', compact('demande', 'salle','demandes'))
             ->format('A4')
 
             ->name('quittance' . $demande->id . '.pdf')
@@ -325,4 +324,17 @@ class DemandeController extends Controller
             ->download();
     }
     //rechercher une demande
+
+
+    //notifiaction des demandes
+    public function NotificationDemande(Request $request, $id)
+    {
+        $user = Auth::user();
+        $demandes = Demandes::where('id_user', $user->id)->orderByDesc('updated_at')->get();
+
+        $notifications = $user->notifications;
+        // Marquer toutes comme lues
+        Auth::user()->unreadNotifications->markAsRead();
+        return view('Demandes.notification', compact('demandes', 'notifications', 'demandes'));
+    }
 }
