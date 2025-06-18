@@ -22,12 +22,29 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link
         rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
-    <link rel="stylesheet" href="{{asset('css/salles/listesalle.css')}}">
-    <!-- Theme style -->
+    {{-- lien manquants --}}
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Raleway">
+    <link rel="stylesheet" href="{{ asset('css/salles/salle.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    <!-- Theme style -->
+    {{-- lien manquants --}}
+    <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Raleway">
+    <link rel="stylesheet" href="{{ asset('css/salles/salle.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Font: Source Sans Pro -->
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -85,7 +102,8 @@
                                 <td>{{ $salle->tarif }}</td>
                                 <td>{{ $salle->statut }}</td>
                                 <td>
-                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $salle->latitude }},{{ $salle->longitude }}" target="_blank">
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $salle->latitude }},{{ $salle->longitude }}"
+                                        target="_blank">
                                         <i class="fas fa-map-marker-alt"></i>
                                     </a>
                                 </td>
@@ -152,10 +170,10 @@
                     </tbody>
                 </table>
                 <div class="clearfix">
-                    <div class="hint-text">
+                    {{-- <div class="hint-text">
 
-                        </b> {{ $salle->id }} <b> éléments </b> sur <b>{{ $nombresalles }}</b>
-                    </div>
+                        </b> {{ $salles->id }} <b> éléments </b> sur <b>{{ $nombresalles }}</b>
+                    </div> --}}
                     <ul class="pagination">
 
                         @if ($salles->onFirstPage())

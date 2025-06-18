@@ -76,52 +76,7 @@
 </style>
 
 <body class="hold-transition sidebar-mini">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <a class="navbar-brand" href="{{ route('profile') }}"
-            style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
-            <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
-                class="d-inline-block align-top">
-            <b style="color: rgb(57, 209, 115)"> gs.ujkz</b>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav mr-auto ml-4">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('profile') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_demande') }}">Les demandes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('liste_salles') }}">Les salles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                        <h2 style="font-size: 12px;">
-                            << {{ Auth::user()->nom }}>>
-                        </h2>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ route('profile') }}">Mon profil</a>
-                        <a class="dropdown-item" href="#">Paramètres</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="{{ route('logout') }}">Déconnexion</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    @include("layouts.navbarunique")
 
 
     <div class="container" style="margin-left: 1px">

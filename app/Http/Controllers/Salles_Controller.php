@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Salles;
 use App\Models\Demandes;
+use App\Models\equipement;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -17,7 +18,8 @@ class Salles_Controller extends Controller
     public function AjouterSalles()
     {
         $this->authorize('create', Salles::class);
-        return view("salles.Ajout_salles");
+        $equipements = equipement::all();
+        return view("salles.Ajout_salles", compact('equipements'));
     }
     //validation denregistrement salles
     public function enretrement_salle(Request $request)
@@ -29,9 +31,9 @@ class Salles_Controller extends Controller
                 "code" => "required",
                 "nombreplace" => "required",
                 "taille" => "required",
-
                 "tarif" => "required",
                 "statut" => "required",
+                // "equipement" => "required|array",
                 "longitude" => "required",
                 "latitude" => "required",
 
@@ -43,7 +45,6 @@ class Salles_Controller extends Controller
                 "code" => $request->input("code"),
                 "nombreplace" => $request->input("nombreplace"),
                 "taille" => $request->input("taille"),
-
                 "tarif" => $request->input("tarif"),
                 "statut" => $request->input("statut"),
                 "longitude" => $request->input("longitude"),
@@ -134,28 +135,6 @@ class Salles_Controller extends Controller
 
         return view('salles.salle_disponible', compact('salles', 'now'));
     }
-
-    // public function sallesDisponiblesJour(Request $request)
-    // {
-    //     // Définir la période pour aujourd'hui
-    //     $datedebut = Carbon::today()->startOfDay(); // Début de la journée (00:00)
-    //     $datefin = Carbon::today()->endOfDay();     // Fin de la journée (23:59:59)
-
-    //     // Récupérer les IDs des salles occupées aujourd'hui
-    //     $sallesOccupees = Demandes::where(function ($query) use ($datedebut, $datefin) {
-    //         $query->whereBetween('datedebut', [$datedebut, $datefin])
-    //             ->orWhereBetween('datefin', [$datedebut, $datefin])
-    //             ->orWhere(function ($q) use ($datedebut, $datefin) {
-    //                 $q->where('datedebut', '<=', $datedebut)
-    //                     ->where('datefin', '>=', $datefin);
-    //             });
-    //     })->pluck('id_salle');
-
-    //     // Récupérer les salles disponibles
-    //     $salles = Salles::whereNotIn('id', $sallesOccupees)->get();
-
-    //     return view('salles.salle_disponible', ['salles' => $salles]);
-    // }
 
     //liste des salles
     public function les_salles()

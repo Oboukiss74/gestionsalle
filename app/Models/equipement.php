@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class equipement extends Model
 {
     protected $table = "equipements";
-    protected $fillable = ['salle_id','nom', 'code', 'quantite', 'etat' ];
+    protected $fillable = ['nom', ];
     public function salles()
     {
-        return $this->belongsToy(Salles::class);
+        return $this->belongsToMany(Salles::class);
     }
     public function Salle() {
-        return $this->hasManyy(Salles::class,'salle_id');
+        return $this->hasMany(Salles::class,'salle_id');
 
     }
+
 
 }

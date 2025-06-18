@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -111,15 +112,31 @@
                                 class="formbold-form-input" />
                         </div>
 
-
                     </div>
 
+                    <div>
+
+                        <label for="email" class="formbold-form-label" id="longitude"> la longitude </label>
 
 
-                    <button class="formbold-btn">Enregistrer</button>
-                </form>
+                        {{-- @foreach ($equipements as $equipement)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="equipements[]" value="{{ $equipement->id }}" id="equipement{{ $equipement->id }}">
+                                <label class="form-check-label" for="equipement{{ $equipement->id }}">
+                                    {{ $equipement->nom }}
+                                </label>
+                            </div>
+                        @endforeach --}}
+                    </div>
+
             </div>
+
+
+
+            <button class="formbold-btn">Enregistrer</button>
+            </form>
         </div>
+    </div>
     </div>
 </body>
 

@@ -11,16 +11,16 @@
                 <a href="{{ route('profile') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
 
-                <a href="{{ route('equipementdetails') }}" class="nav-item nav-link active" style="color: black"><i
+                <a href="{{ route('ajoutequipement') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa-solid fa-recycle"></i><span>Materiels</span></a>
 
-                @can('view', App\Models\Demandes::class)
+                {{-- @can('view', App\Models\Demandes::class) --}}
                     <a href="{{ route('total_demande') }}" class="nav-item nav-link active" style="color: black"><i
                             class="fa-solid fa-file"></i><span>les demandes</span></a>
-                @endcan
+                {{-- @endcan --}}
 
                 @can('view', App\Models\Salles::class)
-                    <a href="{{ route('tableau_salles') }}" class="nav-item nav-link active" style="color: black"><i
+                    <a href="{{ route('liste_salles') }}" class="nav-item nav-link active" style="color: black"><i
                             class="fa-solid fa-landmark"></i><span>les salles</span></a>
                 @endcan
 
@@ -34,10 +34,10 @@
                         infos</span></a>
 
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
-                {{-- @can('voirmesdemandes', App\Models\Demandes::class) --}}
+                @can('voirmesdemandes', App\Models\Demandes::class)
                 <a href="{{ route('mes_demande') }}" class="nav-item nav-link" style="color: black"><i
                         class="fa fa-pie-chart" style="color: black"></i><span>Mes demandes</span></a>
-                {{-- @endcan --}}
+                @endcan
 
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}
                 <a href="{{ route('notifiation', ['id' => Auth::user()->id]) }}" class="nav-item nav-link"
@@ -78,14 +78,14 @@
 
                 @if (Route::currentRouteName() === 'ajouterutilisateur')
                     <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-item nav-link"
-                            ><i class="fa-solid fa-users"></i><span>Les
+                        <a href="{{ route('tableau_de_bord') }}" class="nav-item nav-link"><i
+                                class="fa-solid fa-users"></i><span>Les
                                 utilisateurs</span></a>
 
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('ajouterutilisateur') }}" class="nav-item nav-link"><i
-                                class="fa-solid fa-address-card" ></i><span>Ajouter un
+                                class="fa-solid fa-address-card"></i><span>Ajouter un
                                 utilisateur</span></a>
                     </li>
                 @endif
@@ -289,7 +289,7 @@
                 @endif
                 {{-- liens de liste demandes --}}
 
-                @if (Route::currentRouteName() === 'total_demande' || Route::currentRouteName()==='liste_demande')
+                @if (Route::currentRouteName() === 'total_demande' || Route::currentRouteName() === 'liste_demande')
                     <li class="nav-item">
                         <a href="{{ route('liste_demandeencour') }}" class="nav-link">
                             <i class="nav-icon fas fa-clock"></i>
@@ -310,10 +310,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('liste_demandeencour') }}" class="nav-link">
-                            <i class="nav-icon fas fa-tasks"></i>
-                            <p>Traiter les demandes</p>
-                        </a>
+                        @can('view', App\Models\Demandes::class)
+                            <a href="{{ route('liste_demandeencour') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>Traiter les demandes</p>
+                            </a>
+                        @endcan
+
                     </li>
                 @endif
 

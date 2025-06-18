@@ -122,13 +122,34 @@ Route::get('/attribution/role/permission', function () {
     $user->assignRole('Admin');
 
     // Récupérer le rôle (ex: "admin")
-    $role = Role::findByName('Admin'); // ou Role::find($id);
+    // $role = Role::findByName('Admin'); // ou Role::find($id);
 
-    // Récupérer toutes les permissions
-    $permissions = Permission::all();
+    // // Récupérer toutes les permissions
+    // $permissions = Permission::all();
 
     // Attribuer toutes les permissions au rôle
-    $role->syncPermissions($permissions);
+    // $role->givePermissionTo($permissions);
+    //attribution des permissions aux roles
+    $role = Role::findByName('Admin');
+    $role->givePermissionTo([
+        'modifier.ma.demande',
+        'supprimer.demande',
+        'soummetre.demande',
+        // 'valider.demande',
+        'refuser.demande',
+        // 'voir.demande',
+        'suivre.demande',
+        'modifier.utilisateur',
+        'supprimer.utilisateurs',
+        'creer.utilisateurs',
+        'voir.utilisateurs',
+        'modifier.profile',
+        'voir.profile',
+        'voir.demandevalidee',
+        'voir.demandeerefusee',
+        'voir.demandeencour',
+        'ecrire.demande',
+    ]);
 });
 
 
@@ -200,7 +221,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
 
     //liste des demandes
-    Route::get('/demandes/liste', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
+    Route::get('/demandes/encours', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
 
     //ma demande
     Route::get('ma_demande/', [DemandeController::class, 'lademande'])->name(name: 'la_demande');
@@ -267,9 +288,9 @@ Route::middleware(['auth'])->group(function () {
     //valider l'enregistrement des equipements
     Route::post('equipements/valider', [Controllerequipement::class, 'valider'])->name('validerequipement');
     //afficher les equipements
-    Route::get('equipements/voir', [Controllerequipement::class, 'view'])->name('listeequipement');
+    // Route::get('equipements/voir', [Controllerequipement::class, 'view'])->name('listeequipement');
     //liqte total et infos des equipements
-    Route::get('equipements', [Controllerequipement::class, 'listeequipement'])->name('equipementdetails');
+    // Route::get('equipements', [Controllerequipement::class, 'listeequipement'])->name('equipementdetails');
     //modifier les equipements
     Route::post('equipements/modifier', [Controllerequipement::class, 'store'])->name('modifierequipement');
     //supprimer equipement

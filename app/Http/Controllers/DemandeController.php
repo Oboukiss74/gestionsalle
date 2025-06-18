@@ -162,7 +162,7 @@ class DemandeController extends Controller
     //supprimer une demande
     public function deletedemande($id)
     {
-        $this->authorize("deleteAny");
+        // $this->authorize("deleteAny");
         $demande = Demandes::find($id);
 
         if (!$demande) {
@@ -176,9 +176,8 @@ class DemandeController extends Controller
     //liste des demandes et la configuration de la validation et refus
     public function liste_demande(Demandes $demande)
     {
+        // dd('verifier');
         $this->authorize('view', Demandes::class);
-        //$this->authorize('view', $demande) ;
-        // Récupère tous les demandes
         $demandes = Demandes::paginate(3);
         $nombredemande = Demandes::count();
 

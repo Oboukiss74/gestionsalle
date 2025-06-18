@@ -74,7 +74,8 @@ class AdminController extends Controller
     //totatal des demandes
     public function total_demandes()
     {
-        $this->authorize('viewAny', Demandes::class);
+        // dd('ok');
+        $this->authorize('view', Demandes::class);
         $demandes = Demandes::count();
         $demandeValidée = Demandes::where('etat', 'Validée')->count();
         $demandeRefusée = Demandes::where('etat', 'Refusée')->count();

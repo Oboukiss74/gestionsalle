@@ -24,40 +24,20 @@ class Controllerequipement extends Controller
     // Controller
     public function valider(Request $request)
     {
+
+
         $validated = $request->validate([
-            'nom' => 'required|string|max:255',
-            'code' => 'required|string|unique:equipements,code|max:50',
-            'quantite' => 'required|integer|min:1',
-            'etat' => 'required|string',
-            'salle_id' => 'required|exists:salles,id'
+            'nom' => 'required|string|max:255|unique:equipements,nom',
         ]);
 
         try {
             Equipement::create($validated);
             return redirect()->back()->with('succes', 'Équipement ajouté avec succès');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erreur technique : ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erreur d ajout : ' . $e->getMessage());
         }
     }
-    //consultat la liste des equipement avec leurs salles
-    public function view(Request $request)
-    {
 
-        $equipements = equipement::paginate();
-        $nombreequipement=equipement::count();
-        $salles = Salles::all('nom');
-        return view("equipement.voir", compact("equipements",'salles','nombreequipement'));
-    }
-
-    //liste des equipements
-    public function listeequipement() {
-        $equipementneuf = equipement::all()->count();
-        $equipementneuf = equipement::where('etat','neuf')->count();
-        $equipementmauvais = equipement::where('etat','mauvais')->count();
-        $equipementuse = equipement::where('etat','use')->count();
-        $equipementbon = equipement::where('etat','bon etat')->count();
-        return view('equipement.liste',compact('equipementneuf',"equipementmauvais","equipementuse","equipementbon"));
-    }
     //modifier equipements
     public function equipent_modifier(Request $request)
     {

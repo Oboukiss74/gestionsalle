@@ -24,6 +24,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 </head>
 
@@ -33,7 +34,7 @@
     <div class="wrapper">
         <!-- Navbar -->
         @include('layouts.navbarunique')
-        @include('layouts.sider')
+
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -103,6 +104,7 @@
                                             <td>{{ $demande->heurefin }}</td>
                                             <td>{{ $demande->motif }}</td>
                                             <td>
+
                                                 <a href="#">
                                                     <svg class="filament-link-icon w-4 h-4 mr-1"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -112,17 +114,22 @@
                                                         </path>
                                                     </svg>
                                                 </a>
-                                                <a href="{{ route('demandesupprimer', $demande->id) }}"
-                                                    class="text-danger w-4 h-4 mr-1">
-                                                    <svg wire:loading.remove.delay="" wire:target=""
-                                                        class="filament-link-icon w-4 h-4 mr-1"
-                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                        fill="currentColor" aria-hidden="true">
-                                                        <path ath fill-rule="evenodd"
-                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                            clip-rule="evenodd"></path>
-                                                    </svg>
-                                                </a>
+
+                                                <form action="{{ route('demandesupprimer', $demande->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-link text-danger p-0"
+                                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+                                                        <svg class="filament-link-icon w-4 h-4 mr-1"
+                                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                            fill="currentColor" aria-hidden="true">
+                                                            <path fill-rule="evenodd"
+                                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                </form>
+
                                             </td>
                                         </tr>
                                     @endforeach

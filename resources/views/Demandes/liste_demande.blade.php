@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('css/demande/liste_demande.css') }}">
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 
 
 </head>

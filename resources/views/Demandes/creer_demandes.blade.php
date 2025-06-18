@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <title>Creer une demande</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Raleway">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -10,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -26,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <!-- Theme style -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Creer une demande</title>
+
     <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
     <link rel="icon" type="image/png" href="images/logo.png" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -186,18 +188,16 @@
                                                                             Capacité
                                                                             : {{ $salle->nombreplace }} places
                                                                         </div>
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-primary"
-                                                                            onclick="afficherEquipements({{ $salle->id }})">
-                                                                            Voir les équipements
-                                                                        </button>
+                                                                        <option value="{{ $salle->equipements->id }}">
+                                                                            <select name="nom" id="" >{{ $salle->equipements->nom }}</select>
+                                                                        </option>
                                                                     </div>
 
                                                                     <!-- Zone d’affichage des équipements (masquée au départ) -->
-                                                                    <div id="equipements-{{ $salle->id }}"
+                                                                    {{-- <div id="equipements-{{ $salle->id }}"
                                                                         class="equipements mt-2"
                                                                         style="display: none;">
-                                                                    </div>
+                                                                    </div> --}}
                                                                 </li>
                                                             @endforeach
                                                         </ul>

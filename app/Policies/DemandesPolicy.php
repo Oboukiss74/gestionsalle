@@ -14,7 +14,7 @@ class DemandesPolicy
     public function viewAny(User $user): bool
     {
         // dd($user->hasRole('Utilisateur'), $user->roles->pluck('name')->toArray());
-        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('DIP');
+        return $user->hasRole('Admin');
     }
 
     /**
@@ -22,7 +22,7 @@ class DemandesPolicy
      */
     public function view(User $user): bool
     {
-        return $user->hasRole('Admin') || $user->hasRole('SG') || $user->hasRole('SC') || $user->hasRole('DEPS')  || $user->hasRole('Utilisateur');
+        return $user->hasPermissionTo('voir.demande');
         // return true;
     }
 
@@ -59,7 +59,6 @@ class DemandesPolicy
      */
     public function deleteAny(User $user): bool
     {
-        // return $user->hasAllRoles('Admin') || $user->hasRole("DIP") || $user->hasRole("DEPS");
 
         return $user->hasPermissionTo('supprimer.demande') ;
 

@@ -25,6 +25,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 </head>
 

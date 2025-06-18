@@ -32,7 +32,7 @@
             <div class="navbar-nav">
                 <a href="{{ route('profile') }}"class="nav-item nav-link">Acceuil</a>
                 <a href="{{ route('ajoutequipement') }}"class="nav-item nav-link">Ajouter materiels</a>
-                <a href="{{ route('listeequipement') }}"class="nav-item nav-link">verifier materiels</a>
+
                 @yield('elements')
 
                 <a href="#" class="nav-item nav-link">Contact</a>
@@ -83,44 +83,6 @@
                         <input type="text" name="nom" id="nom" value="{{ old('nom') }}"
                             class="formbold-form-input" required>
                     </div>
-
-                    <div class="formbold-mb-3">
-                        <label for="code" class="formbold-form-label">Code *</label>
-                        <input type="text" name="code" id="code" value="{{ old('code') }}"
-                            class="formbold-form-input" placeholder="le code de l'equipemnet" required>
-                    </div>
-                </div>
-
-                <div class="formbold-input-flex">
-                    <div class="formbold-mb-3">
-                        <label for="quantite" class="formbold-form-label">Quantité *</label>
-                        <input type="number" name="quantite" id="quantite" value="{{ old('quantite') }}"
-                            class="formbold-form-input" min="1" required>
-                    </div>
-
-                    <div class="formbold-mb-3">
-                        <label for="salle_id" class="formbold-form-label">Salle *</label>
-                        <select name="salle_id" id="salle_id" class="formbold-form-input" required>
-                            <option value="">Choisir une salle</option>
-                            @foreach ($salles as $salle)
-                                <option value="{{ $salle->id }}"
-                                    {{ old('salle_id') == $salle->id ? 'selected' : '' }}>
-                                    {{ $salle->nom }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="formbold-mb-3">
-                    <label for="etat" class="formbold-form-label">État *</label>
-                    <select name="etat" id="etat" class="formbold-form-input" required>
-                        <option value="">Sélectionner un état</option>
-                        <option value="neuf" {{ old('etat') == 'neuf' ? 'selected' : '' }}>Neuf</option>
-                        <option value="bon" {{ old('etat') == 'bon' ? 'selected' : '' }}>Bon état</option>
-                        <option value="usé" {{ old('etat') == 'usé' ? 'selected' : '' }}>Usé</option>
-                        <option value="mauvais" {{ old('etat') == 'mauvais' ? 'selected' : '' }}>Mauvais état</option>
-                    </select>
                 </div>
 
                 <button type="submit" class="formbold-btn">Enregistrer</button>
