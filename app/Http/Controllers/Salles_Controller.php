@@ -62,6 +62,41 @@ class Salles_Controller extends Controller
             ]);
         }
     }
+
+    //modifier salle
+    public function modifier_salle(Salles $salle)
+    {
+        $this->authorize('update', $salle);
+        // Afficher les salles déjà enregistrées
+        // La salle sélectionnée est déjà injectée via l'argument $salle
+        // Vous pouvez donc simplement passer $salle à la vue
+        $equipements = equipement::all();
+        return view('salles.modifier_salle', compact('salle', 'equipements'));
+    }
+
+    //validation de la modification de la salle
+    public function validation_modifier_salle(Request $request, Salles $salle)
+    {
+        // $this->authorize('update', $salle);
+        $request->validate([
+            "nom" => "required",
+            "code" => "required",
+            "nombreplace" => "required",
+            "taille" => "required",
+            "tarif" => "required",
+            "equipement" => "required",
+        ]);
+        $salle->update([
+            "nom" => $request->input("nom"),
+            "code" => $request->input("code"),
+            "nombreplace" => $request->input("nombreplace"),
+            "taille" => $request->input("taille"),
+            "tarif" => $request->input("tarif"),
+            "statut" => $request->input("statut"),
+        ]);
+        //dd($salle);
+        return redirect()->route('liste_salles')->with("success", "Salle modifiée avec succès");
+    }
     //liste des salles
 
     public function liste_salles(Salles $salles)

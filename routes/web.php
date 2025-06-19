@@ -184,12 +184,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/salles/ajouter', [Salles_Controller::class, 'AjouterSalles'])->name(name: 'pages_salles');
     //validation des salles
     Route::post('admin/Ajouter_salles', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salle');
+    // modifier les salles
+    Route::get('admin/modifier_salle/{id}', [Salles_Controller::class, 'modifier_salle'])->name(name: 'modifier_salle');
+    //enregistrer les salles
+    Route::post('admin/valider_modifier', [Salles_Controller::class, 'validation_modifier_salle'])->name(name: 'enregistrer_salle_modifiee');
     //validation des salles
     Route::post('admin/Ajouter_salle', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salles');
     //liste des salles
     Route::get('admin/liste_salles', [Salles_Controller::class, 'liste_salles'])->name(name: 'liste_salles');
-    //mise a jour des salle
-    Route::post('admin/modifier_salles', [Salles_Controller::class, 'Salles_Update'])->name(name: 'Update_salles');
+    // //mise a jour des salle
+    // Route::post('admin/modifier_salles', [Salles_Controller::class, 'Salles_Update'])->name(name: 'Update_salles');
     //supprimer salles
     Route::post('supprimer_salles', [Salles_Controller::class, 'delete_salle'])->name(name: 'delete_salles');
     //salle occupées
