@@ -30,28 +30,35 @@ Route::get('role_permission', function () {
 
     //     // $roleSuperAdmin = Role::where('name','Utilisateur')->first();
     //     // $roleAdmin->givePermissionTo(['modifier.profile', 'voir.profile','ecrire.demande','suivre.demande']);
-    $rolegestionaire = Role::where('name', 'Admin')->first();
-    $rolegestionaire->givePermissionTo([
-        'modifier.ma.demande',
-        'supprimer.demande',
-        'ecrire.demande',
-        'valider.demande',
-        'refuser.demande',
-        'creer.utilisateurs',
-        'supprimer.utilisateurs',
-        'voir.utilisateurs',
-        'modifier.profile',
-        'voir.profile',
-        'ecrire.demande',
-        'approuvee'
-    ]);
+    // $rolegestionaire = Role::where('name', 'Admin')->first();
+    // $rolegestionaire->givePermissionTo([
+    //     'modifier.ma.demande',
+    //     'supprimer.demande',
+    //     'ecrire.demande',
+    //     'valider.demande',
+    //     'refuser.demande',
+    //     'creer.utilisateurs',
+    //     'supprimer.utilisateurs',
+    //     'voir.utilisateurs',
+    //     'modifier.profile',
+    //     'voir.profile',
+    //     'voir.demande',
+    //     'approuvee'
+    // ]);
 
 
     //assigner role
     $users = User::all();
     foreach ($users as $user) {
         $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
-        $user->givePermissionTo(['ecrire.demande']);
+        $user->givePermissionTo([
+            // 'ecrire.demande',
+            // 'voir.utilisateurs',
+            // 'modifier.profile',
+            // 'voir.profile',
+            'voir.mesdemande',
+            // 'modifier.ma.demande',
+        ]);
     }
 
     // Assigne le rôle "admin"
@@ -59,39 +66,39 @@ Route::get('role_permission', function () {
     //    $role->givePermissionTo('ok');
 
     //     return view('welcome');
-    $user = User::find(1); // Récupère l'utilisateur
-    $user->assignRole('Admin'); // Assigne le rôle "admin"
-    //Tu peux aussi attribuer plusieurs permissions à un rôle :
-    // $role = Role::findByName('DEPS');
-    $role = Role::findByName('Admin');
-    $role->givePermissionTo([
-        'voir.demande',
+    // $user = User::find(1); // Récupère l'utilisateur
+    // $user->assignRole('Admin'); // Assigne le rôle "admin"
+    // //Tu peux aussi attribuer plusieurs permissions à un rôle :
+    // // $role = Role::findByName('DEPS');
+    // $role = Role::findByName('Admin');
+    // $role->givePermissionTo([
+    //     'voir.demande',
 
-    ]);
+    // ]);
 });
 
 //creation des permissions
 Route::get('creer/permission', function () {
 
-    Permission::create(['name' => 'approuvee']);
-    Permission::create(['name' => 'modifier.ma.demande']);
-    Permission::create(['name' => 'supprimer.demande']);
-    Permission::create(['name' => 'soummetre.demande']);
-    Permission::create(['name' => 'valider.demande']);
-    Permission::create(['name' => 'refuser.demande']);
-    Permission::create(['name' => 'voir.demande']);
-    Permission::create(['name' => 'suivre.demande']);
-    Permission::create(['name' => 'modifier.utilisateur']);
-    Permission::create(['name' => 'supprimer.utilisateurs']);
+    // Permission::create(['name' => 'approuvee']);
+    // Permission::create(['name' => 'modifier.ma.demande']);
+    // Permission::create(['name' => 'supprimer.demande']);
+    // Permission::create(['name' => 'soummetre.demande']);
+    // Permission::create(['name' => 'valider.demande']);
+    // Permission::create(['name' => 'refuser.demande']);
+    // Permission::create(['name' => 'voir.demande']);
+    // Permission::create(['name' => 'suivre.demande']);
+    // Permission::create(['name' => 'modifier.utilisateur']);
+    // Permission::create(['name' => 'supprimer.utilisateurs']);
 
-    Permission::create(['name' => 'creer.utilisateurs']);
-    Permission::create(['name' => 'voir.utilisateurs']);
-    Permission::create(['name' => 'modifier.profile']);
-    Permission::create(['name' => 'voir.profile']);
-    Permission::create(['name' => 'voir.demandevalidee']);
-    Permission::create(['name' => 'voir.demandeerefusee']);
-    Permission::create(['name' => 'voir.demandeencour']);
-    Permission::create(['name' => 'ecrire.demande']);
+    // Permission::create(['name' => 'creer.utilisateurs']);
+    // Permission::create(['name' => 'voir.utilisateurs']);
+    // Permission::create(['name' => 'modifier.profile']);
+    // Permission::create(['name' => 'voir.profile']);
+    // Permission::create(['name' => 'voir.demandevalidee']);
+    // Permission::create(['name' => 'voir.demandeerefusee']);
+    // Permission::create(['name' => 'voir.demandeencour']);
+    Permission::create(['name' => 'voir.mesdemande']);
 });
 
 //creation des roles
@@ -182,35 +189,48 @@ Route::get('/', [AccueilController::class, 'PageAccueil'])->name(name: 'Accueil'
 Route::middleware(['auth'])->group(function () {
     //page d'enregistrement salles
     Route::get('admin/salles/ajouter', [Salles_Controller::class, 'AjouterSalles'])->name(name: 'pages_salles');
+
     //validation des salles
     Route::post('admin/Ajouter_salles', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salle');
+
     // modifier les salles
     Route::get('admin/modifier_salle/{id}', [Salles_Controller::class, 'modifier_salle'])->name(name: 'modifier_salle');
-    //enregistrer les salles
-    Route::post('admin/valider_modifier', [Salles_Controller::class, 'validation_modifier_salle'])->name(name: 'enregistrer_salle_modifiee');
+
+    //enregistrer la modidfication de la salles
+    Route::put('admin/valider_modifier/{salle}', [Salles_Controller::class, 'validation_modifier_salle'])->name(name: 'enregistrer_salle_modifiee');
+
     //validation des salles
     Route::post('admin/Ajouter_salle', [Salles_Controller::class, 'enretrement_salle'])->name(name: 'enregistrer_salles');
+
     //liste des salles
     Route::get('admin/liste_salles', [Salles_Controller::class, 'liste_salles'])->name(name: 'liste_salles');
+
     // //mise a jour des salle
     // Route::post('admin/modifier_salles', [Salles_Controller::class, 'Salles_Update'])->name(name: 'Update_salles');
     //supprimer salles
     Route::post('supprimer_salles', [Salles_Controller::class, 'delete_salle'])->name(name: 'delete_salles');
+
     //salle occupées
     Route::get('admin/occupe_salles', [Salles_Controller::class, 'sallesOccupe'])->name(name: 'occupant_salles');
 
+
     //rechercher une salle
     Route::get('admin/rechercher_salle', action: [Salles_Controller::class, 'sallesDispo'])->name(name: 'recherche_salles');
+
     //liste de salle disponible sur une demande
     Route::get('admin/salle_disponible', action: [Salles_Controller::class, 'sallesDisponibles'])->name(name: 'liste_salles_dipsonible');
+
     //liste des salles du jour
     Route::post('admin/salle_disponible_jour', action: [Salles_Controller::class, 'sallesDisponiblesJour'])->name(name: 'liste_salle_jour');
+
     //total des salles
     Route::post('admin/tableau_bord/salles', [Salles_Controller::class, 'les_salles'])->name(name: 'tableau_salles');
+
     //liste des salles occupées
     //Route::post('salle_occupe', action: [Salles_Controller::class, 'sallesOccupe'])->name(name: 'liste_salle_occupe');
     //salles occupees
     Route::get('admin/salleoccupee', [Salles_Controller::class, 'SallesOccupee'])->name('liste_salles_occupee');
+
     //statistiques des salles sur demande
     Route::get('admin/salles/statistiquesalles/', [Salles_Controller::class, 'statistique'])->name('statistique');
 });
@@ -305,7 +325,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     //Profile
-    Route::get('profile', action: [ProfileController::class, 'profiles'])->name(name: 'profile');
+    Route::get('Acceuil', action: [ProfileController::class, 'profiles'])->name(name: 'profile');
     //modifier info
     Route::get('mes_infos', [ProfileController::class, 'profile_modifier'])->name('mesinfos');
     Route::put('mesinfos', [ProfileController::class, 'ModifierProfile'])->name('mesinfosmodifier');

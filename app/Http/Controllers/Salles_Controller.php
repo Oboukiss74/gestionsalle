@@ -33,7 +33,7 @@ class Salles_Controller extends Controller
                 "taille" => "required",
                 "tarif" => "required",
                 "statut" => "required",
-                // "equipement" => "required|array",
+                "equipement" => "array|Nullable",
                 "longitude" => "required",
                 "latitude" => "required",
 
@@ -47,6 +47,7 @@ class Salles_Controller extends Controller
                 "taille" => $request->input("taille"),
                 "tarif" => $request->input("tarif"),
                 "statut" => $request->input("statut"),
+                "equipement" => $request->input("equipement"),
                 "longitude" => $request->input("longitude"),
                 "latitude" => $request->input("latitude"),
 
@@ -64,45 +65,51 @@ class Salles_Controller extends Controller
     }
 
     //modifier salle
-    public function modifier_salle(Salles $salle)
+    public function modifier_salle($id)
     {
-        $this->authorize('update', $salle);
-        // Afficher les salles déjà enregistrées
-        // La salle sélectionnée est déjà injectée via l'argument $salle
-        // Vous pouvez donc simplement passer $salle à la vue
-        $equipements = equipement::all();
-        return view('salles.modifier_salle', compact('salle', 'equipements'));
+        // $this->authorize('update', Salles::class);
+        $salle = Salles::findOrFail($id);
+        // $equipements = equipement::all();
+        return view('salles.modifier_salle', compact('salle'));
     }
 
     //validation de la modification de la salle
     public function validation_modifier_salle(Request $request, Salles $salle)
     {
-        // $this->authorize('update', $salle);
-        $request->validate([
-            "nom" => "required",
-            "code" => "required",
-            "nombreplace" => "required",
-            "taille" => "required",
-            "tarif" => "required",
-            "equipement" => "required",
-        ]);
-        $salle->update([
-            "nom" => $request->input("nom"),
-            "code" => $request->input("code"),
-            "nombreplace" => $request->input("nombreplace"),
-            "taille" => $request->input("taille"),
-            "tarif" => $request->input("tarif"),
-            "statut" => $request->input("statut"),
-        ]);
-        //dd($salle);
-        return redirect()->route('liste_salles')->with("success", "Salle modifiée avec succès");
+        try {
+            $request->validate([
+                "nom" => "required",
+                "code" => "required",
+                "nombreplace" => "required|integer",
+                "tarif" => "required",
+                "equipement" => "Nullable|array",
+            ]);
+            // dd($data,$salle->nom);
+            $salle->update([
+                "nom" => $request->input("nom"),
+                "code" => $request->input("code"),
+                "nombreplace" => $request->input("nombreplace"),
+                "tarif" => $request->input("tarif"),
+                "equipement" => $request->equipement,
+                // "equipement" => json_encode($request->input("equipement")), // ou simplement $request->equipement
+            ]);
+            // dd($request->input("equipement"));
+
+            return redirect()->route('liste_salles')->with("success", "Salle modifiée avec succès");
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ]);
+        }
     }
+
     //liste des salles
 
     public function liste_salles(Salles $salles)
     {
         $this->authorize('view', Salles::class);
-        $salles = Salles::paginate(2);
+        $salles = Salles::paginate(3);
         $nombresalles = Salles::count();
         return view("salles.liste_salles", compact("salles", "nombresalles"));
     }

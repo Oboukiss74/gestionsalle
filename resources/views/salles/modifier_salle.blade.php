@@ -104,49 +104,63 @@
                 <div class="contact-form">
                     <h1>Modifier la salle</h1>
 
-                    <form action="#" method="post">
+                    @php
+                        // S'assurer que l'attribut JSON est bien transformé en tableau
+                        $equipements_salle = is_array($salle->equipement)
+                            ? $salle->equipement
+                            : json_decode($salle->equipement, true);
+                    @endphp
+
+                    <form action="{{ route('enregistrer_salle_modifiee', $salle->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="inputName">nom</label>
-                                    <input type="text" class="form-control" id="inputName" required value="{{ $salle->nom }}">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="inputEmail"> le code</label>
-                                    <input type="email" class="form-control" id="inputEmail" required value="{{ $salle->code }}">
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="inputPhone">Nombre de place</label>
-                                    <input type="numbert" class="form-control" id="inputPhone" required value="{{ $salle->nombreplace }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputSubject">Tarif</label>
-                            <input type="text" class="form-control" id="inputSubject" required value="{{ $salle->tarif }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputMessage">equipement</label>
-                            @foreach ($equipements as $equipement)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $equipement->id }}" id="equipement{{ $equipement->id }}" name="equipement[]" {{ in_array($equipement->id, $salle->equipements->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="equipement{{ $equipement->id }}">
-                                        {{ $equipement->nom }}
-                                    </label>
-                                </div>
 
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" class="form-control" name="nom" value="{{ $salle->nom }}"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Code</label>
+                            <input type="text" class="form-control" name="code" value="{{ $salle->code }}"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nombre de place</label>
+                            <input type="number" class="form-control" name="nombreplace"
+                                value="{{ $salle->nombreplace }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tarif</label>
+                            <input type="text" class="form-control" name="tarif" value="{{ $salle->tarif }}"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Équipements disponibles :</label><br>
+
+                            @php
+                                $equipements_disponibles = ['projecteur', 'tableau', 'climatisation', 'electriciter',
+                                    'wifi', 'sonorisation', 'microphone', 'ecran'];
+                            @endphp
+
+                            @foreach ($equipements_disponibles as $eq)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="equipement[]"
+                                        value="{{ $eq }}" id="eq_{{ $eq }}"
+                                        {{ in_array($eq, $equipements_salle ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label"
+                                        for="eq_{{ $eq }}">{{ ucfirst($eq) }}</label>
+                                </div>
                             @endforeach
-                            <input type="text" class="form-control" required value="{{ $salle->tarif }}">
-
                         </div>
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Modifier</button>
+
+                        <button type="submit" class="btn btn-primary">Modifier</button>
                     </form>
+
                 </div>
             </div>
         </div>

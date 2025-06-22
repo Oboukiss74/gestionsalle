@@ -38,7 +38,7 @@
 
 <body>
     @include('layouts.navbarunique')
-    <div>
+    <div class="container">
         <div class="formbold-main-wrapper">
 
             <!-- Author: FormBold Team -->
@@ -100,11 +100,6 @@
 
                     <div id="map" style="height: 400px;"></div>
                     <div class="formbold-input-flex">
-                        <div>
-                            <label for="email" class="formbold-form-label" id="longitude"> la longitude </label>
-                            <input type="text" name="longitude" id="lng" placeholder="la longitude"
-                                class="formbold-form-input" />
-                        </div>
 
                         <div>
                             <label for="latitude" class="formbold-form-label" id="latitude"> la latitude </label>
@@ -112,28 +107,21 @@
                                 class="formbold-form-input" />
                         </div>
 
+                        <div>
+                            <label for="email" class="formbold-form-label" id="longitude"> la longitude </label>
+                            <input type="text" name="longitude" id="lng" placeholder="la longitude"
+                                class="formbold-form-input" />
+                        </div>
+
+
+
                     </div>
-
-                    <div>
-
-                        <label for="email" class="formbold-form-label" id="longitude"> la longitude </label>
-
-
-                        {{-- @foreach ($equipements as $equipement)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="equipements[]" value="{{ $equipement->id }}" id="equipement{{ $equipement->id }}">
-                                <label class="form-check-label" for="equipement{{ $equipement->id }}">
-                                    {{ $equipement->nom }}
-                                </label>
-                            </div>
-                        @endforeach --}}
-                    </div>
-
+                    <button class="formbold-btn">Enregistrer</button>
             </div>
 
 
 
-            <button class="formbold-btn">Enregistrer</button>
+
             </form>
         </div>
     </div>

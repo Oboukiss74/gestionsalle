@@ -31,13 +31,13 @@ class Salles extends Model
         return $this->hasMany(Demandes::class, 'id_salle');
     }
 
-    public function equipements()
-    {
-        return $this->hasMany(equipement::class, ('id_salle'));
-    }
+    // public function equipements()
+    // {
+    //     return $this->hasMany(salle_equipement::class, ('id_salle'));
+    // }
 
-    public function equipement()
-    {
-        return $this->belongsToMany(equipement::class);
-    }
+    // public function equipement()
+    // {
+    //     return $this->belongsToMany(salle_equipement::class);
+    // }
 }

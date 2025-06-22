@@ -49,13 +49,13 @@
                     <div id="etape1">
                         <h1>
                             @if (session()->has('success'))
-                                <p style="color: red">{{ session('success') }}</p>
+                                <p style="color: rgb(34, 255, 0)">{{ session('success') }}</p>
                                 </p>
                             @endif
                         </h1>
                         <h1>
                             @if (session()->has('message'))
-                                <p style="color: red">{{ session('success') }}</p>
+                                <p style="color: rgb(0, 255, 21)">{{ session('success') }}</p>
                                 </p>
                             @endif
                         </h1>
@@ -188,9 +188,15 @@
                                                                             Capacité
                                                                             : {{ $salle->nombreplace }} places
                                                                         </div>
-                                                                        <option value="{{ $salle->equipements->id }}">
-                                                                            <select name="nom" id="" >{{ $salle->equipements->nom }}</select>
-                                                                        </option>
+                                                                        @if (!empty($salle->equipements))
+                                                                            <ul>
+                                                                                @foreach ($salle->equipements as $equipement)
+                                                                                    <option value="">{{ ucfirst($equipement) }}</option>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        @else
+                                                                            <span>Aucun équipement</span>
+                                                                        @endif
                                                                     </div>
 
                                                                     <!-- Zone d’affichage des équipements (masquée au départ) -->

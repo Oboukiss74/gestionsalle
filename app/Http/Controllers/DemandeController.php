@@ -48,6 +48,17 @@ class DemandeController extends Controller
             });
         })->get();
 
+        $sallesDisponibles->transform(function ($salle) {
+            // Décoder uniquement si c'est une chaîne JSON
+            if (is_string($salle->equipement)) {
+                $salle->equipements = json_decode($salle->equipement, true); // true pour tableau associatif
+            } elseif (is_array($salle->equipement)) {
+                $salle->equipements = $salle->equipement;
+            } else {
+                $salle->equipements = [];
+            }
+            return $salle;
+        });
         return view("Demandes.creer_demandes", compact(
 
             'sallesDisponibles',
@@ -188,7 +199,6 @@ class DemandeController extends Controller
 
     public function lademande($id)
     {
-
         $demande = Demandes::findOrFail($id); // Récupère la demande spécifique
         return view('Demandes.liste_demande', compact('demandes'));
     }
@@ -196,22 +206,27 @@ class DemandeController extends Controller
     //mes demande
     public function DemandeStatut(Demandes $demandes)
     {
-        $this->authorize('voirmesdemandes', Demandes::class);
+        $this->authorize('voir.mesdemande', Demandes::class);
 
+        // $demandes = $demandes->where('etat', 'Validée')->where('id_user', Auth::id())->get();
         $user = Auth::user();
-        $demandes = $user->demandes;
+        $demandes = $user->demandes()
+            ->where('etat', 'Validée')
+            ->with('salle') // relation vers salle
+            ->orderBy('datedebut', 'desc')
+            ->paginate(10);
         return view('Demandes.mes_demandes', compact('demandes'));
     }
 
     //verifier mes demandes etats
     public function VerifierStatut(Demandes $demandes)
     {
-        $this->authorize('view', $demandes);
+        // $this->authorize('view', $demandes);
 
         $user = Auth::user();
-        $localisation= Salles::all();
+        $localisation = Salles::all();
         $demandes = $user->demandes;
-        return view('Demandes.verifier_demande', compact('demandes','localisation'));
+        return view('Demandes.verifier_demande', compact('demandes', 'localisation'));
     }
     //detail de ma demande
     public function DetailMaDemande($id)
@@ -255,13 +270,6 @@ class DemandeController extends Controller
 
         return redirect()->back()->with('error', 'Demande refusée.');
     }
-
-    //SG
-    public function ViewSG(request $request)
-    {
-        // $demandes = Demandes::paginate(3); // 10 demandes par page
-        return view('Demandes.Demande_SG', compact('demandes'));
-    }
     //liste de demande en cour
     public function demande_en_cour()
     {
@@ -302,7 +310,8 @@ class DemandeController extends Controller
         $demandeValidee = Demandes::where('etat', 'Validée')->paginate(3);
         $nombredemande = Demandes::where('etat', 'Validée')->count();
         $demandes = Demandes::where('etat', 'Validée')->get();
-        return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee','localisation'));
+        $localisation = Salles::all();
+        return view('Demandes.demande_validee', compact('demandes', 'nombredemande', 'demandeValidee', 'localisation'));
     }
 
     //quittance demandes
@@ -315,7 +324,7 @@ class DemandeController extends Controller
         $user = Auth::user();
         $demandes = Demandes::where('id_user', $user->id)->orderByDesc('updated_at')->get();
         $salle = Salles::all();
-        return Pdf::view('Demandes.quittance', compact('demande', 'salle','demandes'))
+        return Pdf::view('Demandes.quittance', compact('demande', 'salle', 'demandes'))
             ->format('A4')
 
             ->name('quittance' . $demande->id . '.pdf')

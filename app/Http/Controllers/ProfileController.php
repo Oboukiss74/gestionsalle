@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Demandes;
+use App\Models\Salles;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -86,8 +88,13 @@ class ProfileController extends Controller
     }
     //vue du profile
     public function profiles(request $request) {
+        $nombresalle = Salles::count();
+        $nombredemande = Demandes::count();
+        // Remplacez ceci par la logique correcte pour compter les demandes acceptées
+        $nombredemandeaccepte = Demandes::where('etat', 'Validée')->count();
+        $nombredemandeencour = Demandes::where('etat', 'En attente')->count();
 
-        return view('Utilisateur.profiles.profile');
+        return view('Utilisateur.profiles.profile',compact('nombresalle', 'nombredemande', 'nombredemandeaccepte', 'nombredemandeencour'));
     }
 
     //modifier infos

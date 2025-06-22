@@ -41,6 +41,41 @@
 <body>
     @include('layouts.navbarunique')
 
+    <div class="container mt-5" style="margin-right: 5%;">
+        <h2>Mes demandes validées</h2>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Salle</th>
+                    <th>Motif</th>
+                    <th>Heure début</th>
+                    <th>Heure fin</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($demandes as $demande)
+                    @if($demande->etat === 'Validée')
+                        <tr>
+
+                            <td>{{ $demande->id }}</td>
+                            <td>{{ $demande->salle->nom ?? 'N/A' }}</td>
+                            <td>{{ $demande->motif }}</td>
+                            <td>{{ $demande->heuredebut }}</td>
+                            <td>{{ $demande->heurefin }}</td>
+                            <td><span class="badge badge-success">Validée</span></td>
+                        </tr>
+                    @endif
+                @empty
+                    <tr>
+                        <td colspan="6" class="text-center">Aucune demande validée trouvée.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>

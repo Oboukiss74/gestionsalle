@@ -25,6 +25,11 @@ class DemandesPolicy
         return $user->hasPermissionTo('voir.demande');
         // return true;
     }
+    public function mesdemandes(User $user): bool
+    {
+        return $user->hasPermissionTo('voir.mesdemande');
+        // return true;
+    }
 
     /**
      * Determine whether the user can create models.

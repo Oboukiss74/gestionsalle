@@ -11,13 +11,10 @@
                 <a href="{{ route('profile') }}" class="nav-item nav-link active" style="color: black"><i
                         class="fa fa-home"></i><span>Acceuil</span></a>
 
-                <a href="{{ route('ajoutequipement') }}" class="nav-item nav-link active" style="color: black"><i
-                        class="fa-solid fa-recycle"></i><span>Materiels</span></a>
-
-                {{-- @can('view', App\Models\Demandes::class) --}}
+                @can('view', App\Models\Demandes::class)
                     <a href="{{ route('total_demande') }}" class="nav-item nav-link active" style="color: black"><i
                             class="fa-solid fa-file"></i><span>les demandes</span></a>
-                {{-- @endcan --}}
+                @endcan
 
                 @can('view', App\Models\Salles::class)
                     <a href="{{ route('liste_salles') }}" class="nav-item nav-link active" style="color: black"><i
@@ -34,9 +31,9 @@
                         infos</span></a>
 
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
-                @can('voirmesdemandes', App\Models\Demandes::class)
-                <a href="{{ route('mes_demande') }}" class="nav-item nav-link" style="color: black"><i
-                        class="fa fa-pie-chart" style="color: black"></i><span>Mes demandes</span></a>
+                @can('voir.mesdemande', App\Models\Demandes::class)
+                    <a href="{{ route('mes_demande') }}" class="nav-item nav-link" style="color: black"><i
+                            class="fa fa-pie-chart" style="color: black"></i><span>Mes demandes</span></a>
                 @endcan
 
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}
@@ -54,9 +51,17 @@
 
             @endauth
 
+            <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="color: black"><i
+                    class="fa-solid fa-user-graduate"></i><span>Acceuil</span></a>
+
+
+            <a href="#" class="nav-item nav-link active" style="color: black"><i
+                    class="fa-solid fa-user-graduate"></i><span>Contact</span></a>
+
         </div>
     </div>
 </nav>
+
 
 
 <aside class="main-sidebar sidebar-light-primary bg-white"
@@ -67,307 +72,313 @@
             style="opacity: .8">
         <span class="brand-text font-weight-light"><b>gs.ujkz</b></span>
     </a>
+    @auth
+        <div class="sidebar">
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar Menu -->
-        <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    {{-- lien sur les ajout d'utilisateur --}}
 
-                {{-- lien sur les ajout d'utilisateur --}}
+                    @if (Route::currentRouteName() === 'ajouterutilisateur')
+                        <li class="nav-item">
+                            <a href="{{ route('tableau_de_bord') }}" class="nav-item nav-link"><i
+                                    class="fa-solid fa-users"></i><span>Les
+                                    utilisateurs</span></a>
 
-                @if (Route::currentRouteName() === 'ajouterutilisateur')
-                    <li class="nav-item">
-                        <a href="{{ route('tableau_de_bord') }}" class="nav-item nav-link"><i
-                                class="fa-solid fa-users"></i><span>Les
-                                utilisateurs</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('ajouterutilisateur') }}" class="nav-item nav-link"><i
+                                    class="fa-solid fa-address-card"></i><span>Ajouter un
+                                    utilisateur</span></a>
+                        </li>
+                    @endif
+                    {{-- liens de demandes validées et refusées et en cours --}}
+                    @if (Route::currentRouteName() === 'liste_demandevalidee' ||
+                            Route::currentRouteName() === 'liste_demanderefusee' ||
+                            Route::currentRouteName() === 'liste_demandeencour')
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
+                                    aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">
+                                    <i class="fas fa-badge-check"></i>
+                                    <p>les utilisateur</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('liste_demandevalidee') }}">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>Demandes validées</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('liste_demanderefusee') }}">
+                                    <i class="fas fa-times-circle text-danger"></i>
+                                    <p>Demandes refusées</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('liste_demandeencour') }}">
+                                    <i class="fas fa-spinner text-warning"></i>
+                                    <p>Demandes en cour</p>
+                                </a>
+                            @endcan
+                        </li>
+                    @endif
 
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('ajouterutilisateur') }}" class="nav-item nav-link"><i
-                                class="fa-solid fa-address-card"></i><span>Ajouter un
-                                utilisateur</span></a>
-                    </li>
-                @endif
-                {{-- liens de demandes validées et refusées et en cours --}}
-                @if (Route::currentRouteName() === 'liste_demandevalidee' ||
-                        Route::currentRouteName() === 'liste_demanderefusee' ||
-                        Route::currentRouteName() === 'liste_demandeencour')
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link active " aria-current="page" href="{{ route('total_demande') }}"
-                                aria-disabled="true" style="font-size: 20px; text-decoration: none;color:black">
-                                <i class="fas fa-badge-check"></i>
-                                <p>les utilisateur</p>
+                    {{-- lien des liste_salles --}}
+                    @if (Route::currentRouteName() === 'liste_salles' || Route::currentRouteName() === 'liste_salles_occupee')
+                        <li class="nav-item">
+                            @can('view', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('tableau_salles') }}"> <i class="fas fa-table"></i> </p>
+                                    Salles</p> </a>
+                            @endcan
+
+                        </li>
+                    @endif
+
+                    @if (Route::currentRouteName() === 'salles_tableau' ||
+                            Route::currentRouteName() === 'pages_salles' ||
+                            Route::currentRouteName() === 'pagedemandes')
+                        <li class="nav-item">
+                            @can('view', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('liste_salles_dipsonible') }}"><i
+                                        class="fas fa-door-open"></i>
+                                    <p>Salles disponibles</p>
+                                </a>
+                            @endcan
+                        </li>
+
+                        <li class="nav-item">
+                            @can('view', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('liste_salles_occupee') }}"> <i
+                                        class="fas fa-door-closed"></i>
+                                    <p>Salles occupées</p>
+                                </a>
+                            @endcan
+
+                        </li>
+
+                        <li class="nav-item">
+                            @can('view', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('liste_salles') }}"><i class="fas fa-table"></i>
+                                    <p>les salles</p>
+                                </a>
+                            @endcan
+                        </li>
+
+                        <li class="nav-item">
+                            @can('create', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('pages_salles') }}"> <i class="fas fa-circle-plus"></i>
+                                    <p>Ajouter une salle</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('create', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('pagedemandes') }}"> <i
+                                        class="fas fa-calendar-check"></i>
+                                    <p>Réservation</p>
+                                </a>
+                            @endcan
+
+                        </li>
+                    @endif
+
+                    {{-- lien de verifier demande --}}
+
+                    @if (Route::currentRouteName() === 'Verifie_demande' ||
+                            Route::currentRouteName() === 'mes_demande' ||
+                            Route::currentRouteName() === 'notifiation')
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('Verifie_demande') }}" style="color: black">
+                                    <i class="fa-solid fa-file"></i>
+                                    <p>Mes demandes</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"><i
+                                        class="fas fa-search"></i>
+                                    <p>verifier demandes</p>
+                                </a>
+
+                                </a>
+                            @endcan
+                        </li>
+                    @endif
+
+                    {{-- lien du cote soumission de demande --}}
+
+                    @if (Route::currentRouteName() === 'pagedemandes')
+                        <li class="nav-item">
+                            @can('voirmesdemandes', App\Models\Demandes::class)
+                                <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"> <i
+                                        class="fas fa-search"></i>
+                                    <p>verifier demandes</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mesinfos') }}" class="nav-item nav-link "><i class="fas fa-user"></i>
+                                <p>mes infos</p>
                             </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demandevalidee') }}">
-                                <i class="fas fa-check-circle"></i>
-                                <p>Demandes validées</p>
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a href="{{ route('deatilsdemandes') }}" class="nav-item nav-link"> <i
+                                        class="fas fa-trash"></i>
+                                    <p>supprimer demande</p>
+                                </a>
+                            @endcan
+                        </li>
+                    @endif
+
+                    {{-- lien de mes demandes --}}
+
+                    @if (Route::currentRouteName() === 'mes_demande' || Route::currentRouteName() === 'Verifie_demande')
+                        <li class="nav-item">
+                            <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">
+                                <i class="fas fa-paper-plane"></i>
+                                <p>soumettre demande</p>
                             </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demanderefusee') }}">
-                                <i class="fas fa-times-circle text-danger"></i>
-                                <p>Demandes refusées</p>
-                            </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demandeencour') }}">
-                                <i class="fas fa-spinner text-warning"></i>
-                                <p>Demandes en cour</p>
-                            </a>
-                        @endcan
-                    </li>
-                @endif
+                        </li>
 
-                {{-- lien des liste_salles --}}
-                @if (Route::currentRouteName() === 'liste_salles' || Route::currentRouteName() === 'liste_salles_occupee')
-                    <li class="nav-item">
-                        @can('view', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('tableau_salles') }}"> <i class="fas fa-table"></i> </p>
-                                Salles</p> </a>
-                        @endcan
-
-                    </li>
-                @endif
-
-                @if (Route::currentRouteName() === 'salles_tableau' ||
-                        Route::currentRouteName() === 'pages_salles' ||
-                        Route::currentRouteName() === 'pagedemandes')
-                    <li class="nav-item">
-                        @can('view', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('liste_salles_dipsonible') }}"><i
-                                    class="fas fa-door-open"></i>
-                                <p>Salles disponibles</p>
-                            </a>
-                        @endcan
-                    </li>
-
-                    <li class="nav-item">
-                        @can('view', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('liste_salles_occupee') }}"> <i
-                                    class="fas fa-door-closed"></i>
-                                <p>Salles occupées</p>
-                            </a>
-                        @endcan
-
-                    </li>
-
-                    <li class="nav-item">
-                        @can('view', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('liste_salles') }}"><i class="fas fa-table"></i>
-                                <p>les salles</p>
-                            </a>
-                        @endcan
-                    </li>
-
-                    <li class="nav-item">
-                        @can('create', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('pages_salles') }}"> <i class="fas fa-circle-plus"></i>
-                                <p>Ajouter une salle</p>
-                            </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('create', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('pagedemandes') }}"> <i
-                                    class="fas fa-calendar-check"></i>
-                                <p>Réservation</p>
-                            </a>
-                        @endcan
-
-                    </li>
-                @endif
-
-                {{-- lien de verifier demande --}}
-
-                @if (Route::currentRouteName() === 'Verifie_demande' || Route::currentRouteName() === 'mes_demande')
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('Verifie_demande') }}" style="color: black">
-                                <i class="fa-solid fa-file"></i>
+                        <li class="nav-item">
+                            <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i
+                                    class="fas fa-pie-chart"></i>
                                 <p>Mes demandes</p>
                             </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"><i
                                     class="fas fa-search"></i>
-                                <p>verifier demandes</p>
+                                <p>verifier demande</p>
                             </a>
+                        </li>
+                    @endif
 
-                            </a>
-                        @endcan
-                    </li>
-                @endif
+                    {{-- liens de demande details --}}
 
-                {{-- lien du cote soumission de demande --}}
+                    @if (Route::currentRouteName() === 'deatilsdemandes')
+                        <li class="nav-item">
+                            @can('viewAny', App\Models\Salles::class)
+                                <a class="nav-link" href="{{ route('tableau_salles') }}" style="color: black">
+                                    <i class="fa-solid fa-landmark"></i>
+                                    <p>Salles</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('liste_demande') }}" style="color: black">
+                                    <i class="fa-regular fa-envelope"></i>
+                                    <p>Les demandes</p>
+                                </a>
+                            @endcan
+                        </li>
+                        <li class="nav-item">
+                            @can('create', App\Models\Demandes::class)
+                                <a class="nav-link" href="{{ route('creer_demande') }}">
+                                    <i class="fa-solid fa-landmark"></i>
+                                    <p>Réservations</p>
+                                </a>
+                            @endcan
+                        </li>
+                    @endif
+                    {{-- liens de liste demandes --}}
 
-                @if (Route::currentRouteName() === 'pagedemandes')
-                    <li class="nav-item">
-                        @can('voirmesdemandes', App\Models\Demandes::class)
-                            <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"> <i
-                                    class="fas fa-search"></i>
-                                <p>verifier demandes</p>
-                            </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('mesinfos') }}" class="nav-item nav-link "><i class="fas fa-user"></i>
-                            <p>mes infos</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a href="{{ route('deatilsdemandes') }}" class="nav-item nav-link"> <i
-                                    class="fas fa-trash"></i>
-                                <p>supprimer demande</p>
-                            </a>
-                        @endcan
-                    </li>
-                @endif
-
-                {{-- lien de mes demandes --}}
-
-                @if (Route::currentRouteName() === 'mes_demande')
-                    <li class="nav-item">
-                        <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">
-                            <p>soumettre une demande</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route('mes_demande') }}" class="nav-item nav-link"><i
-                                class="fas fa-pie-chart"></i>
-                            <p>Mes demandes</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"><i
-                                class="fas fa-search"></i>
-                            <p>verifier demande</p>
-                        </a>
-                    </li>
-                @endif
-
-                {{-- liens de demande details --}}
-
-                @if (Route::currentRouteName() === 'deatilsdemandes')
-                    <li class="nav-item">
-                        @can('viewAny', App\Models\Salles::class)
-                            <a class="nav-link" href="{{ route('tableau_salles') }}" style="color: black">
-                                <i class="fa-solid fa-landmark"></i>
-                                <p>Salles</p>
-                            </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('liste_demande') }}" style="color: black">
-                                <i class="fa-regular fa-envelope"></i>
-                                <p>Les demandes</p>
-                            </a>
-                        @endcan
-                    </li>
-                    <li class="nav-item">
-                        @can('create', App\Models\Demandes::class)
-                            <a class="nav-link" href="{{ route('creer_demande') }}">
-                                <i class="fa-solid fa-landmark"></i>
-                                <p>Réservations</p>
-                            </a>
-                        @endcan
-                    </li>
-                @endif
-                {{-- liens de liste demandes --}}
-
-                @if (Route::currentRouteName() === 'total_demande' || Route::currentRouteName() === 'liste_demande')
-                    <li class="nav-item">
-                        <a href="{{ route('liste_demandeencour') }}" class="nav-link">
-                            <i class="nav-icon fas fa-clock"></i>
-                            <p>Demandes en attente</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('liste_demanderefusee') }}" class="nav-link">
-                            <i class="nav-icon fas fa-times-circle"></i>
-                            <p>Demandes refusées</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item" @if (Route::currentRouteName() != 'deatilsdemandes') style="display: none;" @endif>
-                        <a href="{{ route('liste_demandevalidee') }}" class="nav-link">
-                            <i class="nav-icon fas fa-check-circle"></i>
-                            <p>Demandes validées</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        @can('view', App\Models\Demandes::class)
+                    @if (Route::currentRouteName() === 'total_demande' || Route::currentRouteName() === 'liste_demande')
+                        <li class="nav-item">
                             <a href="{{ route('liste_demandeencour') }}" class="nav-link">
-                                <i class="nav-icon fas fa-tasks"></i>
-                                <p>Traiter les demandes</p>
+                                <i class="nav-icon fas fa-clock"></i>
+                                <p>Demandes en attente</p>
                             </a>
-                        @endcan
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('liste_demanderefusee') }}" class="nav-link">
+                                <i class="nav-icon fas fa-times-circle"></i>
+                                <p>Demandes refusées</p>
+                            </a>
+                        </li>
 
+                        <li class="nav-item" @if (Route::currentRouteName() != 'deatilsdemandes') style="display: none;" @endif>
+                            <a href="{{ route('liste_demandevalidee') }}" class="nav-link">
+                                <i class="nav-icon fas fa-check-circle"></i>
+                                <p>Demandes validées</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @can('view', App\Models\Demandes::class)
+                                <a href="{{ route('liste_demandeencour') }}" class="nav-link">
+                                    <i class="nav-icon fas fa-tasks"></i>
+                                    <p>Traiter les demandes</p>
+                                </a>
+                            @endcan
+
+                        </li>
+                    @endif
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fas fa-phone"></i>
+                            <p>Contact</p>
+                        </a>
                     </li>
-                @endif
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="fas fa-phone"></i>
-                        <p>Contact</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link text-danger">
-                        <i class="nav-icon fas fa-sign-out-alt"></i>
-                        <p>Déconnexion</p>
-                    </a>
-                </li>
-                <div class="nav-item dropdown">
-                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"
-                        style="color: black"> {{ Auth::user()->nom }} <b class="caret"></b></a>
-                    <br>
-                    {{-- <h5 class="nav-item" >{{ Auth::user()->cnib }}</h5> --}}
-                    <div class="dropdown-menu">
-                        {{-- <div class="px-4">
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link text-danger">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>Déconnexion</p>
+                        </a>
+                    </li>
+                    <div class="nav-item dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"
+                            style="color: black"> {{ Auth::user()->nom }} <b class="caret"></b></a>
+                        <br>
+                        {{-- <h5 class="nav-item" >{{ Auth::user()->cnib }}</h5> --}}
+                        <div class="dropdown-menu">
+                            {{-- <div class="px-4">
                             <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                             <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div> --}}
 
-                        <a href="{{ route('mesinfos') }}" class="dropdown-item"><i class="fa fa-calendar-o"></i> mes
-                            infos</a>
-                        <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> parametre</a>
-                        <a href="#" class="dropdown-item"><i class="fas fa-key"></i> changer mot depasse</a>
-                        <div class="divider dropdown-divider"></div>
-                        <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
-                            @csrf
+                            <a href="{{ route('mesinfos') }}" class="dropdown-item"><i class="fa fa-calendar-o"></i> mes
+                                infos</a>
+                            <a href="#" class="dropdown-item"><i class="fa fa-sliders"></i> parametre</a>
+                            <a href="#" class="dropdown-item"><i class="fas fa-key"></i> changer mot depasse</a>
+                            <div class="divider dropdown-divider"></div>
+                            <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
+                                @csrf
 
-                            <div class="deconnecter">
-                                <x-responsive-nav-link :href="route('logout')"
-                                    onclick="event.preventDefault();
+                                <div class="deconnecter">
+                                    <x-responsive-nav-link :href="route('logout')"
+                                        onclick="event.preventDefault();
                                             this.closest('form').submit();"
-                                    class="dropdown-item deconnecter">
-                                    <i class="fa-solid fa-hospital-user"></i> Deconnexion
-                                </x-responsive-nav-link>
-                            </div>
-                        </form>
-                        {{-- <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> --}}
+                                        class="dropdown-item deconnecter">
+                                        <i class="fa-solid fa-hospital-user"></i> Deconnexion
+                                    </x-responsive-nav-link>
+                                </div>
+                            </form>
+                            {{-- <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> --}}
+                        </div>
                     </div>
-                </div>
 
-            </ul>
-        </nav>
-        <!-- /.sidebar-menu -->
-    </div>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+    @endauth
+
+    <!-- Sidebar -->
+
     <!-- /.sidebar -->
 </aside>
