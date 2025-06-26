@@ -79,9 +79,9 @@
     @include("layouts.navbarunique")
 
 
-    <div class="container" style="margin-left: 1px">
+    <div class="container" style="margin-left: 1px;padding: 55px;">
         <div class="content-wrapper">
-            <section class="content-header">
+            <section class="content-header" >
                 <div class="container-fluid my-2">
                     <div class="row mb-3">
                         <div class="col-sm-6">
@@ -96,8 +96,8 @@
                 </div>
             </section>
 
-            <section class="content">
-                <div class="container-fluid">
+            <section class="content" >
+                <div class="container-fluid" >
                     <div class="card">
                         <div class="card-header d-flex justify-content-end">
                             <form class="form-inline">
@@ -131,10 +131,14 @@
                                             <td>{{ $user->sexe }}</td>
                                             <td>{{ $user->profile }}</td>
                                             <td>
-                                                <a href="#" class="text-primary mr-2" title="Modifier"><i
+                                                <a href="{{ route('profile.modifier',$user->id) }}" class="text-primary mr-2" title="Modifier"><i
                                                         class="fas fa-edit"></i></a>
-                                                <a href="{{ route('profile.destroy') }}" class="text-danger"
-                                                    title="Supprimer"><i class="fas fa-trash-alt"></i></a>
+                                                <form action="{{ route('supprimer_utilisateur',$user->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-danger" style="border: none; outline: none; background-color: white;"><i class="fas fa-trash-alt"></i></button>
+
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

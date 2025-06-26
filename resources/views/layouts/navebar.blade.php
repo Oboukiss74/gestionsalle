@@ -1,16 +1,19 @@
 <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
 
-    <div class="container">
-        @auth
-            <a class="tooplate-green" href="{{ route('profile') }}"
-                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">gs.
-                <span class="tooplate-green">ujkz</span></a>
-        @endauth
-
+    <div class="container" style="background-color: rgb(81, 234, 134) !important;
+  margin-left: 11%;">
         @guest
-            <a class="tooplate-green" href="{{ route('Accueil') }}"
+            <a class="navbar-brand" href="{{ route('Accueil') }}"
+                style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px; margin-left: -13%;">
+                <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
+                    class="d-inline-block align-top" style="margin-top: 10px;">
+                <b style="color: rgb(57, 209, 115)">gs.ujkz</b>
+            </a>
+            {{-- <a class="tooplate-green" href="{{ route('Accueil') }}"
                 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">gs.
-                <span class="tooplate-green">ujkz</span></a>
+                <span class="tooplate-green">ujkz</span></a> --}}
+
+
         @endguest
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -24,21 +27,22 @@
                     <li class="nav-item">
                         <a class="nav-link click-scroll" href="{{ route('Accueil') }}">Accueil</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_2">A propos</a>
-                    </li>
-
+                    @if (Route::currentRouteName() === 'Accueil' || Route::currentRouteName() === 'register')
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_2">A propos</a>
+                        </li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link click-scroll" href="{{ route('register') }}">S'incrire</a>
 
-
                     </li>
 
+                    @if (Route::currentRouteName() === 'Accueil' || Route::currentRouteName() === 'register')
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="{{ route('login') }}">Se connecter</a>
+                        </li>
+                    @endif
 
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="{{ route('login') }}">Se connecter</a>
-                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link click-scroll" href="#section_5">Contact</a>

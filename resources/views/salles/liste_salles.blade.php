@@ -49,7 +49,7 @@
     <!-- Site wrapper -->
 
     <div class="container-xl d-flex" style="transform: translate(50px,0px)">
-        <div class="table-responsive">
+        <div class="table-responsive" style="padding: 4%;padding-right: initial; margin-left: 9%;">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">

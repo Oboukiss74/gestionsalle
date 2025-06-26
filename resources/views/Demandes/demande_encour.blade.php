@@ -33,8 +33,8 @@
 <body class="listedemande_body">
     @include('layouts.navbarunique')
 
-    <div class="container-xl" style=" width: 78%;  justify-content: center; margin-left: 1px; margin-right: 1px">
-        <div class="table-responsive">
+    <div class="container-xl" style=" width: 78%;  justify-content: center; margin-left: 1px; margin-right: 1px;">
+        <div class="table-responsive" style="padding: 4%;padding-right: initial;margin-left:15%">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">

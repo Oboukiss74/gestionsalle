@@ -16,10 +16,29 @@
     <link rel="icon" type="image/png" href="images/logo.png" />
     <link rel="stylesheet" href="{{ asset('css/Etudiant/etudiant_connection.css') }}">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <link href="css2/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css2/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="css2/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="css2/tooplate-moso-interior.css" rel="stylesheet">
+
+
+
 </head>
 
 <body class="body_etudiant_connection">
-    @include('layouts.navbarfinal')
+    
+    @include('layouts.navebar')
+
     <div class="login-form body_etudiant_connections">
         <form action="{{ route('connexion') }}" method="POST">
             @csrf

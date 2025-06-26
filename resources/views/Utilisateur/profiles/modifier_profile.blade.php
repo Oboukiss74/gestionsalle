@@ -14,7 +14,7 @@
 @section('infos')
     <div class="container">
         <div class="modifier">
-            <h3>mes infos</h3>
+
             <div class="modifiers" >
                 <div class="toutesinfos">
                     <form action="{{ route('mesinfosmodifier') }}" method="post">

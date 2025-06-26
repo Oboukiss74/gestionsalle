@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="background-color: #94f7a4 !important; height: 57px;">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top" style="background-color: #94f7a4 !important; height: 57px;">
 
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -51,8 +51,8 @@
 
             @endauth
 
-            <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="color: black"><i
-                    class="fa-solid fa-user-graduate"></i><span>Acceuil</span></a>
+            {{-- <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="color: black"><i
+                    class="fa-solid fa-user-graduate"></i><span>Acceuil</span></a> --}}
 
 
             <a href="#" class="nav-item nav-link active" style="color: black"><i
@@ -80,7 +80,7 @@
 
                     {{-- lien sur les ajout d'utilisateur --}}
 
-                    @if (Route::currentRouteName() === 'ajouterutilisateur')
+                    @if (Route::currentRouteName() === 'ajouterutilisateur' || Route::currentRouteName()=== 'tableau_de_bord')
                         <li class="nav-item">
                             <a href="{{ route('tableau_de_bord') }}" class="nav-item nav-link"><i
                                     class="fa-solid fa-users"></i><span>Les

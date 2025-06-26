@@ -33,7 +33,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 
 
 </head>
@@ -41,7 +41,7 @@
 <body>
     @include('layouts.navbarunique')
 
-    <div class="container mt-5" style="margin-right: 5%;">
+    <div class="container mt-5" style="margin-right: 5%;padding: 4%;padding-right: initial; margin-left: 17%; " >
         <h2>Mes demandes validées</h2>
         <table class="table table-bordered mt-3">
             <thead>

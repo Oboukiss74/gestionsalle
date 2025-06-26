@@ -42,7 +42,7 @@
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Careers</span></a> --}}
                 <a href="#" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Messages</span></a>
                 <a href="#" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a>
-                <div class="nav-item dropdown">
+                {{-- <div class="nav-item dropdown">
 
                     <form method="POST" action="{{ route('logout') }}" class="dropdown-item">
                         @csrf
@@ -54,8 +54,8 @@
                             <i class="material-icons">&#xE8AC;</i> Deconnexion
                         </x-responsive-nav-link>
                     </form>
-                    {{-- <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a> --}}
-                </div>
+                    <a href="#" class="dropdown-item"><i class="material-icons">&#xE8AC;</i> Logout</a>
+                </div> --}}
             </div>
         </div>
         </div>

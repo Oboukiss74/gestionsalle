@@ -41,7 +41,7 @@ Bootstrap 5 HTML CSS Template
 
 <body>
 
-        @include('layouts.navebar')
+    @include('layouts.navebar')
 
     @if (session()->has(session('success')))
         <h1>
@@ -57,7 +57,9 @@ Bootstrap 5 HTML CSS Template
                     <div class="col-lg-8 col-12 text-center mx-auto">
                         <img src="images/slideshow/ujkz.jpg" alt="ujkz" style="border-radius: 00px">
                         <div class="hero-section-text">
-                            <small class="section-small-title" style="font-family: Arial, Helvetica, sans-serif">gs.ujkz<i class="hero-icon bi-house"></i></small>
+                            <small class="section-small-title"
+                                style="font-family: Arial, Helvetica, sans-serif">gs.ujkz<i
+                                    class="hero-icon bi-house"></i></small>
 
                             <h1 class="hero-title text-white mt-2 mb-4">Université Pr Joseph Ki Zerbo</h1>
 
@@ -68,78 +70,9 @@ Bootstrap 5 HTML CSS Template
             </div>
         </section>
 
+
     </main>
 
-    {{-- <footer class="site-footer section-padding">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-3 col-md-5 col-12 mb-3">
-                        <h3><a href="index.html" class="custom-link mb-1">Moso Interior</a></h3>
-
-                        <p class="text-white">Since 1986, We crafted interior products for better spaces</p>
-
-                        <p class="text-white"><a href="https://www.tooplate.com" target="_parent">Web Design: Tooplate</a></p>
-                    </div>
-
-                    <div class="col-lg-3 col-md-3 col-12 ms-lg-auto mb-3">
-                        <h3 class="text-white mb-3">Store</h3>
-
-                        <p class="text-white mt-2">
-                            <i class="bi-geo-alt"></i>
-                            Berlin, Germany
-                        </p>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 col-12 mb-3">
-                        <h3 class="text-white mb-3">Contact Info</h3>
-
-                            <p class="text-white mb-1">
-                                <i class="bi-telephone me-1"></i>
-
-                                <a href="tel: 090-080-0760" class="text-white">
-                                    090-080-0760
-                                </a>
-                            </p>
-
-                            <p class="text-white mb-0">
-                                <i class="bi-envelope me-1"></i>
-
-                                <a href="mailto:info@company.com" class="text-white">
-                                    info@company.com
-                                </a>
-                            </p>
-                    </div>
-
-                    <div class="col-lg-6 col-md-7 copyright-text-wrap col-12 d-flex flex-wrap align-items-center mt-4 ms-auto">
-                        <p class="copyright-text mb-0 me-4">Copyright © Moso Interior 2048</p>
-
-                        <ul class="social-icon">
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link social-icon-twitter bi-twitter"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link social-icon-facebook bi-facebook"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link social-icon-instagram bi-instagram"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link social-icon-pinterest bi-pinterest"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link social-icon-whatsapp bi-whatsapp"></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </footer> --}}
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>

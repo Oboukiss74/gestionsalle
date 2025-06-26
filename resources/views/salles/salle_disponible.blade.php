@@ -39,7 +39,7 @@
         @include('layouts.navbarunique')
 
         <div class="container-xl">
-            <div class="table-responsive">
+            <div class="table-responsive" style="padding: 6%;padding-right: initial;">
                 <div class="table-wrapper">
                     <div class="table-title" style="width: auto" >
                         <div class="row">

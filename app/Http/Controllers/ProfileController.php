@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Demandes;
 use App\Models\Salles;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,40 +62,59 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->back()->with('status','Utilisateur sur supprimer avec succes');
+        return redirect()->back()->with('status', 'Utilisateur sur supprimer avec succes');
     }
 
     //supprimer compte
-    public function SuppCompte() {
-        $user=Auth::user();
+    public function SuppCompte()
+    {
+        $user = Auth::user();
         if ($user) {
             $user->delete(); // Supprime l'utilisateur
             Auth::logout(); // Déconnecte l'utilisateur après suppression
-            return redirect('/')->with('success', 'Votre compte a été supprimé avec succès.');
+            return redirect::route('profile')->with('success', 'Votre compte a été supprimé avec succès.');
         }
 
         return redirect()->back()->with('error', 'Erreur lors de la suppression.');
-
     }
-    //vue de connection a son profile
-    public function ConnectionProfile() {
-        return view('Utilisateur.profiles.connection');
+    //supprimer un utilisateur
+    public function SuppCompteUtilisateur($id)
+    {
 
+        $user = User::findOrFail($id);
+
+        // Facultatif : Empêcher un admin de se supprimer lui-même
+        if (Auth::check() && Auth::id() === $user->id) {
+            return back()->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
+        }
+
+        $user->delete();
+
+        return redirect()->back()->with('error', 'Erreur lors de la suppression.');
+    }
+
+
+    //vue de connection a son profile
+    public function ConnectionProfile()
+    {
+        return view('Utilisateur.profiles.connection');
     }
 
     //vue de modifier les infos du profile
-    public function profile_modifier()  {
+    public function profile_modifier()
+    {
         return view('Utilisateur.profiles.modifier_profile');
     }
     //vue du profile
-    public function profiles(request $request) {
+    public function profiles(request $request)
+    {
         $nombresalle = Salles::count();
         $nombredemande = Demandes::count();
         // Remplacez ceci par la logique correcte pour compter les demandes acceptées
         $nombredemandeaccepte = Demandes::where('etat', 'Validée')->count();
         $nombredemandeencour = Demandes::where('etat', 'En attente')->count();
 
-        return view('Utilisateur.profiles.profile',compact('nombresalle', 'nombredemande', 'nombredemandeaccepte', 'nombredemandeencour'));
+        return view('Utilisateur.profiles.profile', compact('nombresalle', 'nombredemande', 'nombredemandeaccepte', 'nombredemandeencour'));
     }
 
     //modifier infos
@@ -119,6 +139,4 @@ class ProfileController extends Controller
 
         return redirect()->route('profile');
     }
-
-
 }

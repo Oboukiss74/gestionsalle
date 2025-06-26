@@ -33,7 +33,8 @@
     @include('layouts.navbarunique')
     @role('Admin')
         <div class="container mt-5">
-            <div class="row justify-content-center" style="margin-left: 150px">
+            <div class="row justify-content-center" style="margin-left: 150px;    padding: 2%;
+                padding-right: initial;">
                 <!-- Statistiques des Salles -->
                 <div class="col-md-4">
                     <div class="card text-white bg-primary mb-3">

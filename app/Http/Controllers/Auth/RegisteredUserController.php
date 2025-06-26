@@ -124,7 +124,7 @@ class RegisteredUserController extends Controller
             }
 
             // Attribution automatique du rôle "Utilisateur"
-            $user->assignRole('Utilisateur');
+            $user->givePermissionTo('voir.mesdemande');
 
             event(new Registered($user));
 

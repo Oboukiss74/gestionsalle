@@ -42,7 +42,7 @@
     <div class="formbold-main-wrapper" style="transform: translate(150px);">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
-        <div class="container">
+        <div class="container" style="padding: 2%;padding-right: initial;">
             <div class="formbold-form-wrapper">
 
                 <div class="container">
@@ -191,7 +191,9 @@
                                                                         @if (!empty($salle->equipements))
                                                                             <ul>
                                                                                 @foreach ($salle->equipements as $equipement)
-                                                                                    <option value="">{{ ucfirst($equipement) }}</option>
+                                                                                    <option value="">
+                                                                                        {{ ucfirst($equipement) }}
+                                                                                    </option>
                                                                                 @endforeach
                                                                             </ul>
                                                                         @else

@@ -20,15 +20,16 @@
 </head>
 
 <body class="hold-transition sidebar-mini">
+    @include('layouts.navbarunique')
     <!-- Site wrapper -->
-    <div class="wrapper">
+    <div class="wrapper" style="padding: 8%;padding-right: initial; right: 5%;">
         <!-- Navbar -->
-        @include('layouts.navbarunique')
+
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        {{-- <div class="content-wrapper" > --}}
             <!-- Content Header (Page header) -->
-            <section class="content-header">
+            {{-- <section class="content-header">
                 <div class="container-fluid my-2">
                     <div class="row mb-2">
                         <div class="col-sm-6">
@@ -38,11 +39,13 @@
                     </div>
                 </div>
                 <!-- /.container-fluid -->
-            </section>
+            </section> --}}
             <!-- Main content -->
             <section class="content">
+                <h1>essaie</h1>
                 <!-- Default box -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="width: 80%; margin-left: auto; margin-right: 0;">
+                    <h1>salles occupées</h1>
                     <div class="card">
                         <div class="card-header">
                             <div class="card-tools">
@@ -127,14 +130,15 @@
                 <!-- /.card -->
             </section>
             <!-- /.content -->
-        </div>
+        {{-- </div> --}}
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
 
-            <strong>Gestion et localisation &copy; des salles de l'université Joseph KI-Zerbo
-        </footer>
 
     </div>
+    {{-- <footer class="main-footer">
+
+            <strong>Gestion et localisation &copy; des salles de l'université Joseph KI-Zerbo
+    </footer> --}}
     <!-- ./wrapper -->
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>

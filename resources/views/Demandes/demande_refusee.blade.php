@@ -35,7 +35,7 @@
 <body class="listedemande_body">
     @include('layouts.navbarunique')
     <div class="container-xl">
-        <div class="table-responsive"style=" width: 78%;  justify-content: center; transform: translate(-18%, 0px);">
+        <div class="table-responsive"style=" width: 78%;  justify-content: center; transform: translate(-18%, 0px);padding: 4%;padding-right: initial;margin-left:18%">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">

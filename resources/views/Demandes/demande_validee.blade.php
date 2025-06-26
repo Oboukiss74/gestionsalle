@@ -34,7 +34,7 @@
 <body class="listedemande_body">
    @include('layouts.navbarunique')
     <div class="ccontainer-xl">
-        <div class="table-responsive">
+        <div class="table-responsive" style="padding: 4%;padding-right: initial; margin-left: 17%;">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">

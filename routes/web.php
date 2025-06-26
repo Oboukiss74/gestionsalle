@@ -113,20 +113,20 @@ Route::get('creer/role', function () {
 });
 //attribution des roles et permission
 Route::get('/attribution/role/permission', function () {
-    $users = User::all();
-    foreach ($users as $user) {
-        $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
-        $user->givePermissionTo([
-            'ecrire.demande',
-            'modifier.profile',
-            'voir.profile',
-            'voir.demande',
+    //$users = User::all();
+    // foreach ($users as $user) {
+    //     $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
+    //     $user->givePermissionTo([
+    //         'ecrire.demande',
+    //         'modifier.profile',
+    //         'voir.profile',
+    //         'voir.demande',
 
-        ]);
-    }
+    //     ]);
+    // }
 
-    $user = User::find(1); // Récupère l'utilisateur
-    $user->assignRole('Admin');
+    $user = User::find(3); // Récupère l'utilisateur
+    $user->assignRole('Utilisateur'); // Assigne le rôle "utilisateur"
 
     // Récupérer le rôle (ex: "admin")
     // $role = Role::findByName('Admin'); // ou Role::find($id);
@@ -167,12 +167,16 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('modifier/profile', [ProfileController::class, 'edit'])->name('profile.modifier');
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.edit');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('modifier/profile_modifier', [ProfileController::class, 'updateinfos'])->name('profile.edit');
+    Route::delete('supprimer/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/suppression', [ProfileController::class, 'SuppCompte'])->name('profile.supprimer');
+
+    // suppression de compte par admin
+    Route::delete('supprimer/utilisateur/{id}', [ProfileController::class, 'SuppCompteUtilisateur'])->name('supprimer_utilisateur');
+
 });
 
 //coté utilisateur
@@ -239,10 +243,10 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     //accueil des demandes
-    Route::get('/Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
+    Route::get('demande/Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
 
     //faire une demande
-    Route::get('demandepage', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
+    Route::get('demande/creer', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
 
     //liste des demandes
     Route::get('/demandes/encours', [DemandeController::class, 'liste_demande'])->name(name: 'liste_demande');
@@ -311,10 +315,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('equipements/ajout', [Controllerequipement::class, 'Ajouter'])->name('ajoutequipement');
     //valider l'enregistrement des equipements
     Route::post('equipements/valider', [Controllerequipement::class, 'valider'])->name('validerequipement');
-    //afficher les equipements
-    // Route::get('equipements/voir', [Controllerequipement::class, 'view'])->name('listeequipement');
-    //liqte total et infos des equipements
-    // Route::get('equipements', [Controllerequipement::class, 'listeequipement'])->name('equipementdetails');
+
     //modifier les equipements
     Route::post('equipements/modifier', [Controllerequipement::class, 'store'])->name('modifierequipement');
     //supprimer equipement
@@ -327,7 +328,7 @@ Route::middleware(['auth'])->group(function () {
     //Profile
     Route::get('Acceuil', action: [ProfileController::class, 'profiles'])->name(name: 'profile');
     //modifier info
-    Route::get('mes_infos', [ProfileController::class, 'profile_modifier'])->name('mesinfos');
+    Route::get('modifier/mes_infos', [ProfileController::class, 'profile_modifier'])->name('mesinfos');
     Route::put('mesinfos', [ProfileController::class, 'ModifierProfile'])->name('mesinfosmodifier');
 });
 
