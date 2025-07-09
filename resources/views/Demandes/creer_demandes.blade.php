@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
     <link rel="icon" type="image/png" href="images/logo.png" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+    {{-- pour les entête --}}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 </head>
 
 <body>
@@ -111,8 +113,8 @@
                                 @csrf
 
                                 <div class="formbold-mb-5 " style="display: none">
-                                    <input type="text" name="id_user" id="name" value="{{ Auth::user()->id }}"
-                                        class="formbold-form-input " />
+                                    <input type="text" name="id_user" id="name"
+                                        value="{{ Auth::user()->id }}" class="formbold-form-input " />
                                 </div>
 
                                 <div class="formbold-mb-5 ">
@@ -121,6 +123,23 @@
                                         value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}"
                                         class="formbold-form-input " />
                                 </div>
+                                <div style="justify-content: left; display: flex; display: grid;">
+                                    <div class="formbold-mb-5 ">
+                                        <label for="name" class="formbold-form-label required"> nom complet du
+                                            demandeur</label>
+                                        <input type="text" name="demandeur" id="name"
+                                            value="{{ Auth::user()->nom }}" class="formbold-form-input " />
+                                    </div>
+
+                                    {{-- <div class="formbold-mb-5 ">
+                                        <label for="name" class="formbold-form-label required">prenom du
+                                            demandeur</label>
+                                        <input type="text" name="nom" id="name"
+                                            value="{{ Auth::user()->prenom }}" class="formbold-form-input " />
+                                    </div> --}}
+
+                                </div>
+
                                 <div class="formbold-mb-5">
                                     <label for="phone" class="formbold-form-label required"> telephone</label>
                                     <input type="tel" name="telephone" id="phone"
@@ -177,37 +196,85 @@
                                                 <div class="w-full sm:w-half formbold-px-3">
                                                     <div class="formbold-mb-5">
                                                         <ul class="list-group">
-                                                            @foreach ($sallesDisponibles as $salle)
-                                                                <li class="list-group-item">
-                                                                    <div
-                                                                        class="d-flex justify-content-between align-items-center">
-                                                                        <div>
-                                                                            <input type="radio" name="id_salle"
-                                                                                value="{{ $salle->id }}" required>
-                                                                            <strong>{{ $salle->nom }}</strong> —
-                                                                            Capacité
-                                                                            : {{ $salle->nombreplace }} places
-                                                                        </div>
-                                                                        @if (!empty($salle->equipements))
-                                                                            <ul>
-                                                                                @foreach ($salle->equipements as $equipement)
-                                                                                    <option value="">
-                                                                                        {{ ucfirst($equipement) }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </ul>
-                                                                        @else
-                                                                            <span>Aucun équipement</span>
-                                                                        @endif
-                                                                    </div>
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th>Sélectionner</th>
+                                                                        <th>salle</th>
+                                                                        <th>Capacité</th>
+                                                                        <th>Équipements</th>
 
-                                                                    <!-- Zone d’affichage des équipements (masquée au départ) -->
-                                                                    {{-- <div id="equipements-{{ $salle->id }}"
-                                                                        class="equipements mt-2"
-                                                                        style="display: none;">
-                                                                    </div> --}}
-                                                                </li>
-                                                            @endforeach
+                                                                    </tr>
+                                                                </thead>
+                                                                <!-- Barre de recherche -->
+                                                                <input type="text" id="searchSalle"
+                                                                    class="form-control"
+                                                                    placeholder="Rechercher une salle par nom ou équipement ou n° place..."
+                                                                    style="padding: 5px; margin: 5px;">
+                                                                <tbody>
+
+
+                                                                    @foreach ($sallesDisponibles as $salle)
+                                                                        <tr class="salle-row">
+                                                                            <td class="align-middle text-center">
+                                                                                <input type="radio" name="id_salle"
+                                                                                    value="{{ $salle->id }}"
+                                                                                    required
+                                                                                    style="transform: scale(1.3); accent-color: #28a745;">
+                                                                            </td>
+                                                                            <td class="align-middle"
+                                                                                style="color:#28a745; font-weight: bold;">
+                                                                                {{ $salle->nom }}
+                                                                            </td>
+                                                                            <td class="align-middle">
+                                                                                {{ $salle->nombreplace }} places
+                                                                            </td>
+                                                                            <td class="align-middle">
+                                                                                @if (!empty($salle->equipements))
+                                                                                    <ul class="list-inline mb-0">
+                                                                                        @foreach ($salle->equipements as $equipement)
+                                                                                            <li
+                                                                                                class="list-inline-item">
+                                                                                                <span
+                                                                                                    class="badge rounded-pill bg-light text-dark border"
+                                                                                                    style="font-size: 0.92em;">
+                                                                                                    <i
+                                                                                                        class="fa fa-check-circle text-success mr-1"></i>
+                                                                                                    {{ ucfirst($equipement) }}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                        @endforeach
+                                                                                    </ul>
+                                                                                @else
+                                                                                    <span
+                                                                                        class="badge bg-secondary">Aucun
+                                                                                        équipement</span>
+                                                                                @endif
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', function() {
+                                                                            const searchInput = document.getElementById('searchSalle');
+                                                                            searchInput.addEventListener('keyup', function() {
+                                                                                const filter = searchInput.value.toLowerCase();
+                                                                                document.querySelectorAll('.salle-row').forEach(function(row) {
+                                                                                    const nom = row.children[1].textContent.toLowerCase();
+                                                                                    const nombreplace = row.children[2].textContent.toLowerCase();
+                                                                                    const equipements = row.children[3].textContent.toLowerCase();
+                                                                                    if (nom.includes(filter) || equipements.includes(filter) || nombreplace
+                                                                                        .includes(filter)) {
+                                                                                        row.style.display = '';
+                                                                                    } else {
+                                                                                        row.style.display = 'none';
+                                                                                    }
+                                                                                });
+                                                                            });
+                                                                        });
+                                                                    </script>
+                                                                </tbody>
+                                                            </table>
                                                         </ul>
 
                                                     </div>
@@ -218,15 +285,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="w-full sm:w-half formbold-px-3">
-                                            <div class="formbold-mb-5">
-                                                <label for="Equipement" class="formbold-form-label required">
-                                                    nombre de personnes
-                                                </label>
-                                                <input type="text" name="effectif" id="post-code"
-                                                    placeholder="nombre de personnes" class="formbold-form-input" />
-                                            </div>
-                                        </div>
+
                                         <div class="w-full sm:w-half formbold-px-3">
                                             <div class="formbold-mb-5">
                                                 <label for="motif" class="formbold-form-label required">

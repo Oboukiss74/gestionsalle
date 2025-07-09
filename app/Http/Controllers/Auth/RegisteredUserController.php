@@ -124,7 +124,13 @@ class RegisteredUserController extends Controller
             }
 
             // Attribution automatique du rôle "Utilisateur"
-            $user->givePermissionTo('voir.mesdemande');
+            // $role = Role::where('name', 'Utilisateur')->first();
+            // if (!$role) {
+            //     // Si le rôle n'existe pas, le créer
+            //     $role = Role::create(['name' => 'Utilisateur']);
+            // }
+            // $user->givePermissionTo('voir.mesdemande');
+            $user->assignRole('Utilisateur');
 
             event(new Registered($user));
 
@@ -136,6 +142,7 @@ class RegisteredUserController extends Controller
                 "message" => $th->getMessage(),
             ]);
         }
+        $user->notify(new \App\Notifications\Inscription());
         return redirect(route('profile'));
     }
 }

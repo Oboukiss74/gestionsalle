@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -27,8 +26,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <!-- Theme style -->>
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
@@ -42,11 +40,11 @@
 
     <!-- Site wrapper -->
     <div.container>
-        <div class="wrapper" style="">
+        <div class="wrapper" style="margin-top:5%;">
 
             <!-- Content Wrapper. Contains page content -->
 
-            <div class="content-wrapper" style="background-color: white">
+            <div class="content-wrapper" style="background-color: rgb(249, 246, 246)">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <div class="container-fluid">
@@ -66,19 +64,23 @@
                     <!-- Default box -->
                     <div class="container-fluid">
                         <div class="row">
+
                             <div class="col-lg-4 col-6">
                                 <div class="small-box card">
                                     <div class="inner">
-                                        <h3>{{ $demandes }}</h3>
-                                        <p>Total demandes</p>
+                                        <h3>{{ $demandeEncour }}</h3>
+                                        <p>Demandes en attente</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="ion ion-bag"></i>
+                                        <i class="ion ion-person-add"></i>
                                     </div>
-                                    <a href="{{ route('deatilsdemandes') }}" class="small-box-footer text-dark">plus
-                                        infos<i class="fas fa-arrow-circle-right"></i></a>
+                                    <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark">
+                                        plus
+                                        infos <i class="fas fa-arrow-circle-right"></i></a>
+                                    {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
                                 </div>
                             </div>
+
 
                             <div class="col-lg-4 col-6">
                                 <div class="small-box card">
@@ -111,16 +113,14 @@
                             <div class="col-lg-4 col-6">
                                 <div class="small-box card">
                                     <div class="inner">
-                                        <h3>{{ $demandeEncour }}</h3>
-                                        <p>Demandes en attente</p>
+                                        <h3>{{ $demandes }}</h3>
+                                        <p>Total demandes</p>
                                     </div>
                                     <div class="icon">
-                                        <i class="ion ion-person-add"></i>
+                                        <i class="ion ion-bag"></i>
                                     </div>
-                                    <a href="{{ route('liste_demandeencour') }}" class="small-box-footer text-dark">
-                                        plus
-                                        infos <i class="fas fa-arrow-circle-right"></i></a>
-                                    {{-- <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a> --}}
+                                    <a href="{{ route('deatilsdemandes') }}" class="small-box-footer text-dark">plus
+                                        infos<i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,7 @@ use App\Models\User;
 use GuzzleHttp\Promise\Create;
 use App\Http\Middleware\App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\couriercontroller;
-
+use App\Http\Controllers\PaiementController;
 
 Route::get('role_permission', function () {
 
@@ -30,8 +30,8 @@ Route::get('role_permission', function () {
 
     //     // $roleSuperAdmin = Role::where('name','Utilisateur')->first();
     //     // $roleAdmin->givePermissionTo(['modifier.profile', 'voir.profile','ecrire.demande','suivre.demande']);
-    // $rolegestionaire = Role::where('name', 'Admin')->first();
-    // $rolegestionaire->givePermissionTo([
+    // $roleutilisateur = Role::where('name', 'Utilisateur')->first();
+    // $roleutilisateur->givePermissionTo([
     //     'modifier.ma.demande',
     //     'supprimer.demande',
     //     'ecrire.demande',
@@ -48,18 +48,18 @@ Route::get('role_permission', function () {
 
 
     //assigner role
-    $users = User::all();
-    foreach ($users as $user) {
-        $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
-        $user->givePermissionTo([
-            // 'ecrire.demande',
-            // 'voir.utilisateurs',
-            // 'modifier.profile',
-            // 'voir.profile',
-            'voir.mesdemande',
-            // 'modifier.ma.demande',
-        ]);
-    }
+    // $users = User::all();
+    // foreach ($users as $user) {
+    //     $user->assignRole('Utilisateur'); // Assigne le rôle à chaque utilisateur
+    //     $user->givePermissionTo([
+    //         'ecrire.demande',
+    //         'voir.utilisateurs',
+    //         'modifier.profile',
+    //         'voir.profile',
+    //         'voir.mesdemande',
+    //         'modifier.ma.demande',
+    //     ]);
+    // }
 
     // Assigne le rôle "admin"
     //    $role-> givePermissionTo('ok');
@@ -70,11 +70,11 @@ Route::get('role_permission', function () {
     // $user->assignRole('Admin'); // Assigne le rôle "admin"
     // //Tu peux aussi attribuer plusieurs permissions à un rôle :
     // // $role = Role::findByName('DEPS');
-    // $role = Role::findByName('Admin');
-    // $role->givePermissionTo([
-    //     'voir.demande',
+    $role = Role::findByName('Admin');
+    $role->givePermissionTo([
+        'voir.les_demandes',
 
-    // ]);
+    ]);
 });
 
 //creation des permissions
@@ -98,7 +98,8 @@ Route::get('creer/permission', function () {
     // Permission::create(['name' => 'voir.demandevalidee']);
     // Permission::create(['name' => 'voir.demandeerefusee']);
     // Permission::create(['name' => 'voir.demandeencour']);
-    Permission::create(['name' => 'voir.mesdemande']);
+    // Permission::create(['name' => 'voir.mesdemande']);
+    Permission::create(['name' => 'voir.les_demandes']);
 });
 
 //creation des roles
@@ -307,6 +308,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/{demande}/quittance', [DemandeController::class, 'demandequittance'])->name(name: 'quittance');
     //notification des demandes
     Route::get('demande/notification/{id}', [DemandeController::class, 'NotificationDemande'])->name(name: 'notifiation');
+    //verifier la demande acceptee ou refusee
+    Route::get('verifier/demande_acceptee/{id}', [DemandeController::class, 'VerifierLaDemande'])->name(name: 'verifier_la_demande');
+
+});
+
+//cote paiement
+Route::middleware(['auth'])->group(function(){
+    Route::get('demande/paiement',[PaiementController::class,'PaiementMethode'])->name('methodepaiement');
+    Route::get('demande/paiement/processus',[PaiementController::class,'ProcessusPaiement'])->name('proscessus_paiement');
 });
 
 //cote equipement

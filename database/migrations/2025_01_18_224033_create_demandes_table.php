@@ -23,7 +23,6 @@ return new class extends Migration
             $table->dateTime('datefin');
             $table->time('heuredebut');
             $table->time('heurefin');
-            $table->string('effectif');
             $table->string('motif');
             $table->enum('etat', ['En attente', 'Validée', 'Refusée'])->default('En attente');
             $table->enum('reçu', ['Non', 'Oui'])->default('Non');

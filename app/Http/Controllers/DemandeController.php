@@ -16,12 +16,14 @@ use Illuminate\Validation\Rule;
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\PdfBuilder;
 use App\Notifications\DemandeAcceptee;
+use App\Notifications\NotifierUtilisateur;
 
 
 
 class DemandeController extends Controller
 {
     use AuthorizesRequests;
+
     //page de demande
     public function Page_Demande(Request $request)
     {
@@ -79,23 +81,26 @@ class DemandeController extends Controller
                     "id_salle" => "required",
                     "id_user" => "required",
                     "nom" => "required",
+                    "demandeur" => "required",
                     "telephone" => "required",
                     "mail" => "required|email",
-                    "datedebut" => "required|date|after_or_equal:today",
+                    // date debut ne doit pas etre interieur a la date du jour
+
+                    "datedebut" => "required|date|after_or_equal:" . now()->toDateString(),
+                    // "datefin" => "required|date|after_or_equal:datedebut",
+                    //"datedebut" => ["required|date|after_or_equal:" . now()->toDateString()],
                     "datefin" => "required|date|after_or_equal:datedebut",
-                    "heuredebut" => "required|date_format:H:i|after_or_equal:07:30|before:heurefin",
-                    "heurefin" => "required|date_format:H:i|after:heuredebut|before:17:00",
-                    "effectif" => "required|integer|min:1",
+                    "heuredebut" => "required|date_format:H:i|before:heurefin",
+                    "heurefin" => "required|date_format:H:i|after:heuredebut",
                     "motif" => "required",
                 ]
 
-
-
             );
-            //dd($validatedData);
+
+            // dd($validatedData);
 
             Demandes::create($validatedData);
-
+            // dd($validatedData);
             //mail depuis le DB
 
 
@@ -153,6 +158,7 @@ class DemandeController extends Controller
         ]);
 
         $demande->update(['etat' => $request->etat]);
+        // $demande->user->notify(new NotifierUtilisateur());
 
         // return back()->with('success', 'État de la demande mis à jour.');
     }
@@ -206,7 +212,7 @@ class DemandeController extends Controller
     //mes demande
     public function DemandeStatut(Demandes $demandes)
     {
-        $this->authorize('voir.mesdemande', Demandes::class);
+        $this->authorize('voir.demande', Demandes::class);
 
         // $demandes = $demandes->where('etat', 'Validée')->where('id_user', Auth::id())->get();
         $user = Auth::user();
@@ -225,7 +231,11 @@ class DemandeController extends Controller
 
         $user = Auth::user();
         $localisation = Salles::all();
-        $demandes = $user->demandes;
+        $demandes = $user->demandes()
+            ->orderBy('updated_at', 'desc')
+            ->get();
+        // ->where('etat', 'Validée')
+        // ->with('salle') // relation vers salle
         return view('Demandes.verifier_demande', compact('demandes', 'localisation'));
     }
     //detail de ma demande
@@ -253,8 +263,9 @@ class DemandeController extends Controller
         $demande = Demandes::findOrFail($id);
         $demande->etat = 'Validée';
         $demande->save();
-
         $user = $demande->user; // ou User::find($demande->id_user);
+
+
         $user->notify(new DemandeAcceptee($demande));
 
         return redirect()->back()->with('success', 'Demande acceptée avec succès.');
@@ -268,6 +279,8 @@ class DemandeController extends Controller
         $demande->etat = 'Refusée';
         $demande->save();
 
+        $user= $demande->user; // ou User::find($demande->id_user);
+        $user->notify(new NotifierUtilisateur($demande));
         return redirect()->back()->with('error', 'Demande refusée.');
     }
     //liste de demande en cour
@@ -289,7 +302,7 @@ class DemandeController extends Controller
         }
         $salle = Salles::all();
         $nombredemande = Demandes::where('etat', 'En attente')->count();
-        $demandeEncours = Demandes::where('etat', 'En attente')->paginate(3);
+        $demandeEncours = Demandes::where('etat', 'En attente')->paginate(20);
         //dd($demandes);
 
         return view('Demandes.demande_encour', compact('demandeEncours', 'nombredemande', 'salle'));
@@ -344,5 +357,21 @@ class DemandeController extends Controller
         // Marquer toutes comme lues
         Auth::user()->unreadNotifications->markAsRead();
         return view('Demandes.notification', compact('demandes', 'notifications', 'demandes'));
+    }
+    //notification de l'utilisateur par son email
+    public function NotifierUtilisateur(Request $request, $id)
+    {
+        $demande = Demandes::findOrFail($id);
+        $user = User::findOrFail($demande->id_user);
+        $user->notify(new NotifierUtilisateur($demande));
+        return redirect()->back()->with('success', 'Notification envoyée à l\'utilisateur.');
+    }
+    //verifier etat d'une demande
+    public function VerifierLaDemande($id){
+
+        // $this->authorize('view', Demandes::class);
+        //recuperer une demande
+        $demande=Demandes::findOrFail($id);
+        return view('Demandes.verifier_la_demande', compact('demande'));
     }
 }

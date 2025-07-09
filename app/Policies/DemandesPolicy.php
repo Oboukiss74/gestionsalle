@@ -22,12 +22,12 @@ class DemandesPolicy
      */
     public function view(User $user): bool
     {
-        return $user->hasPermissionTo('voir.demande');
+        return $user->hasPermissionTo('voir.les_demandes');
         // return true;
     }
     public function mesdemandes(User $user): bool
     {
-        return $user->hasPermissionTo('voir.mesdemande');
+        return $user->hasPermissionTo('voir.demande');
         // return true;
     }
 

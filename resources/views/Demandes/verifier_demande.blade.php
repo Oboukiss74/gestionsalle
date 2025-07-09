@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>verifier demande</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -26,7 +27,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-
+    {{-- pour les entête --}}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 </head>
 
 <body>
@@ -36,7 +38,7 @@
             @if (@session()->has('message'))
                 <p style="color: red">{{ session('message') }}</p>
             @endif
-            <table class="table" style="    width: 80%;left: 104px;margin-left: 18%;">
+            <table class="table" style="    width: 80%;left: 104px;margin-left: 18%; transform: translate(0,25%); margin-top: 5%;">
                 <thead>
                     <tr>
                         <th scope="col">N°</th>
@@ -62,7 +64,7 @@
                             <td>
 
                                 @if ($demande->etat === 'Validée')
-                                    <a href="">
+                                    <a href="{{ route('methodepaiement') }}">
                                         <button
                                             style="border-radius: 4px; color: red; border-color: red; background-color: red; color:aliceblue;">non
                                             payé</button>

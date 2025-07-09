@@ -21,6 +21,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
     <!-- Theme style -->
+
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -33,45 +34,57 @@
     @include('layouts.navbarunique')
     @role('Admin')
         <div class="container mt-5">
-            <div class="row justify-content-center" style="margin-left: 150px;    padding: 2%;
+            <div class="row justify-content-center"
+                style="margin-left: 150px;    padding: 8%;
                 padding-right: initial;">
                 <!-- Statistiques des Salles -->
                 <div class="col-md-4">
-                    <div class="card text-white bg-primary mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-building"></i> Salles Totales
-                        </div>
-                        <div class="card-body">
-                            <a href="{{ route('liste_salles') }}"></a>
-                            <h3 class="card-title">{{ $nombresalle ?? 0 }}</h3>
-                            <p class="card-text">Nombre total de salles disponibles.</p>
-                        </div>
+                    <div class="card text-white bg-primary mb-3" style="left: -200px;">
+                        <a href="{{ route('liste_demandeencour') }}">
+                            <div class="card-header" style="color: red; size: 50px;">
+                                <i class="fas fa-hourglass-half" style="color: #f15218"></i> demande en cours
+                            </div>
+                        </a>
+                        <a href="{{ route('liste_demandeencour') }}">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ $nombredemandeencour ?? 0 }}</h3>
+                                <p class="card-text">Nombre des demande en cour.</p>
+                            </div>
+                        </a>
+
                     </div>
                 </div>
+
                 <!-- Statistiques des Demandes -->
                 <div class="col-md-4">
-                    <div class="card text-white bg-success mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-envelope"></i> Demandes Totales
-                        </div>
-                        <div class="card-body">
-                            <h3 class="card-title">{{ $nombredemande ?? 0 }}</h3>
-                            <p class="card-text">Nombre des demandes effectuées.</p>
-                        </div>
+                    <div class="card text-white bg-success mb-3" style="left: 100px">
+                        <a href="{{ route('total_demande') }}">
+                            <div class="card-header">
+
+                                <i class="fa fa-envelope"></i> Demandes Totales
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="card-title">{{ $nombredemande ?? 0 }}</h3>
+                                <p class="card-text">Total demandes effectuées.</p>
+                            </div>
+                        </a>
+
                     </div>
                 </div>
                 <!-- Statistiques des Demandes Acceptées -->
-                <div class="col-md-4">
+                <div class="col-md-4" style="left: 180px">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header">
-                            <i class="fa fa-check-circle"></i> Demandes Acceptées
-                        </div>
-                        <div class="card-body">
-                            <a href="{{ route('liste_demandevalidee') }}">
-                                <h3 class="card-title">{{ $nombredemandeaccepte ?? 0 }}</h3>
-                            </a>
-                            <p class="card-text">Nombre de demandes acceptées.</p>
-                        </div>
+                        <a href="{{ route('liste_demandevalidee') }}">
+                            <div class="card-header">
+                                <i class="fa fa-check-circle"></i> Demandes Acceptées
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="card-title" style="color: white">{{ $nombredemandeaccepte ?? 0 }}</h3>
+                                <p class="card-text">Total demandes acceptées.</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -81,42 +94,19 @@
             <div class="row justify-content-center">
                 <!-- Statistiques des Salles -->
                 <div class="col-md-4">
-                    <div class="card text-white bg-primary mb-3" style="background-color: #f15218;">
-                        <a href="{{ route('liste_demandeencour') }}">
+                    <a href="{{ route('liste_salles') }}">
+                        <div class="card text-white bg-primary mb-3">
                             <div class="card-header">
-                                <i class="fas fa-hourglass-half"></i> demande en cours
+                                <i class="fa fa-building"></i> Salles Totales
                             </div>
-                        </a>
-                        <div class="card-body">
-                            <h3 class="card-title">{{ $nombredemandeencour ?? 0 }}</h3>
-                            <p class="card-text">Nombre des demande en cour.</p>
+                            <div class="card-body">
+                                <h3 class="card-title">{{ $nombresalle ?? 0 }}</h3>
+                                <p class="card-text">Nombre total de salles disponibles.</p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                {{-- <!-- Statistiques des Demandes -->
-            <div class="col-md-4">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-envelope"></i> Demandes Totales
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">{{ $nombredemandeaccepte ?? 0 }}</h3>
-                        <p class="card-text">Nombre total de demandes effectuées.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Statistiques des Demandes Acceptées -->
-            <div class="col-md-4">
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-check-circle"></i> Demandes Acceptées
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title">{{ $demandesAcceptees ?? 0 }}</h3>
-                        <p class="card-text">Nombre de demandes acceptées.</p>
-                    </div>
-                </div>
-            </div> --}}
+
             </div>
         </div>
         <div class="container mt-5">

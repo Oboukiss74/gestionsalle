@@ -13,6 +13,7 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable,hasApiTokens,HasRoles;
     use HasRoles;
+    use Notifiable;
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +34,12 @@ class User extends Authenticatable
         'password',
         'role',
     ];
+    use Notifiable;
+
+    public function getNomCompletAttribute()
+    {
+        return ucfirst($this->prenom) . ' ' . strtoupper($this->nom);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -78,6 +85,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Demandes::class, 'id_user');
     }
-
 
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Liste demandes</title>
+    <title>paiement</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -15,48 +15,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
-    <link
-        rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('css/demande/liste_demande.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
-
+    {{-- pour les entête --}}
 
 </head>
 
 <body class="listedemande_body">
     @include('layouts.navbarunique')
 
-    <div style="align-content: center;text-align: center; margin-top: 15%;">
-        @forelse ($demandes as $demande)
-            @if ($demande->etat === 'Validée')
-                <p style="font-size: 15px; text-align: center;">
-                    Votre demande <b style="color: black">n° {{ $demande->id }}</b> a été <span
-                        style="color: green;">acceptée</span> le {{ $demande->updated_at->format('d/m/Y') }}.<br>
-                    Vous pouvez procéder au paiement.
-                </p>
-                <a href="{{ route('Verifie_demande') }}" style="font-size: 15px; text-align: center;">Cliquez ici</a>
-            @elseif ($demande->etat === 'Refusée')
-                <p style="font-size: 15px; text-align: center;">
-                    Votre demande <b style="color: black">n° {{ $demande->id }}</b> a été <span
-                        style="color: red;">refusée</span> le {{ $demande->updated_at->format('d/m/Y') }}.<br>
-                    Vous pouvez refaire une autre demande.
-                </p>
-                <a href="{{ route('creer_demande') }}" style="font-size: 15px; text-align: center;">Cliquez ici</a>
-            @endif
+    <div class="container-xl" style=" width: 78%;  justify-content: center; margin-left: 1px; margin-right: 1px;">
+       <div>
+            processus de paiement
+       </div>
+    </div>
 
-        @empty
-            <p style="text-align: center;">Aucune notification pour le moment.</p>
-            @endforelse
-        </div>
-    </body>
+</body>
 
-    </html>
+</html>

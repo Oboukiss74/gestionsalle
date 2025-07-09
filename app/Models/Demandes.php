@@ -16,6 +16,7 @@ class Demandes extends Model
         "id_salle",
         "id_user",
         "nom",
+        "demandeur",
         "telephone",
         "mail",
         "cnib",
@@ -23,7 +24,6 @@ class Demandes extends Model
         "datefin",
         "heuredebut",
         "heurefin",
-        "effectif",
         "motif",
         'etat',
         'reçu',
@@ -63,6 +63,11 @@ class Demandes extends Model
 
         return $pdf->save(storage_path("app/public/quittance/{$this->id}.pdf"));
     }
+
+    //     public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
 
 }

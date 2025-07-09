@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gestion des administrateurs</title>
     @yield('lien')
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
+    {{-- pour les entête --}}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 </head>
 <style>
     body {

@@ -7,6 +7,7 @@
     <title>les salles</title>
 
     <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -34,6 +35,8 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/salles/listesalle.css') }}">
+    {{-- pour les entête --}}
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 
 
 

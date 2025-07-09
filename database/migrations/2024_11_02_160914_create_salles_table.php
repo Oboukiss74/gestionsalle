@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('salles', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('demandeur'); // Added nullable for backward compatibility
             $table->string('code');
-            $table->string('nombreplace');
             $table->string('taille');
             $table->string('tarif');
             $table->string('statut');

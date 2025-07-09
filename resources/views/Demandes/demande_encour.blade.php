@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <!-- Font Awesome -->
+
+
+
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/admin/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/custom.css') }}">
@@ -27,6 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/demande/liste_demande.css') }}">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
 
+    {{-- pour les entête --}}
 
 </head>
 
@@ -45,9 +49,7 @@
 
                             <form action="#" method="post">
                                 <div class="button">
-                                    <div class="buttonicon">
-                                        <i class="fa-solid fa-magnifying-glass icon"></i>
-                                    </div>
+
                                     <input type="text" class="btn btn-success recherche" placeholder="recherche">
                                 </div>
 
@@ -132,61 +134,53 @@
                                 role="dialog" aria-labelledby="modalLabel{{ $demandeEncour->id }}"
                                 aria-hidden="true">
                                 <div class="modal-dialog">
-                                    <div class="modal-content" style="text-align: center">
-
+                                    <div class="modal-content" style="text-align: center;">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Mise a jour de la demande</h4>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Traiter la demande</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         </div>
                                         <div class="modal-body">
-
-                                            <p class="modal-body" ><strong >Nom du demandeur:</strong>
-                                                <br>{{ $demandeEncour->nom }}
-                                            </p>
-
-
-                                            <p class="form-group"><strong>date de debut:</strong>
-                                                {{ $demandeEncour->datedebut }}</p>
-
-                                            <p class="form-group"><strong>date de fin:</strong>
-                                                {{ $demandeEncour->datefin }}
-                                            </p>
-
-                                            <p class="form-group"><strong>heure de debut:</strong>
-                                                {{ $demandeEncour->heuredebut }}</p>
-
-                                            <p class="form-group"><strong>heure de fin:</strong>
-                                                {{ $demandeEncour->heurefin }}</p>
-
-                                            <p class="form-group"><strong>motif de la demande:</strong> <br>
-                                                {{ $demandeEncour->motif }}</p>
-                                            <p class="form-group"><strong>salle demandée:</strong> <br>
-                                                {{ $demandeEncour->salle->nom }}</p>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">Nom du demandeur:</label> <br>
+                                                <input type="text" value="{{ $demandeEncour->nom }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">date de debut:</label>
+                                                <input type="text" value="{{ \Carbon\Carbon::parse($demandeEncour->datedebut)->format('d/m/Y') }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">date de fin:</label>
+                                                <input type="text" value="{{ \Carbon\Carbon::parse($demandeEncour->datefin)->format('d/m/Y') }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">heure de debut:</label>
+                                                <input type="text" value="{{ \Carbon\Carbon::parse($demandeEncour->heuredebut)->format('H-i') }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">heure de fin:</label>
+                                                <input type="text" value="{{  \Carbon\Carbon::parse($demandeEncour->heurefin)->format('H-i') }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">motif de la demande:</label>
+                                                <input type="text" value="{{ $demandeEncour->motif }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
+                                            <div class="d-flex align-items-center mb-2">
+                                                <label class="mb-0 mr-2">salle demandée:</label>
+                                                <input type="text" value="{{ $demandeEncour->salle->nom }}" readonly style="border: none; background-color: transparent;">
+                                            </div>
                                         </div>
                                         <div class="modal-footer modal-body">
-                                            <form action="{{ route('refuserdemande', ['id' => $demandeEncour->id]) }}"
-                                                method="post">
+                                            <form action="{{ route('refuserdemande', ['id' => $demandeEncour->id]) }}" method="post" class="mr-2">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" name="etat" class="btn btn-default"
-                                                    value="refusée">Refuser</button>
+                                                <button type="submit" name="etat" class="btn btn-default" value="refusée">Refuser</button>
                                             </form>
-
-                                            <form
-                                                action="{{ route('accpeterdemande', ['id' => $demandeEncour->id]) }}"
-                                                method="post">
+                                            <form action="{{ route('accpeterdemande', ['id' => $demandeEncour->id]) }}" method="post">
                                                 @csrf
                                                 @method('PUT')
-                                                <button type="submit" name="etat" class="btn btn-info"
-                                                    value="validée">Accepter</button>
+                                                <button type="submit" name="etat" class="btn btn-info" value="validée">Accepter</button>
                                             </form>
-
-
-                                            {{-- <input type="button" name="etat" class="btn btn-default" data-dismiss="modal" value="Refuser">
-                                            <input type="button" name="etat" class="btn btn-info" value="Accepter"> --}}
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -260,29 +254,29 @@
                                 <label>
                                     <h1>nom du demandeur</h1>
                                 </label>
-                                <h3>{{ $demandeEncour->nom }}</h3>
+                                <div>{{ $demandeEncour->nom }}</div>
 
                             </div>
                             <div class="form-group">
                                 <label>date de but</label>
-                                <h3>{{ $demandeEncour->datedebut }}</h3>
+                                <div>{{ $demandeEncour->datedebut }}</div>
 
                             </div>
                             <div class="form-group">
                                 <label>date de fin</label>
-                                <h3>{{ $demandeEncour->datefin }}</h3>
+                                <div>{{ $demandeEncour->datefin }}</div>
                             </div>
                             <div class="form-group">
                                 <label>heure de debut</label>
-                                <h3>{{ $demandeEncour->heuredebut }}</h3>
+                                <div>{{ $demandeEncour->heuredebut }}</div>
                             </div>
                             <div class="form-group">
                                 <label>heure de fin</label>
-                                <h3>{{ $demandeEncour->heurefin }}</h3>
+                                <div>{{ $demandeEncour->heurefin }}</div>
                             </div>
                             <div class="form-group">
                                 <label>motif de la demande</label>
-                                <h2>{{ $demandeEncour->motif }}</h3>
+                                <div>{{ $demandeEncour->motif }}</div>
                             </div>
                         </div>
                         <div class="modal-footer">

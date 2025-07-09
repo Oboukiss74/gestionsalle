@@ -31,7 +31,7 @@
                         infos</span></a>
 
                 {{-- <a href="#" class="nav-item nav-link"><i class="fa fa-users"></i><span>Team</span></a> --}}
-                @can('voir.mesdemande', App\Models\Demandes::class)
+                @can('mesdemandes', App\Models\Demandes::class)
                     <a href="{{ route('mes_demande') }}" class="nav-item nav-link" style="color: black"><i
                             class="fa fa-pie-chart" style="color: black"></i><span>Mes demandes</span></a>
                 @endcan

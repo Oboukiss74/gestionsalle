@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Carbon\Carbon;
 
 class DemandeAcceptee extends Notification
 {
@@ -41,10 +42,15 @@ class DemandeAcceptee extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+
         return (new MailMessage)
-                    ->line('votre demande a été prise en compte')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Demande acceptée')
+                    ->greeting('Bonjour ' . $notifiable->nom_complet)
+                    ->line('votre demande soumise le '.$this->demande->created_at->format('d/m/Y'). 'pour ' .$this->demande->motif. 'qui doit debuter du ' .Carbon::parse( $this->demande->datedebut)->format('d/m/Y').
+                    ' au ' .Carbon::parse($this->demande->datefin )->format('d/m/Y'). ' a été acceptée.')
+                    ->line('merci de proceder au payement  et recuperer votre reçu
+                    avant les 24h de la date de l\'événement.')
+                    ->action('Voir ma demande', url('/verifier/demande_acceptee/' . $this->demande->id));
     }
 
     /**

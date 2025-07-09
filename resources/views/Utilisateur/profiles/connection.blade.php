@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +35,7 @@
 </head>
 
 <body class="body_etudiant_connection">
-    
+
     @include('layouts.navebar')
 
     <div class="login-form body_etudiant_connections">
@@ -53,9 +52,7 @@
                     <input type="email" name="email" placeholder="email" value="{{ old('email') }}"
                         class="@error('email') is-invalid @enderror form-control">
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                    @error('email')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+
                 </div>
             </div>
             <div class="form-group">
@@ -70,6 +67,16 @@
                     @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
+                    <br>
+                    @error('email')
+                        <div class="alert alert-danger"
+                            style="margin: 15px;
+                            border: inherit;
+                            width: 255px;
+                            height: 50px;
+                            text-align: center;">
+                            {{ $message }}</div>
+                    @enderror
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
             </div>
@@ -81,7 +88,7 @@
                 <a href="#" class="float-right">Mot de password oublié?</a>
             </div>
         </form>
-        <p class="text-center small">Pas de compte! <a href="{{ route("register") }}">Creer un compte</a>.</p>
+        <p class="text-center small">Pas de compte! <a href="{{ route('register') }}">Creer un compte</a>.</p>
     </div>
 </body>
 
