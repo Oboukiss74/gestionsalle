@@ -30,7 +30,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{ asset('css/demande/creer_demande.css') }}">
-    <link rel="icon" type="image/png" href="images/logo.png" />
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}" />
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     {{-- pour les entête --}}
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
@@ -44,11 +44,11 @@
     <div class="formbold-main-wrapper" style="transform: translate(150px);">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
-        <div class="container" style="padding: 2%;padding-right: initial;">
+        <div class="container" style="padding: 2%;padding-right: initial; margin-left: 70px;">
             <div class="formbold-form-wrapper">
 
                 <div class="container">
-                    <div id="etape1">
+                    <div id="etape1" style="{{ $requeteUtilisateur ? 'display:none;' : '' }}">
                         <h1>
                             @if (session()->has('success'))
                                 <p style="color: rgb(34, 255, 0)">{{ session('success') }}</p>
@@ -62,22 +62,21 @@
                             @endif
                         </h1>
                         <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
-                        <form action="{{ route('pagedemandes') }}" method="GET" enctype="multipart/form-data"
-                            id="form-etape1">
+                        <form action="{{ route('pagedemandes') }}" method="GET" >
                             <div class="flex flex-wrap formbold--mx-3">
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="date" class="formbold-form-label required"> Date de
                                             debut</label>
                                         <input type="date" name="datedebut" id="datedebut"
-                                            class="formbold-form-input" />
+                                            class="formbold-form-input"  />
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="date" class="formbold-form-label required"> Date de fin</label>
-                                        <input type="date" name="datefin" id="datefin"
-                                            class="formbold-form-input" />
+                                        <input type="date" name="datefin" id="datefin" class="formbold-form-input"
+                                             />
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
@@ -85,30 +84,32 @@
                                         <label for="time" class="formbold-form-label required"> Heure de debut
                                         </label>
                                         <input type="time" name="heuredebut" id="heuredebut"
-                                            class="formbold-form-input" />
+                                            class="formbold-form-input"/>
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="time" class="formbold-form-label required"> Heure de fin</label>
-                                        <input type="time" name="heurefin" id="heurefin"
-                                            class="formbold-form-input" />
+                                        <input type="time" name="heurefin" id="heurefin" class="formbold-form-input"
+                                           />
                                     </div>
                                 </div>
+
                             </div>
 
                             <div id="etape_suivant"
-                                style="display: flex; justify-content: center; margin-top: 20px; background-color: rgb(16, 237, 119); width: 450px; margin-left: -10px; border-radius: 5px;">
-                                <buttonclass="formbold-btn" type="submit">suivant</button>
+                                style="display: flex; justify-content: center; margin-top: 190px; background-color: rgb(16, 237, 119); margin-left: -8px;">
+                                <button class="formbold-btn" type="submit" style="background-color: green">suivant</button>
                             </div>
                         </form>
 
                     </div>
 
                     @if ($sallesDisponibles->count() > 0)
-                        <div id="etape2" style="display: none">
+                        <div id="etape2" style="{{ $requeteUtilisateur && $sallesDisponibles->count() > 0 ? '' : 'display:none;' }}">
                             <a href="{{ route('pagedemandes') }}">Retour</a>
-                            <form method="POST" action="{{ route('creer_demande') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('creer_demande') }}"
+                                enctype="multipart/form-data">
 
                                 @csrf
 
@@ -119,9 +120,7 @@
 
                                 <div class="formbold-mb-5 ">
                                     <label for="name" class="formbold-form-label required"> nom complet</label>
-                                    <input type="text" name="nom" id="name"
-                                        value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}"
-                                        class="formbold-form-input " />
+                                    <p class="formbold-form-input ">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</p>
                                 </div>
                                 <div style="justify-content: left; display: flex; display: grid;">
                                     <div class="formbold-mb-5 ">
@@ -155,7 +154,7 @@
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5">
                                         <input type="hidden" id="datedebut" name="datedebut"
-                                            value="{{ $dateDebut }}" placeholder="Nombre de personnes"
+                                            value="{{ $dateDebut }}" placeholder="date de debut"
                                             class="formbold-form-input" />
                                     </div>
                                 </div>
@@ -176,7 +175,7 @@
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5">
                                         <input type="hidden" id="heurefin" name="heurefin" max="17:00"
-                                            value="{{ $heureFin }}" placeholder="heure de fin"
+                                            value="{{ $heureFin }}" placeholder="{{ $heureFin }}"
                                             class="formbold-form-input" />
                                     </div>
                                 </div>
@@ -295,6 +294,15 @@
                                                     placeholder="motif de la demande" class="formbold-form-input" />
                                             </div>
                                         </div>
+                                        <div class="w-full sm:w-half formbold-px-3">
+                                            <div class="formbold-mb-5">
+                                                <label for="motif" class="formbold-form-label required">
+                                                    Description
+                                                </label>
+                                                <input type="texterea" name="motif" id="post-code"
+                                                    placeholder="motif de la demande" class="formbold-form-input" />
+                                            </div>
+                                        </div>
 
 
 
@@ -325,27 +333,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#etape_suivant').on('click', function(e) {
-                e.preventDefault();
+            // $('#etape_suivant').on('click', function(e) {
+            //     e.preventDefault();
 
-                // Récupérer les valeurs saisies
-                const datedebut = $('#datedebut').val();
-                const datefin = $('#datefin').val();
-                const heuredebut = $('#heuredebut').val();
-                const heurefin = $('#heurefin').val();
-                if (!datedebut || !datefin || !heuredebut || !heurefin) {
-                    alert('Veuillez remplir toutes les dates et heures');
-                    return;
-                }
-                // Mettre à jour les champs cachés du formulaire d'étape 2
-                $('input[name="datedebut"]').val(datedebut);
-                $('input[name="datefin"]').val(datefin);
-                $('input[name="heuredebut"]').val(heuredebut);
-                $('input[name="heurefin"]').val(heurefin);
+            //     // Récupérer les valeurs saisies
+            //     const datedebut = $('#datedebut').val();
+            //     const datefin = $('#datefin').val();
+            //     const heuredebut = $('#heuredebut').val();
+            //     const heurefin = $('#heurefin').val();
+            //     if (!datedebut || !datefin || !heuredebut || !heurefin) {
+            //         alert('Veuillez remplir toutes les dates et heures');
+            //         return;
+            //     }
+            //     // Mettre à jour les champs cachés du formulaire d'étape 2
+            //     $('input[name="datedebut"]').val(datedebut);
+            //     $('input[name="datefin"]').val(datefin);
+            //     $('input[name="heuredebut"]').val(heuredebut);
+            //     $('input[name="heurefin"]').val(heurefin);
 
-                $('#etape1').hide();
-                $('#etape2').show();
-            });
+            //     $('#etape1').hide();
+            //     $('#etape2').show();
+            // });
         });
 
         const salle = @json($sallesDisponibles);

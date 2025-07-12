@@ -17,8 +17,9 @@ use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\PdfBuilder;
 use App\Notifications\DemandeAcceptee;
 use App\Notifications\NotifierUtilisateur;
+use Spatie\LaravelPdf\Enums\Format;
 
-
+use function Laravel\Prompts\form;
 
 class DemandeController extends Controller
 {
@@ -28,12 +29,13 @@ class DemandeController extends Controller
     public function Page_Demande(Request $request)
     {
         $this->authorize("create", Demandes::class);
+        $requeteUtilisateur = $request->has('datedebut') && $request->has('datefin') && $request->has('heuredebut') && $request->has('heurefin');
 
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
-        $heureDebut = $request->input('heuredebut', '07:00');
+        $heureDebut = $request->input('heuredebut',now()->format('H:i'));
         $dateFin = $request->input('datefin', now()->format('Y-m-d'));
-        $heureFin = $request->input('heurefin', '18:00');
+        $heureFin = $request->input('heurefin',now()->format('H:i'));
 
         // Convertir en objets Carbon pour la requête
         $debut = Carbon::createFromFormat('Y-m-d H:i', "$dateDebut $heureDebut");
@@ -49,11 +51,11 @@ class DemandeController extends Controller
                     ->where('datefin', '>', $debut);
             });
         })->get();
-
+       // dd($dateDebut, $dateFin, $heureDebut, $heureFin);
         $sallesDisponibles->transform(function ($salle) {
             // Décoder uniquement si c'est une chaîne JSON
             if (is_string($salle->equipement)) {
-                $salle->equipements = json_decode($salle->equipement, true); // true pour tableau associatif
+                $salle->equipements = json_decode($salle->equipements, true); // true pour tableau associatif
             } elseif (is_array($salle->equipement)) {
                 $salle->equipements = $salle->equipement;
             } else {
@@ -67,7 +69,8 @@ class DemandeController extends Controller
             'dateDebut',
             'dateFin',
             'heureDebut',
-            'heureFin'
+            'heureFin',
+            'requeteUtilisateur'
         ));
         //return view("Demandes.creer_demandes");
     }
