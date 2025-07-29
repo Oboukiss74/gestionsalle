@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
-        Schema::table('salles', function (Blueprint $table) {
-        $table->json('equipement')->nullable()->after('longitude');
-    });
+        Schema::table('demandes', function (Blueprint $table) {
+            $table->string('description')->nullable()->after('motif');
+        });
     }
 
     /**

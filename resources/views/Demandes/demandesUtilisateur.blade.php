@@ -62,7 +62,7 @@
             </thead>
             <tbody>
                 @forelse($demandes as $demande)
-                    @if($demande->etat === 'Validée' || $demande->etat === 'En attente')
+                    @if($demande->etat === 'En attente')
                         <tr>
 
                             <td>{{ $demande->id }}</td>

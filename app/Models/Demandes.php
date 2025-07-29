@@ -25,6 +25,7 @@ class Demandes extends Model
         "heuredebut",
         "heurefin",
         "motif",
+        "description",
         'etat',
         'reçu',
     ];

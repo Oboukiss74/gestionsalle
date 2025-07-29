@@ -12,13 +12,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="@yield('csss','{{ asset("css/profile.css") }}')">
+    <link rel="stylesheet" href="@yield('css','{{ asset("css/profile.css") }}')">
     <link rel="icon" type="image/png" href="images/logo.png" />
 </head>
 
 <body>
     {{-- <i class="fa fa-cube"> --}}
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" >
        <a class="navbar-brand" href="{{ route('profile') }}"
             style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 30px;">
             <img src="{{ asset('images/logo.png') }}" width="30" height="30" alt="Logo"
@@ -29,7 +29,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Collection of nav links, forms, and other content for toggling -->
-        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start" style="background-color: rgb(57, 209, 115);">
 
             <div class="navbar-nav ml-auto" style="transform: translate(-500px,0)">
                 <a href="{{ route('Accueil') }}" class="nav-item nav-link active" style="transform: translate(-300px,0)"><i

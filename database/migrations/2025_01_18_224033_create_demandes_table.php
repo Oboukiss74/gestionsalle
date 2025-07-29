@@ -24,6 +24,7 @@ return new class extends Migration
             $table->time('heuredebut');
             $table->time('heurefin');
             $table->string('motif');
+            $table->string('description');
             $table->enum('etat', ['En attente', 'Validée', 'Refusée'])->default('En attente');
             $table->enum('reçu', ['Non', 'Oui'])->default('Non');
             $table->timestamps();

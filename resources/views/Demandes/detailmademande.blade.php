@@ -51,7 +51,7 @@
 
                 <div class="formbold-form-title">
                     <h2 class="">Demande sélectionnée N° {{ $demandes->id }}</h2>
-                    <p>Modification possible si l'état est en attente</p>
+                    <p>Modification possible pour demande en attente</p>
                 </div>
 
                 <div class="formbold-input-flex">
@@ -66,7 +66,7 @@
                     <div>
                         <label for="datefin" class="formbold-form-label">Date de fin</label>
                         <input type="date" name="datefin" id="datefin" class="formbold-form-input"
-                            value="{{ old('datefin', $demandes->datefin) }}" required />
+                            value="{{ old('datefin', $demandes->datefin)}}" required />
                         @error('datefin')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -92,19 +92,29 @@
                     </div>
                 </div>
 
-                <div class="formbold-mb-3">
+                {{-- <div class="formbold-mb-3">
                     <label for="effectif" class="formbold-form-label">Effectif de participants</label>
                     <input type="number" name="effectif" id="effectif" class="formbold-form-input"
                         value="{{ old('effectif', $demandes->effectif) }}" min="1" required />
                     @error('effectif')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <div class="formbold-mb-3">
                     <label for="motif" class="formbold-form-label">Motif de la demande</label>
-                    <textarea name="motif" id="motif" class="formbold-form-input" required>{{ old('motif', $demandes->motif) }}</textarea>
+                    <input type="text" name="motif" id="motif" class="formbold-form-input"
+                        value="{{ old('motif', $demandes->motif) }}" required />
+                    {{-- <textarea name="motif" id="motif" class="formbold-form-input" required>{{ old('motif', $demandes->motif) }}</textarea> --}}
+                    @error('motif')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="formbold-mb-3">
+                    <label for="motif" class="formbold-form-label">description de la demande</label>
+                    <textarea name="description" id="motif" class="formbold-form-input" required>{{ old('motif', $demandes->description) }}</textarea>
                     @error('motif')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror

@@ -34,11 +34,14 @@
 <body>
     @include('layouts.navbarunique')
     @role('Utilisateur')
+
         <div style="margine:18px; padding: 18px;">
-            @if (@session()->has('message'))
-                <p style="color: red">{{ session('message') }}</p>
-            @endif
-            <table class="table" style="    width: 80%;left: 104px;margin-left: 18%; transform: translate(0,25%); margin-top: 5%;">
+            <div style="transform: translate(45%,50px);">
+                @if (@session()->has('message'))
+                    <p style="color: red">{{ session('message') }}</p>
+                @endif
+            </div>
+            <table class="table" style="    width: 80%;left: 104px;margin-left: 18%; margin-top: 5%;">
                 <thead>
                     <tr>
                         <th scope="col">N°</th>
@@ -47,7 +50,7 @@
                         <th scope="col">etat</th>
                         <th scope="col">date de soumission</th>
                         <th scope="col">etat de paiement</th>
-                        <th scope="col">details</th>
+                        <th scope="col">Editer</th>
                         <th scope="col">Quittances</th>
                         <th scope="col">localiser</th>
                     </tr>
@@ -66,20 +69,20 @@
                                 @if ($demande->etat === 'Validée')
                                     <a href="{{ route('methodepaiement') }}">
                                         <button
-                                            style="border-radius: 4px; color: red; border-color: red; background-color: red; color:aliceblue;">non
+                                            style="border-radius: 4px; color: rgb(17, 255, 0); border-color: rgb(17, 255, 0); background-color: rgb(17, 255, 0); color:aliceblue;">non
                                             payé</button>
                                     </a>
                                 @endif
 
                                 @if ($demande->etat === 'En attente')
                                     <button
-                                        style="border-radius: 4px; color: rgb(28, 241, 85); border-color: rgb(28, 241, 85); background-color: rgb(28, 241, 85); color:black;">en
+                                        style="border-radius: 4px; color: rgb(241, 60, 28); border-color: rgb(241, 32, 28); background-color: rgb(241, 28, 28); color:black;">en
                                         attente
                                     </button>
                                 @endif
                                 @if ($demande->etat === 'Refusée')
                                     <button
-                                        style="border-radius: 4px; color: rgb(28, 241, 85); border-color: rgb(28, 241, 85); background-color: rgb(28, 241, 85); color:black;">paiement
+                                        style="border-radius: 4px; color: rgb(241, 28, 28); border-color: rgb(241, 28, 28); background-color: rgb(241, 28, 28); color:black;">paiement
                                         impossible
                                     </button>
                                 @endif
@@ -115,10 +118,17 @@
 
                         </tr>
                     @endforeach
+                    @if (count($demandes) === 0)
+                        <tr>
+                            <td colspan="9" class="text-center">Aucune demande trouvée</td>
+                        </tr>
+                    @endif
+
 
                 </tbody>
             </table>
         </div>
+
     @endrole
 </body>
 

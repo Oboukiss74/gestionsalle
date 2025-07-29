@@ -77,7 +77,20 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+                    {{-- llien de profile --}}
+                    @if (Route::currentRouteName() === 'profile' || Route::currentRouteName() === 'mesinfos')
+                        <li class="nav-item">
+                            <a href="{{ route('profile') }}" class="nav-item nav-link active"><i
+                                    class="fa-solid fa-user"></i><span>Mon profile</span></a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">
+                                <i class="fas fa-paper-plane"></i>
+                                <p>soumettre demande</p>
+                            </a>
+                        </li>
+                    @endif
                     {{-- lien sur les ajout d'utilisateur --}}
 
                     @if (Route::currentRouteName() === 'ajouterutilisateur' || Route::currentRouteName()=== 'tableau_de_bord')
@@ -219,14 +232,14 @@
                     {{-- lien du cote soumission de demande --}}
 
                     @if (Route::currentRouteName() === 'pagedemandes')
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             @can('voirmesdemandes', App\Models\Demandes::class)
                                 <a href="{{ route('Verifie_demande') }}" class="nav-item nav-link"> <i
                                         class="fas fa-search"></i>
                                     <p>verifier demandes</p>
                                 </a>
                             @endcan
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="{{ route('mesinfos') }}" class="nav-item nav-link "><i class="fas fa-user"></i>
                                 <p>mes infos</p>
@@ -244,11 +257,18 @@
 
                     {{-- lien de mes demandes --}}
 
-                    @if (Route::currentRouteName() === 'mes_demande' || Route::currentRouteName() === 'Verifie_demande')
+                    @if (Route::currentRouteName() === 'mes_demande' || Route::currentRouteName() === 'Verifie_demande' || Route::currentRouteName() === 'demandeAttente')
                         <li class="nav-item">
                             <a href="{{ route('pagedemandes') }}" class="nav-item nav-link">
                                 <i class="fas fa-paper-plane"></i>
                                 <p>soumettre demande</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('demandeAttente') }}" class="nav-item nav-link">
+                                <i class="nav-icon fas fa-clock"></i>
+                                <p>Démande encours</p>
                             </a>
                         </li>
 

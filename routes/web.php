@@ -80,25 +80,25 @@ Route::get('role_permission', function () {
 //creation des permissions
 Route::get('creer/permission', function () {
 
-    // Permission::create(['name' => 'approuvee']);
-    // Permission::create(['name' => 'modifier.ma.demande']);
-    // Permission::create(['name' => 'supprimer.demande']);
-    // Permission::create(['name' => 'soummetre.demande']);
-    // Permission::create(['name' => 'valider.demande']);
-    // Permission::create(['name' => 'refuser.demande']);
-    // Permission::create(['name' => 'voir.demande']);
-    // Permission::create(['name' => 'suivre.demande']);
-    // Permission::create(['name' => 'modifier.utilisateur']);
-    // Permission::create(['name' => 'supprimer.utilisateurs']);
+    Permission::create(['name' => 'approuvee']);
+    Permission::create(['name' => 'modifier.ma.demande']);
+    Permission::create(['name' => 'supprimer.demande']);
+    Permission::create(['name' => 'soummetre.demande']);
+    Permission::create(['name' => 'valider.demande']);
+    Permission::create(['name' => 'refuser.demande']);
+    Permission::create(['name' => 'voir.demande']);
+    Permission::create(['name' => 'suivre.demande']);
+    Permission::create(['name' => 'modifier.utilisateur']);
+    Permission::create(['name' => 'supprimer.utilisateurs']);
 
-    // Permission::create(['name' => 'creer.utilisateurs']);
-    // Permission::create(['name' => 'voir.utilisateurs']);
-    // Permission::create(['name' => 'modifier.profile']);
-    // Permission::create(['name' => 'voir.profile']);
-    // Permission::create(['name' => 'voir.demandevalidee']);
-    // Permission::create(['name' => 'voir.demandeerefusee']);
-    // Permission::create(['name' => 'voir.demandeencour']);
-    // Permission::create(['name' => 'voir.mesdemande']);
+    Permission::create(['name' => 'creer.utilisateurs']);
+    Permission::create(['name' => 'voir.utilisateurs']);
+    Permission::create(['name' => 'modifier.profile']);
+    Permission::create(['name' => 'voir.profile']);
+    Permission::create(['name' => 'voir.demandevalidee']);
+    Permission::create(['name' => 'voir.demandeerefusee']);
+    Permission::create(['name' => 'voir.demandeencour']);
+    Permission::create(['name' => 'voir.mesdemande']);
     Permission::create(['name' => 'voir.les_demandes']);
 });
 
@@ -110,7 +110,7 @@ Route::get('creer/role', function () {
     Role::create(['name' => 'Utilisateur']);
     Role::create(['name' => 'Gestionnaier']);
     Role::create(['name' => 'DCMF']);
-    Role::create(['name' => 'SupperAdmin']);
+
 });
 //attribution des roles et permission
 Route::get('/attribution/role/permission', function () {
@@ -246,6 +246,9 @@ Route::middleware(['auth'])->group(function () {
     //accueil des demandes
     Route::get('demande/Mesdemandes', [DemandeController::class, 'DemandeStatut'])->name('mes_demande');
 
+    //accueil des demandes
+    Route::get('demande/DemandeAttente', [DemandeController::class, 'DemandeAttente'])->name('demandeAttente');
+
     //faire une demande
     Route::get('demande/creer', [DemandeController::class, 'Page_Demande'])->name(name: 'pagedemandes');
 
@@ -357,7 +360,7 @@ Route::post('/permissions/assign', [RolePermissionController::class, 'assignPerm
 
 
 //profile administrateur
-Route::get('Admin', [AdminController::class, 'AdminProfile'])->name(name: 'profile_admin');
+Route::get('Admin', [AdminController::class, 'UtilisateurProfile'])->name(name: 'profile_admin');
 
 //profile des acteur
 

@@ -39,8 +39,6 @@
 <body>
     @include('layouts.navbarunique')
 
-
-
     <div class="formbold-main-wrapper" style="transform: translate(150px);">
         <!-- Author: FormBold Team -->
         <!-- Learn More: https://formbold.com -->
@@ -48,35 +46,33 @@
             <div class="formbold-form-wrapper">
 
                 <div class="container">
+                    @if (session('resetForm'))
+                        @php $requeteUtilisateur = false; @endphp
+                    @endif
                     <div id="etape1" style="{{ $requeteUtilisateur ? 'display:none;' : '' }}">
                         <h1>
-                            @if (session()->has('success'))
-                                <p style="color: rgb(34, 255, 0)">{{ session('success') }}</p>
+                            @if (session()->has('succes'))
+                                <p style="color: rgb(34, 255, 0)">{{ session('succes') }}</p>
                                 </p>
                             @endif
                         </h1>
-                        <h1>
-                            @if (session()->has('message'))
-                                <p style="color: rgb(0, 255, 21)">{{ session('success') }}</p>
-                                </p>
-                            @endif
-                        </h1>
+
                         <h1> Veuillez entrer la periode de l'occupation de la salle svp.</h1>
-                        <form action="{{ route('pagedemandes') }}" method="GET" >
+                        <form action="{{ route('pagedemandes') }}" method="GET">
                             <div class="flex flex-wrap formbold--mx-3">
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="date" class="formbold-form-label required"> Date de
                                             debut</label>
                                         <input type="date" name="datedebut" id="datedebut"
-                                            class="formbold-form-input"  />
+                                            class="formbold-form-input" />
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="date" class="formbold-form-label required"> Date de fin</label>
-                                        <input type="date" name="datefin" id="datefin" class="formbold-form-input"
-                                             />
+                                        <input type="date" name="datefin" id="datefin"
+                                            class="formbold-form-input" />
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
@@ -84,32 +80,45 @@
                                         <label for="time" class="formbold-form-label required"> Heure de debut
                                         </label>
                                         <input type="time" name="heuredebut" id="heuredebut"
-                                            class="formbold-form-input"/>
+                                            class="formbold-form-input" />
                                     </div>
                                 </div>
                                 <div class="w-full sm:w-half formbold-px-3">
                                     <div class="formbold-mb-5 w-full">
                                         <label for="time" class="formbold-form-label required"> Heure de fin</label>
-                                        <input type="time" name="heurefin" id="heurefin" class="formbold-form-input"
-                                           />
+                                        <input type="time" name="heurefin" id="heurefin"
+                                            class="formbold-form-input" />
                                     </div>
                                 </div>
 
                             </div>
+                            {{-- condition des dates --}}
+                            @if (!empty($erreur))
+                                <div style="color: red; text-align: center; ">
+                                    {{ $erreur }}
+                                </div>
+                            @endif
+                            {{-- condition des heures --}}
+                            @if (!empty($erreurheure))
+                                <div style="color: red; text-align: center; ">
+                                    {{ $erreurheure }}
+                                </div>
+                            @endif
 
                             <div id="etape_suivant"
                                 style="display: flex; justify-content: center; margin-top: 190px; background-color: rgb(16, 237, 119); margin-left: -8px;">
-                                <button class="formbold-btn" type="submit" style="background-color: green">suivant</button>
+                                <button class="formbold-btn" type="submit"
+                                    style="background-color: green">suivant</button>
                             </div>
                         </form>
 
                     </div>
 
                     @if ($sallesDisponibles->count() > 0)
-                        <div id="etape2" style="{{ $requeteUtilisateur && $sallesDisponibles->count() > 0 ? '' : 'display:none;' }}">
+                        <div id="etape2"
+                            style="{{ $requeteUtilisateur && $sallesDisponibles->count() > 0 ? '' : 'display:none;' }}">
                             <a href="{{ route('pagedemandes') }}">Retour</a>
-                            <form method="POST" action="{{ route('creer_demande') }}"
-                                enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('creer_demande') }}" enctype="multipart/form-data">
 
                                 @csrf
 
@@ -120,7 +129,10 @@
 
                                 <div class="formbold-mb-5 ">
                                     <label for="name" class="formbold-form-label required"> nom complet</label>
-                                    <p class="formbold-form-input ">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</p>
+                                    <input type="text" name="nom" id="name"
+                                        value="{{ Auth::user()->nom }} {{ Auth::user()->prenom }}"
+                                        class="formbold-form-input " />
+                                    {{-- <p class="formbold-form-input ">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</p> --}}
                                 </div>
                                 <div style="justify-content: left; display: flex; display: grid;">
                                     <div class="formbold-mb-5 ">
@@ -299,8 +311,9 @@
                                                 <label for="motif" class="formbold-form-label required">
                                                     Description
                                                 </label>
-                                                <input type="texterea" name="motif" id="post-code"
-                                                    placeholder="motif de la demande" class="formbold-form-input" />
+                                                <input type="texterea" name="description" id="post-code"
+                                                    placeholder="description de la demande"
+                                                    class="formbold-form-input" />
                                             </div>
                                         </div>
 

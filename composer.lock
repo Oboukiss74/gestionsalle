@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b15f4627f4f50b8438532079c3532667",
+    "content-hash": "f856ee26203a7dae66c208197aa96ecb",
     "packages": [
         {
             "name": "brick/math",
@@ -3481,16 +3481,16 @@
         },
         {
             "name": "spatie/laravel-pdf",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-pdf.git",
-                "reference": "eba412dbbfb098a4237d80a7107daa5df210ea40"
+                "reference": "d766ba14e9e8c66700458927bc1a1fbf083d3d69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-pdf/zipball/eba412dbbfb098a4237d80a7107daa5df210ea40",
-                "reference": "eba412dbbfb098a4237d80a7107daa5df210ea40",
+                "url": "https://api.github.com/repos/spatie/laravel-pdf/zipball/d766ba14e9e8c66700458927bc1a1fbf083d3d69",
+                "reference": "d766ba14e9e8c66700458927bc1a1fbf083d3d69",
                 "shasum": ""
             },
             "require": {
@@ -3502,7 +3502,7 @@
             },
             "require-dev": {
                 "ext-imagick": "*",
-                "larastan/larastan": "^2.7.0",
+                "larastan/larastan": "^2.7.0|^3.0",
                 "laravel/pint": "^1.13.7",
                 "nunomaduro/collision": "^7.10|^8.0",
                 "orchestra/testbench": "^8.18|^10.0",
@@ -3560,9 +3560,9 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-pdf/issues",
-                "source": "https://github.com/spatie/laravel-pdf/tree/1.5.5"
+                "source": "https://github.com/spatie/laravel-pdf/tree/1.6.0"
             },
-            "time": "2025-02-20T11:09:45+00:00"
+            "time": "2025-06-16T07:49:03+00:00"
         },
         {
             "name": "spatie/laravel-permission",

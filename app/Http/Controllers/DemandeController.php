@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+
 use Spatie\LaravelPdf\Facades\Pdf;
 use Spatie\LaravelPdf\PdfBuilder;
 use App\Notifications\DemandeAcceptee;
@@ -21,6 +22,7 @@ use Spatie\LaravelPdf\Enums\Format;
 
 use function Laravel\Prompts\form;
 
+
 class DemandeController extends Controller
 {
     use AuthorizesRequests;
@@ -28,14 +30,26 @@ class DemandeController extends Controller
     //page de demande
     public function Page_Demande(Request $request)
     {
+        $erreur = null;
+        $erreurheure = null;
         $this->authorize("create", Demandes::class);
         $requeteUtilisateur = $request->has('datedebut') && $request->has('datefin') && $request->has('heuredebut') && $request->has('heurefin');
 
         // Dates par défaut (aujourd'hui)
         $dateDebut = $request->input('datedebut', now()->format('Y-m-d'));
-        $heureDebut = $request->input('heuredebut',now()->format('H:i'));
+        $heureDebut = $request->input('heuredebut', now()->format('H:i'));
         $dateFin = $request->input('datefin', now()->format('Y-m-d'));
-        $heureFin = $request->input('heurefin',now()->format('H:i'));
+        $heureFin = $request->input('heurefin', now()->format('H:i'));
+        //verifier si la date de debut est superieure a la date du jour
+        if ($dateDebut < now()->toDateString() || $dateFin < now()->toDateString()) {
+            $erreur = "La date de début et de fin ne doivent pas être antérieure à aujourd'hui.";
+            $requeteUtilisateur = false;
+        }
+        //verifier si l'heure de debut est superieur a l'heure de fin
+        if ($heureDebut > $heureFin ) {
+            $erreurheure = "L'heure de début est superieure a l'heure de fin.";
+            $requeteUtilisateur = false;
+        }
 
         // Convertir en objets Carbon pour la requête
         $debut = Carbon::createFromFormat('Y-m-d H:i', "$dateDebut $heureDebut");
@@ -51,7 +65,7 @@ class DemandeController extends Controller
                     ->where('datefin', '>', $debut);
             });
         })->get();
-       // dd($dateDebut, $dateFin, $heureDebut, $heureFin);
+        // dd($dateDebut, $dateFin, $heureDebut, $heureFin);
         $sallesDisponibles->transform(function ($salle) {
             // Décoder uniquement si c'est une chaîne JSON
             if (is_string($salle->equipement)) {
@@ -70,7 +84,9 @@ class DemandeController extends Controller
             'dateFin',
             'heureDebut',
             'heureFin',
-            'requeteUtilisateur'
+            'requeteUtilisateur',
+            'erreur',
+            'erreurheure'
         ));
         //return view("Demandes.creer_demandes");
     }
@@ -96,6 +112,7 @@ class DemandeController extends Controller
                     "heuredebut" => "required|date_format:H:i|before:heurefin",
                     "heurefin" => "required|date_format:H:i|after:heuredebut",
                     "motif" => "required",
+                    "description" => "required",
                 ]
 
             );
@@ -117,7 +134,10 @@ class DemandeController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Demande créée avec succès.');
+        return redirect()->route('pagedemandes')->with([
+            'succes' => 'Votre demande a été soumise avec succes.',
+            'resetForm' => true
+        ]);
     }
 
     public function UpdateDemande(Request $request, $id)
@@ -143,6 +163,7 @@ class DemandeController extends Controller
                 'heurefin' => $request->heurefin,
                 'effectif' => $request->effectif,
                 'motif' => $request->motif,
+                'description' => $request->description,
             ]);
 
             //dd($demande);
@@ -226,6 +247,19 @@ class DemandeController extends Controller
             ->paginate(10);
         return view('Demandes.mes_demandes', compact('demandes'));
     }
+    public function DemandeAttente(Demandes $demandes)
+    {
+        $this->authorize('voir.demande', Demandes::class);
+
+        // $demandes = $demandes->where('etat', 'Validée')->where('id_user', Auth::id())->get();
+        $user = Auth::user();
+        $demandes = $user->demandes()
+            ->where('etat', 'En attente')
+            ->with('salle') // relation vers salle
+            ->orderBy('datedebut', 'desc')
+            ->paginate(10);
+        return view('Demandes.mes_demandes', compact('demandes'));
+    }
 
     //verifier mes demandes etats
     public function VerifierStatut(Demandes $demandes)
@@ -282,7 +316,7 @@ class DemandeController extends Controller
         $demande->etat = 'Refusée';
         $demande->save();
 
-        $user= $demande->user; // ou User::find($demande->id_user);
+        $user = $demande->user; // ou User::find($demande->id_user);
         $user->notify(new NotifierUtilisateur($demande));
         return redirect()->back()->with('error', 'Demande refusée.');
     }
@@ -370,11 +404,12 @@ class DemandeController extends Controller
         return redirect()->back()->with('success', 'Notification envoyée à l\'utilisateur.');
     }
     //verifier etat d'une demande
-    public function VerifierLaDemande($id){
+    public function VerifierLaDemande($id)
+    {
 
         // $this->authorize('view', Demandes::class);
         //recuperer une demande
-        $demande=Demandes::findOrFail($id);
+        $demande = Demandes::findOrFail($id);
         return view('Demandes.verifier_la_demande', compact('demande'));
     }
 }

@@ -45,8 +45,8 @@ class AdminController extends Controller
 {
     use AuthorizesRequests;
 
-    //profile Admin
-    public function AdminProfile(Request $request)
+    //profile
+    public function UtilisateurProfile(Request $request)
     {
 
         $demandes = Demandes::count();
